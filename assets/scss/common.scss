@@ -1,0 +1,22 @@
+/*   共用的一些类样式   */
+$width: 1200px;
+$mainBlue: #009BEE;
+.banner { // 静态的banner并且没有文字
+  width: 100%;
+  height: 290px;
+  background: url("~/assets/img/rfid-banner.png") no-repeat center center;
+  background-size: cover;
+  .text {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 94px 0;
+    h1 {
+      font-size: 30px;
+      color: #009bee;
+      margin-bottom: 30px;
+    }
+    p {
+      font-size: 18px;
+    }
+  }
+}

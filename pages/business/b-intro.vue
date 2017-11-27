@@ -1,0 +1,255 @@
+<template>
+  <div class="b-intro">
+    <div class="m-coo-map-bg">
+    <div class="m-coo-map f-cb">
+      <div class="m-coo-left">
+        <chart class="u-coo-map" :options="map" v-on:click="getProvince"></chart>
+      </div>
+      <div class="m-coo-right">
+        <div class="u-coo-list u-coo-empty" v-if="isEmpty">
+          <div class="u-title">{{ province }}</div>
+          <div class="u-empty">
+            <p class="u-tips">本省暂无接入商家，快来成为第一批淘金者吧！</p>
+            <span @click="changeTab('/us/link-us')">
+              <nuxt-link class="u-btn-main" to="/us/link-us">立即申请加入</nuxt-link>
+            </span>
+          </div>
+        </div>
+        <span v-else>
+        <div class="u-title f-cb">
+          <span class="l">{{ province }}</span>
+          <span class="r">合计：{{ list && list.length}} 家</span>
+        </div>
+          <ul class="u-coo-list">
+            <li class="u-item" v-for="( item, i ) in list">
+              <div class="tbox">
+                <span class="t">{{ item.name }}</span>
+              </div>
+              <div class="cbox">
+                <span class="c">{{ item.address }}</span>
+              </div>
+            </li>
+           <!-- <li class="u-box">
+            </li>-->
+          </ul>
+        </span>
+      </div>
+    </div>
+  </div>
+    <div class="child-platform-1">
+      <h1>现有子平台</h1>
+      <div class="content">
+        <div v-for="url in platform">
+          <img :src="url" alt="CNICG 子平台">
+        </div>
+      </div>
+    </div>
+    <div class="child-platform-2">
+      <h1>现有子平台</h1>
+      <div class="content">
+        <div v-for="url in company">
+          <img :src="url" alt="CNICG 子平台">
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import ECharts from 'vue-echarts/components/ECharts.vue'
+  import map from '~/api/cooMap'
+  import 'echarts/lib/chart/map'
+  import 'echarts/lib/component/tooltip'
+  import chinaMap from '~/api/china.json'
+  import { mapState } from 'vuex'
+
+  ECharts.registerMap('china', chinaMap)
+
+  export default {
+    name: 'cooProxy',
+    computed: {
+      ...mapState({
+        platform: state => state.business.childPlatform,
+        company: state => state.business.childCompany
+      })
+    },
+    data () {
+      return {
+        title: '平台代理分布',
+        map,
+        params: '',
+        isEmpty: false,
+        province: '广东',
+        list: []
+      }
+    },
+    async asyncData ({store, app}) {
+      let { data } = await app.$axios.get('/v1/company/', {params: {province: 44, status: 2}})
+      return {list: data.results, isEmpty: data.results.length === 0, companyList: {44: data.results}}
+    },
+    methods: {
+      getProvince: async function (event) { // 每次点击切换省份的公司
+        let id = event.data.id
+        this.province = event.data.name
+        if (!this.companyList[id]) { // 判断是否存在这个省
+          let { data } = await this.$axios.get('/v1/company/', {params: {province: id, status: 2}})
+          this.companyList[id] = data.results
+        }
+        this.list = this.companyList[id]
+        this.isEmpty = this.list.length === 0
+      },
+      changeTab (name) {
+        // this.$store.commit('CHANGE_ACTIVE_INDEX', name)
+      }
+    },
+    components: {
+      chart: ECharts
+    }
+  }
+</script>
+
+<style lang="scss">
+  @import "assets/scss/mixins.scss";
+  .m-coo-map-bg {
+    min-width: 1200px;
+    background: url("~/assets/img/map-bac.png");
+    height: 400px;
+    overflow: hidden;
+  }
+
+  .m-coo-map {
+    width: 1200px;
+    margin: 0 auto;
+    .u-coo-map {
+      width: 600px;
+      height: 400px;
+    }
+    .m-coo-left {
+      float: left;
+    }
+    .m-coo-right {
+      width: 440px;
+      height: 300px;
+      margin: 50px 0;
+      float: right;
+    }
+    .u-title {
+      width: 100%;
+      background-color: #57687c;
+      color: #fff;
+      padding: 0 20px 0 30px;
+      line-height: 46px;
+      height: 46px;
+      .l {
+        float: left;
+        font-size: 18px;
+      }
+      .r {
+        float: right;
+        font-size: 14px;
+      }
+    }
+    .u-coo-list {
+      height: 254px;
+      overflow-y: auto;
+      border: 1px solid #49596b;
+      .u-item {
+        border-bottom: 1px solid #49596b;
+        padding: 10px 12px;
+        background: #334151;
+        .t {
+          font-size: 16px;
+          line-height: 1.2;
+          color: #e5e5e5;
+          vertical-align: top;
+        }
+        .tbox {
+          height: 20px;
+        }
+        .cbox {
+          height: 16px;
+        }
+        .c {
+          font-size: 14px;
+          line-height: 1.5;
+          color: #e5e5e5;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          vertical-align: top;
+        }
+      }
+      .u-box {
+        text-align: center;
+        padding: .20px 16px;
+      }
+      .more {
+        color: #00adef;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .u-empty {
+        text-align: center;
+        .u-tips {
+          font-size: 18px;
+          color: #fff;
+          margin-top: 60px;
+        }
+        .u-btn-main {
+          background: #1783d8;
+          padding: 10px 24px;
+          color: #fff;
+          font-size: 16px;
+          border: none;
+          display: inline-block;
+          margin: 0 auto;
+          margin-top: 40px;
+          line-height: 1;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .child-platform-1, .child-platform-2 {
+    @extend %title;
+    height: 498px;
+    .content {
+      margin-top: 50px;
+      @include clearfix;
+    }
+  }
+  .child-platform-1 .content {
+    div {
+      display: inline-block;
+      margin-bottom: 12px;
+      height: 286px;
+      width: 388px;
+      &:nth-child(3n+2) {
+        margin: 0 18px;
+      }
+      img {
+        width: 388px;
+        height: 286px;
+      }
+    }
+  }
+  .child-platform-2 {
+    height: auto;
+  }
+  .child-platform-2 .content {
+    div {
+      display: inline-block;
+      margin-bottom: 36px;
+      width: 290px;
+      height: 90px;
+      margin-right: 13.3px;
+      img {
+        width: 290px;
+        height: 90px;
+      }
+      &:last-child, &:nth-child(4n) {
+        margin-right: 0;
+      }
+    }
+  }
+</style>

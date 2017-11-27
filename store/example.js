@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import cloneDeep from 'lodash/cloneDeep'
 const summary = [
   {
     number: '即食食品产品',
@@ -34,7 +34,7 @@ export const state = () => ({
 })
 export const getters = {
   exampleList (state) { // 对于获取到的案例添加一个detail描述
-    let lists = _.cloneDeep(state.examples.examplesList) // 进行了一次深拷贝这样state不会改变，如果要自己写方法则需要递归判断
+    let lists = cloneDeep(state.examples.examplesList) // 进行了一次深拷贝这样state不会改变，如果要自己写方法则需要递归判断
     lists.forEach((list) => {
       list.forEach((item) => {
         summary.forEach((sum) => {
@@ -51,39 +51,5 @@ export const mutations = {
   'GET_EXAMPLE_LIST' (state, data) {
     state.examples.examplesList.push(data.list)
     state.examples.examplesParams = data.params
-  }
-}
-export const actions = {
-  async getExampleList ({commit}, gmtype) {
-    this.$axios.get('/v1/iot-site/refs/', {
-      params: {
-        gmtype,
-        page: 1,
-        size: 6
-      }
-    }).then(res => {
-      let tempArr = []
-      let list = res.data.results.filter((item) => {
-        return item.img !== ''
-      })
-      list.forEach((item, index) => {
-        let {img, title, ctime, cms_id} = item
-        tempArr[index] = {
-          img,
-          title,
-          ctime,
-          cms_id
-        }
-      })
-      let news = {
-        list: tempArr,
-        params: {
-          page: 1,
-          size: 6,
-          newsTotal: res.data.count
-        }
-      }
-      commit('GET_EXAMPLE_LIST', news)
-    })
   }
 }

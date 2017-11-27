@@ -108,7 +108,7 @@
 <script>
 import banner from '~/components/common/banner'
 import { mapGetters, mapState } from 'vuex'
-import _ from 'lodash'
+import chunk from 'lodash/chunk'
 import newsItem from '~/components/new-item'
 export default {
   components: {
@@ -200,7 +200,7 @@ export default {
   methods: {
     num (num) { // 转为货币格式
       let nums = ''
-      let list = _.chunk([...num].reverse().join('').split(''), 3).reverse()
+      let list = chunk([...num].reverse().join('').split(''), 3).reverse()
       list.forEach((item) => {
         nums = nums + item.reverse().join('') + ','
       })
@@ -286,6 +286,7 @@ export default {
       }
       .content-header > img, .content-header > div{
         float: left;
+        width: 100%;
       }
       .content-header > div {
         width: 100%;
@@ -584,7 +585,6 @@ export default {
         width: 560px;
         height: 528px;
         overflow: hidden;
-        margin-bottom: 110px;
       }
       }
     }

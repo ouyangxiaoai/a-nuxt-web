@@ -1,5 +1,4 @@
-import { getBanner } from '../api/index'
-import { getBusinessChild } from '../api/business'
+import { getBanner, getBusinessChild } from '../api/index'
 
 export const state = () => ({
   activeIndex: '/',

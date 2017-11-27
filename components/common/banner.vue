@@ -18,7 +18,7 @@
     data () {
       return {
         swiperOption: {
-          autoplay: false,
+          autoplay: 3000,
           initialSlide: 1,
           direction: 'horizontal',
           loop: true,

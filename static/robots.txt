@@ -1,0 +1,7 @@
+# robots file disallow any robots access this site
+User-Agent: *
+Disallow: /action/
+Disallow: /admin/
+Disallow: /my/
+Disallow: /code/download_src
+Disallow: /widgets/

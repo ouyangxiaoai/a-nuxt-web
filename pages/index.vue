@@ -1,11 +1,13 @@
 <template>
   <div>
     <banner :banners="banners"></banner>
+    <div class="num-wrap">
     <div class="num">
       <div v-for="item in nums">
-        <p>{{num(item.num)}}</p>
+        <p v-num-scroll="item.num">0</p>
         <span>{{item.name}}</span>
       </div>
+    </div>
     </div>
     <!--  产品优势  -->
     <div class="product-advantage">
@@ -58,6 +60,7 @@
         <h3>产品优势</h3>
         <h5>Product Advantages</h5>
       </div>
+      <div class="content">
       <div class="adv-item" v-for="item in advList">
         <h1>{{item.index}}</h1>
         <div>
@@ -66,34 +69,32 @@
         <p>{{item.detail2}}</p>
         </div>
       </div>
+      </div>
     </div>
     <!-- 新闻中心 -->
     <div class="news">
       <div class="news-left">
-        <h1>新闻中心<span> / News Center</span></h1>
-        <div class="new-content" @click="goDetail(contentLeft[0].cms_id, activeNews === 'first' ? 26 : 113)">
-          <h2>{{getMonth(contentLeft[0].time)}}</h2>
-          <h3>{{contentLeft[0].title}}</h3>
-          <div v-html="contentLeft[0].content" class="left-content"></div>
+        <h1>新闻中心<span>/</span><span>News Center</span></h1>
+        <div class="new-content" @click="goDetail(contentLeft[0].cms_id)">
+          <!--<img :src="contentLeft[0].img" alt="">-->
+          <i class="img" :style="{backgroundImage: `url(${contentLeft[0].img})`}"></i>
+          <news-item :item="contentLeft[0]"></news-item>
         </div>
       </div>
       <div class="news-right">
         <el-tabs v-model="activeNews" @tab-click="handleClick">
           <el-tab-pane label="平台动向" name="first">
-            <div v-for="item in newsContentRight" class="newsItem" @click="goDetail(item.cms_id, 26)">
-                <news-item :item="item"></news-item>
-              </div>
+            <news-item v-for="(item, index) in newsContent.slice(1, 4)" class="newsItem" :item="item" :key="index"></news-item>
           </el-tab-pane>
           <el-tab-pane label="国家政策" name="second">
-            <div v-for="item in policyContentRight" class="newsItem" @click="goDetail(item.cms_id, 113)">
-                <news-item :item="item"></news-item>
-            </div>
+            <news-item v-for="(item, index) in policyContent.slice(1, 4)" class="newsItem" :item="item" :key="index"></news-item>
           </el-tab-pane>
         </el-tabs>
       </div>
     </div>
     <!--  合作伙伴  -->
     <div class="partner">
+      <div class="par-content">
       <h1>携手共赢，与全球合作伙伴共建标识生态</h1>
       <h2>加入国物标识合作伙伴计划，开创新业务，获取技术、资源、实现更快速成长</h2>
       <ul>
@@ -101,6 +102,7 @@
           <img :src="item.img" alt="国物标识合作伙伴">
         </li>
       </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -108,17 +110,17 @@
 <script>
 import banner from '~/components/common/banner'
 import { mapGetters, mapState } from 'vuex'
-import chunk from 'lodash/chunk'
+/* import chunk from 'lodash/chunk' */
+import numScroll from '~/directives/numScroll'
 import newsItem from '~/components/new-item'
 export default {
   components: {
     banner, 'news-item': newsItem
   },
+  directives: {'num-scroll': numScroll},
   computed: {
     ...mapGetters({
-      banners: 'bannersImg',
-      newsContentRight: 'newsRight',
-      policyContentRight: 'policyRight'
+      banners: 'bannersImg'
     }),
     ...mapState({
       newsContent: state => state.newsContent,
@@ -138,14 +140,14 @@ export default {
       advContent: [
         {
           index: '0',
-          title: '留住用户',
-          titleEn: ' / keep the user',
-          img: require('~/assets/img/keep-the-user.png'),
-          titleDetail: '（留住用户的方法有很多种，这可能是最省钱的一种）',
+          title: '销售转化',
+          titleEn: ' / boost sales',
+          img: require('~/assets/img/boost-sales.png'),
+          titleDetail: '（开拓市场，促进销售转化）',
           list: [
-            {title: '售前扫码', icon: require('~/assets/img/phone.png'), detail: '一有异常，提前止损，让消费者放心购物'},
-            {title: '一键复购', icon: require('~/assets/img/buycar.png'), detail: '我要的，现在就要，一键复购，马上拥有'},
-            {title: '售后服务', icon: require('~/assets/img/buyafter.png'), detail: '优质售后服务，及时响应，周到体贴'}
+            {title: '精准营销', icon: require('~/assets/img/boost-3.png'), detail: '利用场景化的互动与消费者沟通，充分满足用户刚需'},
+            {title: '销售员无处不在', icon: require('~/assets/img/boost-2.png'), detail: '一个标识码就是一个销售员，抓住用户消费冲动。一键即可购买'},
+            {title: '多端促销', icon: require('~/assets/img/boost-1.png'), detail: '活动配置灵活，不同活动可同时开展'}
           ]
         },
         {
@@ -155,19 +157,21 @@ export default {
           img: require('~/assets/img/reduce-the-cost.png'),
           titleDetail: '（成本降低了，利润自然上去了）',
           list: [
+            {title: '活动推广', icon: require('~/assets/img/reduce-3.png'), detail: '标识即入口，无需重复更改包装，节约营销成本'},
             {title: '市场调研', icon: require('~/assets/img/reduce-2.png'), detail: '直面用户，节省调研经费，数据真实有效'},
             {title: '渠道优化', icon: require('~/assets/img/reduce-1.png'), detail: '基于大数据分析，全国销售网点清晰可见。优化渠道投放，触达目标用户'}
           ]
         },
         {
           index: '2',
-          title: '销售转化',
-          titleEn: ' / boost sales',
-          img: require('~/assets/img/boost-sales.png'),
-          titleDetail: '（开拓市场，促进销售转化）',
+          title: '留住用户',
+          titleEn: ' / keep the user',
+          img: require('~/assets/img/keep-the-user.png'),
+          titleDetail: '（留住用户的方法有很多种，这可能是最省钱的一种）',
           list: [
-            {title: '精准营销', icon: require('~/assets/img/boost-1.png'), detail: '可配合经销商策划活动，自主控制活动范围'},
-            {title: '销售员无处不在', icon: require('~/assets/img/boost-2.png'), detail: '一个标识码就是一个销售员，抓住用户消费冲动。一键即可购买'}
+            {title: '售前扫码', icon: require('~/assets/img/phone.png'), detail: '一有异常，提前止损，让消费者放心购物'},
+            {title: '一键复购', icon: require('~/assets/img/buycar.png'), detail: '我要的，现在就要，一键复购，马上拥有'},
+            {title: '售后服务', icon: require('~/assets/img/buyafter.png'), detail: '优质售后服务，及时响应，周到体贴'}
           ]
         }
       ],
@@ -182,9 +186,9 @@ export default {
       advList: [
         {index: '01', name: '品牌权威', detail1: '国家级物联网标识基建平台', detail2: '公信力强'},
         {index: '02', name: '兼容性强', detail1: '作为国家产品基础数据库，独有异构', detail2: '解析技术，兼容所以标识码'},
-        {index: '03', name: '政策扶持', detail1: '国家发改委批复的国家级战略', detail2: '项目由政府出资重点建设'},
-        {index: '04', name: '安全稳定', detail1: '表示信息存储运营，数据信息安全稳定', detail2: ''},
-        {index: '05', name: '技术保障', detail1: '有中科院高级研发人员共同研发建设', detail2: '技术国内领先'}
+        {index: '05', name: '政策扶持', detail1: '国家发改委批复的国家级战略', detail2: '项目由政府出资重点建设'},
+        {index: '03', name: '安全稳定', detail1: '表示信息存储运营，数据信息安全稳定', detail2: ''},
+        {index: '04', name: '技术保障', detail1: '有中科院高级研发人员共同研发建设', detail2: '技术国内领先'}
       ],
       partner: [
         {img: require('~/assets/img/partner-1.png')},
@@ -198,33 +202,19 @@ export default {
     }
   },
   methods: {
-    num (num) { // 转为货币格式
-      let nums = ''
-      let list = chunk([...num].reverse().join('').split(''), 3).reverse()
-      list.forEach((item) => {
-        nums = nums + item.reverse().join('') + ','
-      })
-      return nums.substring(0, nums.length - 1)
-    },
     advActive (index) { // 点击激活某一个产品优势模块
       this.activeAdv = index
     },
     handleClick (tab, event) { // 新闻tab
       this.contentLeft = this.activeNews === 'first' ? this.$store.state.newsContent : this.$store.state.policyContent
     },
-    getMonth (time) { // 只获取月日
-      let list = time.split(' ')[0].split('-').slice(1)
-      return list.join('-')
-    },
     changeTab (index) {
-      this.$router.push(index)
-      // this.$store.commit('CHANGE_ACTIVE_INDEX', index)
+      window.open(index)
     },
-    goDetail (id, gmtype) {
-      // this.$store.commit('CHANGE_ACTIVE_INDEX', '/news')
+    goDetail (id) { // 去到详情
       this.$router.push({
         name: 'detail-id',
-        params: {detail: 'news', id, gmtype}
+        params: {detail: 'news', id}
       })
     }
   }
@@ -233,24 +223,29 @@ export default {
 
 <style scoped lang="scss">
   @import "assets/scss/mixins.scss";
+  @import "assets/scss/common.scss";
+  .num-wrap {
+    background-color: $bgf8;
+  }
   .num { // 中间数字部分
-    width: 100%;
-    height: 190px;
+    width: $width;
+    margin: 0 auto;
+    height: 130px;
     padding: 30px 0;
     div {
       width: 33.3%;
       text-align: center;
       display: inline-block;
       p{
-        color: #333;
-        font-size: 24px;
+        @extend %title-zh;
+        font-size: 32px;
         margin-bottom: 12px;
       }
     }
   }
   .product-advantage, .product-feature, .product-advantage-2 { // 产品优势一整块
-    width: 1200px;
-    height: 840px;
+    width: $width;
+    height: 776px;
     margin: 70px auto;
     text-align: center;
     overflow: hidden;
@@ -258,18 +253,17 @@ export default {
     @include clearfix;
     .title {
       h3 {
-        color: #333;
-        font-size: 26px;
+        @extend %title-zh;
       }
       h5 {
+        @extend %title-en;
         margin-top: 10px;
-        color: #d6d5d5;
       }
     }
   }
   .product-advantage h6 {
     margin-top: 46px;
-    font-size: 16px;
+    font-size: $f16;
   }
     .adv-content {
       margin-top: 50px;
@@ -287,32 +281,38 @@ export default {
       .content-header > img, .content-header > div{
         float: left;
         width: 100%;
+        height: 230px;
       }
       .content-header > div {
         width: 100%;
         text-align: center;
-        height: 66px;
-        line-height: 66px;
-        border: 1px solid #ccc;
+        height: 64px;
+        line-height: 64px;
+        border: 1px solid #e9e9e9;
         border-top: none;
         h6 {
+          margin-top: 0;
           display: inline-block;
-          color: #333;
+          color: $c3;
+        }
+        span {
+          @extend %title-en;
         }
       }
       .content-show {
         display: none;
         position: absolute;
         left: 0;
-        width: 1200px;
+        width: $width;
         height: 260px;
         margin-top: 48px;
         padding: 62px 0 62px 50px;
-        border: 1px solid #ccc;
+        border: 1px solid #e9e9e9;
+        background-color: $bgf8;
         .content-title {
           text-align: left;
           font-size: 20px;
-          color: #333;
+          color: $c3;
           span {
             font-size: 14px;
             color: #666;
@@ -326,7 +326,7 @@ export default {
             height: 30px;
             line-height: 30px;
             position: relative;
-            margin: 10px 80px 10px 0;
+            margin: 10px 60px 10px 0;
             &:last-child {
               margin-right: 0;
             }
@@ -336,12 +336,12 @@ export default {
           }
           div img {
             position: absolute;
-            top: 1.5px;
+            top: 5px;
             left: 0;
           }
           div h2 {
-            color: #333;
-            font-size: 16px;
+            color: $c3;
+            font-size: $f16;
             margin-left: 40px;
           }
         }
@@ -350,11 +350,11 @@ export default {
           position: absolute;
           top: -36px;
           left: 175px;
-          @include upTriangle()
+          @include upTriangle(18px, #999)
         }
         &:before {
           z-index: 3;
-          border-bottom-color: #fff;
+          border-bottom-color: #f8f8f8;
         }
       }
       .show1:before, .show1:after {
@@ -363,19 +363,29 @@ export default {
       .show2:before, .show2:after {
         left: 995px;
       }
+      .show2 .content-list div:first-child img {
+        left: 3px;
+        top: 1.5px;
+      }
+      &.isActive {
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+      }
     }
     .isActive .content-show {
       display: block;
     }
     .isActive .content-header > div {
-      border: none;
+      // border: none;
     }
 /*  产品功能  */
   .product-feature {
     width: 100%;
-    height: 770px;
+    padding: 70px 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    background-color: $bgf8;
     .title p{
-      font-size: 16px;
+      font-size: $f16;
       padding: 5px 0;
     }
     .title h5 {
@@ -404,7 +414,7 @@ export default {
       text-align: center;
       margin: 0 43px;
       color: #fff;
-      font-size: 16px;
+      font-size: $f16;
       background: url("~/assets/img/fea-item.png") no-repeat center top;
       position: relative;
       z-index: 100;
@@ -475,33 +485,44 @@ export default {
   }
   /*  产品优势2  */
   .product-advantage-2 {
+    width: 100%;
     margin-top: 0;
-    height: 640px;
+    margin-bottom: 0;
+    height: 770px;
+    padding-top: 70px;
     background: url("~/assets/img/adv-2-bac.png") no-repeat center center;
+    background-color: $bgf8;
+    .content {
+      width: $width;
+      height: 640px;
+      margin: 0 auto;
+      position: relative;
+    }
     .adv-item {
       position: absolute;
       left: 0;
-      top: 130px;
+      top: 50px;
       width: 316px;
       height: 178px;
       cursor: pointer;
       h1 {
         display: none;
         position: absolute;
-        top: 0;
+        top: -30px;
         left: 16px;
+        height: 60px;
         font-size: 44px;
         color: #009BEE;
         font-weight: bold;
       }
       div {
         @extend %posvm;
-        right: 0;
+        right: 30px;
         text-align: right;
         font-size: 16px;
         h2 {
           font-size: 18px;
-          color: #333;
+          color: $c3;
           margin-bottom: 16px;
         }
       }
@@ -512,124 +533,129 @@ export default {
         bottom: 0;
       }
       &:hover {
+        background-color: #fff;
         h1 {
           display: block;
         }
         h2 {
-          color: #009BEE;
+          color: $mainBlue;
         }
-        &:after {
+       /* &:after {
           animation: borderWidth 1s 0.5s linear forwards;
-        }
+        } */
       }
-      &:nth-child(3), &:nth-child(5) {
+      &:nth-child(2), &:nth-child(4) {
         left: auto;
         right: 0;
       }
-      &:nth-child(3) div, &:nth-child(5) div {
+      &:nth-child(2) div, &:nth-child(4) div {
         right: auto;
-        left: 0;
+        left: 30px;
         text-align: left;
       }
-      &:nth-child(3) h1, &:nth-child(5) h1 {
+      &:nth-child(2) h1, &:nth-child(4) h1 {
         left: auto;
         right: 16px;
       }
-      &:nth-child(4), &:nth-child(5) {
+      &:nth-child(3), &:nth-child(4) {
         top: 328px;
       }
-      &:nth-child(6) {
+      &:nth-child(5) {
         @include poshc;
         top: auto;
-        bottom: 0;
+        bottom: 30px;
       }
     }
   }
   /*  新闻  */
   .news {
-    width: 1200px;
+    width: $width;
     margin: 0 auto;
     @include clearfix;
   }
   .news-left {
     float: left;
     margin-top: 70px;
-    width: 600px;
+    width: 536px;
     h1 {
-      color: #333;
-      font-size: 24px;
+      @extend %title-zh;
+      height: 36px;
+      line-height: 36px;
       span {
-        color: #d6d5d5;
+        @extend %title-en;
+      }
+      span:nth-child(1) {
+        font-size: 18px;
+        padding: 0 6px 0 8px;
       }
     }
     .new-content {
-      margin-top: 66px;
-      padding-left: 40px;
+      width: 536px;
+      height: 422px;
+      margin-top: 50px;
       cursor: pointer;
-      h2 {
-        margin-bottom: 40px;
-        font-size: 28px;
-        color: #d6d5d5;
-      }
-      h3 {
-        font-size: 22px;
-        margin-bottom: 32px;
+      .img {
         width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-      .left-content {
-        font-size: 16px;
-        color: #999;
-        width: 560px;
-        height: 528px;
-        overflow: hidden;
+        height: 286px;
+        display: block;
+        background-size: cover;
+        background-position: center;
       }
       }
     }
   .news-right {
     float: right;
-    margin-top: 65px;
-    width: 526px;
-    height: 873px;
+    margin-top: 70px;
+    width: 600px;
+    height: 508px;
     position: relative;
     color: #999;
   }
   /*  合作伙伴 */
   .partner {
-    width: 1200px;
-    margin: 0 auto;
+    width: 100%;
     text-align: center;
+    background-color: $bgf8;
+    .par-content {
+      width: $width;
+      margin: 70px auto 0;
+      padding-top: 70px;
+    }
     h1 {
-      font-size: 24px;
-      color: #333;
+     @extend %title-zh;
     }
     h2 {
-      font-size: 16px;
+      font-size: $f16;
       padding: 14px 0;
     }
     ul {
       @include clearfix;
-      margin: 30px auto;
+      margin: 50px auto 0;
     }
     li {
       float: left;
       width: 25%;
-      position: relative;
       height: 100px;
+      text-align: center;
       img {
-        @extend %posc
+        //@extend %posc
+      }
+      &:nth-child(3) {
+        padding-top: 10px;
       }
     }
   }
 </style>
 <style lang="scss">
   @import "assets/scss/mixins.scss";
+  @import "assets/scss/common.scss";
   /* el-tab的自定义样式 */
   .news-right {
     .el-tabs__header {
-      margin-bottom: 44px;
+      margin-bottom: 50px;
+    }
+    .el-tabs__content {
+      overflow: visible;
     }
     .el-tabs__nav {
       float: right;
@@ -652,14 +678,26 @@ export default {
     .el-tabs__active-bar {
       transition: none;
     }
-    .el-tabs__content {
-      @extend %posvm;
-    }
   }
   /*  新闻内容的自定义样式 */
+  .newsItem {
+    .text-right span {
+      display: inline-block;
+      width: 434px!important;
+      font-size: 16px;
+      @extend %text-overflow;
+    }
+  }
   .left-content {
-    p {
-      margin-top: 20px;
+    section {
+      padding: 0!important;
+    }
+    .text-right>div p, .text-right>div span {
+      text-align: left!important;
+      text-indent: 0!important;
+      line-height: 30px!important;
+      font-size: 16px!important;
+      height: 30px!important;
     }
     strong {
       font-size: 20px;
@@ -676,16 +714,10 @@ export default {
       }
     }
   }
-  .newsItem {
-    width: 526px;
-    height: 176px;
-    position: relative;
-    cursor: pointer;
-    &:hover .newsItemLeft h1 {
-      color: #009BEE;
-      &:before {
-        background-color: #009BEE;
-      }
-    }
+  .news-left .text-right>div span {
+    display: inline-block;
+    width: 370px;
+    @extend %text-overflow;
+    color: #fff!important;
   }
 </style>

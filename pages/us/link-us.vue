@@ -1,5 +1,6 @@
 <template>
   <div class="link-us">
+  <div class="map-wrap">
   <div class="m-box-map">
     <div class="u-model">
       <div class="u-tab f-cb">
@@ -12,7 +13,7 @@
       <ul class="u-sch">
         <li class="u-input-box" v-for="add in adds">
           <span class="u-icon-g" :class="{ 'u-icon-r' : add.lt }"></span>
-          <input class="u-input-sch" type="text" v-model="add.txt" :readonly="add.del" :class="{ 'z-act': add.del }" placeholder="我的位置">
+          <input class="u-input-sch" type="text" v-model="add.txt" :readonly="add.del" :class="{ 'z-act': add.del }" placeholder="我的位置" />
           <span class="u-icon-del" v-show="add.del"></span>
         </li>
       </ul>
@@ -32,12 +33,12 @@
         :zoom="11"
         :scroll-wheel-zoom="true"
       >
-        <bm-scale anchor="BMAP_ANCHOR_BOTTOM_RIGHT"/>
-        <bm-navigation anchor="BMAP_ANCHOR_TOP_LEFT"/>
+        <bm-scale anchor="BMAP_ANCHOR_BOTTOM_RIGHT" />
+        <bm-navigation anchor="BMAP_ANCHOR_TOP_LEFT" />
         <bm-copyright
           anchor="BMAP_ANCHOR_TOP_RIGHT"
           :copyright="[{id: 1, content: 'Copyright Message', bounds: {ne: {lng: 110, lat: 40}, sw:{lng: 0, lat: 0}}}, {id: 2, content: '<a>bothqia@126.com</a>'}]"/>
-        <bm-city-list anchor="BMAP_ANCHOR_BOTTOM_RIGHT"/>
+        <bm-city-list anchor="BMAP_ANCHOR_BOTTOM_RIGHT" />
         <bm-marker :position="{lng: 113.618, lat: 22.756}" :dragging="false">
           <bm-label content="国家物联网标识管理公共服务平台" :labelStyle="pstyle" :offset="{width: -35, height: 30}"/>
         </bm-marker>
@@ -45,6 +46,7 @@
         <bm-driving v-if="someWay[1].act" :panel="false" :start="adds[0].txt" :end="{lng: 113.618, lat: 22.756}" :auto-viewport="true" location="广州" ></bm-driving>
       </baidu-map>
     </div>
+  </div>
   </div>
     <div class="link">
       <h1>联系我们</h1>
@@ -68,7 +70,6 @@
 
 <script>
   export default {
-    name: 'aboutMap',
     data () {
       return {
         title: '百度地图',
@@ -123,13 +124,14 @@
 
 <style lang="scss" scoped>
   @import "assets/scss/mixins.scss";
-  .link-us {
-    width: 1200px;
-    margin: 0 auto;
+  .map-wrap {
+    width: 100%;
+    background-color: #f5f5f5;
   }
   .m-box-map{
     position: relative;
-    width: 100%;
+    width: 1200px;
+    margin: 0 auto;
     padding: 50px 0 50px 380px;
     background-color: #f8f8f8;
     .u-model{
@@ -184,7 +186,7 @@
       .u-res-list{
         margin-top: 5px;
         background: #efefef;
-        height: 316px;
+        height: 336px;
         overflow-y: auto;
         .u-s{
           font-size: 16px;
@@ -211,6 +213,8 @@
     }
   }
   .link {
+    width: 1200px;
+    margin: 0 auto;
     padding: 70px 0;
     h1 {
       @extend %title-center;
@@ -230,7 +234,7 @@
         color: #333;
         height: 20px;
         line-height: 20px;
-        margin-bottom: 20px;
+        margin-bottom: 26px;
         &:before {
           @extend %line-title;
         }
@@ -238,14 +242,14 @@
       p {
         font-size: 16px;
         color: #666;
-        padding: 10px 0;
+        padding: 8px 0;
       }
     }
     .content .c-right {
       float: right;
-      padding-left: 60px;
+      padding-left: 160px;
       position: relative;
-      &:after {
+      /*&:after {
         content: '微信公众号';
         position: absolute;
         width: 91px;
@@ -255,7 +259,7 @@
         right: 0;
         bottom: 10px;
         background: url("~/assets/img/link-us-code.png") no-repeat center top;
-      }
+      }*/
     }
   }
 </style>

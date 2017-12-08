@@ -1,6 +1,7 @@
 <template>
   <div class="rfid">
     <div class="banner"></div>
+    <div class="rfid-content">
     <div class="rfid-bac">
       <h1>项目背景</h1>
       <div class="img-left">
@@ -13,12 +14,13 @@
         </div>
       </div>
     </div>
+    </div>
     <div class="rfid-zican">
       <h1>固定资产管理系统</h1>
       <div class="content">
         <div class="content-tab">
           <i class="active-line"></i>
-        <el-tabs tab-position="left" style="height: 280px;" @tab-click="activeTab">
+        <el-tabs tab-position="left" style="height: 300px;" @tab-click="activeTab">
           <el-tab-pane :label="item.title" v-for="(item, index) in tabContent" key="index">
             <div>
               <h2>{{item.title}}</h2>
@@ -30,6 +32,7 @@
         </div>
       </div>
     </div>
+    <div class="rfid-content">
     <div class="rfid-adv">
       <h1>项目优势</h1>
       <div class="rfid-adv-content">
@@ -39,8 +42,10 @@
         </div>
       </div>
     </div>
+    </div>
     <div class="rfid-system">
       <h1>系统设计</h1>
+      <img src="~/assets/img/rfid-system.png" alt="系统设计">
     </div>
   </div>
 </template>
@@ -80,19 +85,19 @@
             img = require('~/assets/img/zican-position.png')
             break
           case '资产追踪':
-            y = 51
+            y = 56
             img = require('~/assets/img/zican-track.png')
             break
           case '远程管理':
-            y = 102
+            y = 112
             img = require('~/assets/img/zican-manager.png')
             break
           case '资产盘点':
-            y = 154
+            y = 168
             img = require('~/assets/img/zican-pan.png')
             break
           case '设备防盗':
-            y = 205
+            y = 224
             img = require('~/assets/img/zican-anti.png')
             break
           default:
@@ -111,13 +116,21 @@
   .rfid-bac,.rfid-zican, .rfid-adv, .rfid-system {
     @extend %title;
   }
+  .rfid-content {
+    width: 100%;
+    background-color: $bgf8;
+  }
     .img-left {
       float: left;
-      padding: 50px 33px 48px 30px;
+      padding: 20px 33px 20px 30px;
+      margin-top: 50px;
+      background-color: #fff;
     }
     .text-right {
       float: right;
-      padding: 80px 30px 48px 33px;
+      padding: 40px 30px 51px 33px;
+      margin-top: 50px;
+      background-color: #fff;
       div:first-child {
         margin-bottom: 30px;
       }
@@ -173,6 +186,9 @@
         background: url("~/assets/img/rfid-1.png") no-repeat center center;
         color: #fff;
       }
+      i {
+        @extend %circle-title;
+      }
       div p {
         position: absolute;
         top: 90px;
@@ -181,7 +197,9 @@
       div:nth-child(2)>span {
         top: 13px;
         left: 762px;
-        background-image: url("~/assets/img/rfid-2.png");
+        i {
+          background-color: #1B9DA8;
+        }
       }
       div:nth-child(2)>p {
         top: 53px;
@@ -190,7 +208,9 @@
       div:nth-child(3)>span {
         top: 223px;
         left: 0;
-        background-image: url("~/assets/img/rfid-3.png");
+        i {
+          background-color: #1B9CA9;
+        }
       }
       div:nth-child(3)>p {
         top: 296px;
@@ -200,7 +220,9 @@
         top: 123px;
         left: auto;
         right: 0;
-        background-image: url("~/assets/img/rfid-4.png");
+        i {
+          background-color: #16A6CB;
+        }
       }
       div:nth-child(4)>p {
         top: 193px;
@@ -210,22 +232,25 @@
         top: 264px;
         left: auto;
         right: 100px;
-        background-image: url("~/assets/img/rfid-1.png");
+        i {
+          background-color: #EDBE51;
+        }
       }
       div:nth-child(5)>p {
         top: 344px;
         left: 790px;
-      }
-      i {
-        @extend %circle-title;
       }
     }
   }
   .rfid-system {
     height: 801px;
     padding-bottom: 100px;
-    background: url("~/assets/img/rfid-system.png") no-repeat center 140px;
-    background-size: contain;
+   /* background: url("~/assets/img/rfid-system.png") no-repeat center 140px;
+    background-size: 1200px 561px;*/
+    img {
+      //width: 1200px;
+      margin: 50px auto 0;
+    }
   }
 </style>
 <style lang="scss">
@@ -233,17 +258,17 @@
   @import "assets/scss/mixins.scss";
   .content-tab {
     width: 100%;
-    height: 280px;
+    height: 300px;
     position: relative;
     min-width: 227px;
     .active-line {
       position: absolute;
-      top: 25px;
+      top: 20px;
       left: 20%;
       margin-left: 133px;
       background-color: #009BEE;
       width: 3px;
-      height: 26px;
+      height: 36px;
       z-index: 100;
       transition: transform .3s cubic-bezier(.645,.045,.355,1);
     }
@@ -255,10 +280,10 @@
     }
     .el-tabs__item {
       color: #fff;
-      height: 26px;
-      line-height: 26px;
+      height: 36px;
+      line-height: 36px;
       padding: 0 40px;
-      margin: 25px 0;
+      margin: 20px 0;
       &:hover {
         color: $mainBlue;
       }

@@ -45,11 +45,11 @@
       .u-icon-sch{
         display: inline-block;
         background: url('~/assets/img/search-act.png');
-        background-size: 20px 21px;
-        width: 20px;
-        height: 21px;
+        background-size: 24px 24px;
+        width: 24px;
+        height: 24px;
         position: absolute;
-        top: 8px;
+        top: 6px;
         right: 15px;
         cursor: pointer;
       }
@@ -67,9 +67,21 @@
     padding-right: 55px;
     outline: none;
   }
+  ::-webkit-input-placeholder { /* WebKit browsers */
+    color: #ccc;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #ccc;
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #ccc;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #ccc;
+  }
   .u-icon-sch{
     display: inline-block;
-    background: url('~/assets/img/search.png');
+    background: url('~/assets/img/search-act.png');
     background-size: 16px 18px;
     width: 16px;
     height: 18px;

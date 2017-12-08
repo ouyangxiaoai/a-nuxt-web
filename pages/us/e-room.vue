@@ -26,9 +26,11 @@
 </template>
 <style lang="scss" scoped>
   @import "assets/scss/mixins.scss";
+  .exhabition {
+    background-color: #f5f5f5;
+  }
   .room-exhabition {
     width: 1200px;
-
     margin: 0 auto;
     padding: 70px 0 101px 0;
     .content {
@@ -38,6 +40,9 @@
     }
     h1 {
       @extend %title-center;
+      &:after {
+        content: 'Exhibition hall Glimpse';
+      }
     }
     .img-left {
       float: left;

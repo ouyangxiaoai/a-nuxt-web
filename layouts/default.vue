@@ -1,7 +1,9 @@
 <template>
   <div>
     <fix-header />
+    <div class="page-content">
     <nuxt/>
+    </div>
     <side-bar></side-bar>
     <fix-foot />
   </div>
@@ -18,3 +20,8 @@
     }
   }
 </script>
+<style lang="scss">
+  /*.page-content {
+    margin-top: 126px;
+  }*/
+</style>

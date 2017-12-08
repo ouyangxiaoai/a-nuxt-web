@@ -15,11 +15,11 @@
       <h3>国家物联网标识管理公共服务平台于2014年正式落地广州南沙新区，致力打造物联网标识标准化、规范化管理体系，为物联网规模化发展提供有效的产业支撑，着力解决我国物联网应用的互联互通问题。现已成为广东省物联网发展重点项目、中国（广东）自由贸易试验区广州南沙片区第九大创新业务体系</h3>
     </div>
     <div class="hopeful">
-      <h1>项目愿景</h1>
+      <h1>项目愿景<span>/</span><span>Project Vision</span></h1>
       <p>致力于万亿级物联网标识的价值创新，为物联网应用、大数据、云计算和人工智能等企业（单位）提供物联网标识的注册、查询、存储服务</p>
     </div>
     <div class="pla-product">
-      <h1>产品概述</h1>
+      <h1>产品概述<span>/</span><span>Project Introduction</span></h1>
       <div class="text-left">
         <p>国家物联网标识管理公共服务根平台，涵盖标识注册系统、标识查询系统和标识搜索系统等三大子系统。同时，针对Ecode编码、Handle编码、CID编码等应用建立行业标识服务子平台。并在智能农业、智能交通、智能家居等不同应用领域开展物联网标识服务应用示范</p>
         <p>国家物联网标识管理公共服务平台向所有行业开放，积极实现行业数据对接合作。比如在食品溯源、智能硬件、农业生产、智能交通、云服务等方面，在物流配送、商贸流通、经营管理、安全生产、城市管理、公共安全、社会事业、节能环保等领域，推进数据整合，最终构建物联网标识一物一码、互联互通全流程可追溯的标识码解决方案</p>
@@ -35,7 +35,7 @@
     <div class="pla-policy">
       <h1>政策支持</h1>
       <div class="content">
-        <h1>项目专项</h1>
+        <h1>项目专项<span>/</span><span>Product Special</span></h1>
         <p>结合国民经济和社会发展的重大需求，以重点领域的物联网应用示范为依托，着力突破制约我国物联网发展的关键核心技术，为物联网规模化发展提供有效的产业支撑；制定基础共性技术标准，完善物联网标准体系，着力解决我国物联网应用的互联互通问题；依托已有基础，建设公共服务平台，着力解决检测认证和标识管理问题；加强产业自主创新能力建设，着力培育发展一批物联网技术研发和产品设备制造优势企业</p>
         <div>
           <img src="~/assets/img/pla-policy-1.png" alt="项目专项">
@@ -69,14 +69,21 @@
     width: $width;
     height: 596px;
     margin: 0 auto;
+    border-bottom: 1px solid #eee;
   }
   .pla-intro, .pla-mem, .pla-policy {
     padding: 70px 0 53px 0;
     h1 {
       @extend %title-center;
+      &:after {
+        content: '';
+      }
     }
   }
   .pla-intro{
+    h1:after {
+      content: 'Platform Introduction';
+    }
     .content {
       @include clearfix;
       margin-top: 40px;
@@ -112,12 +119,14 @@
       color: #333;
       font-size: 20px;
       margin-bottom: 40px;
-      &:after {
-        content: ' / Project Vision';
+      span {
         display: inline-block;
-        color: #d0cfcf;
+        color: #bfbfbf;
         font-size: 12px;
-        margin-left: 12px;
+      }
+      span:nth-child(1) {
+        font-size: 18px;
+        padding: 0 6px 0 8px;
       }
     }
   }
@@ -172,6 +181,9 @@
     }
   }
   .pla-policy {
+    &>h1:after {
+      content: 'Policy Support'
+    }
     height: 641px;
     .content {
       height: 30px;
@@ -181,9 +193,6 @@
     .content h1 {
       text-align: left;
       margin: 0;
-      &:after {
-      content: 'Product Special'
-      }
     }
     .content p {
       margin: 50px 0;

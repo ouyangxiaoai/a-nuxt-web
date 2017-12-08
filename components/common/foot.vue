@@ -5,7 +5,7 @@
         <p class="dib">
           <span>地址：广东省广州市南沙区南沙资讯科技园香港科技大学霍英东研究院科技楼三楼</span>
           <span>电话：400-806-0373 </span>
-          <span>邮箱：support@niot.cn</span>
+          <span>邮箱：support@cnicg.cn</span>
         </p>
       </div>
       <div class="friends">
@@ -33,15 +33,15 @@
         friends: [
           {
             link: 'http://iotcid.cn/',
-            name: 'CID 平台'
+            name: 'CID平台'
           },
           {
             link: 'http://www.iotroot.com/home',
-            name: 'Ecode 平台'
+            name: 'Ecode平台'
           },
           {
             link: 'http://www.cndona.cn/',
-            name: 'Handle 平台'
+            name: 'Hande平台'
           },
           {
             link: 'http://www.chinasigns.cn/',

@@ -44,13 +44,15 @@
         </div>
       </div>
     </div>
+    <div class="child-platform-wrap">
     <div class="child-platform-2">
-      <h1>现有子平台</h1>
+      <h1>授权代理商</h1>
       <div class="content">
         <div v-for="url in company">
           <img :src="url" alt="CNICG 子平台">
         </div>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -113,13 +115,13 @@
   .m-coo-map-bg {
     min-width: 1200px;
     background: url("~/assets/img/map-bac.png");
-    height: 400px;
+    height: 460px;
     overflow: hidden;
   }
 
   .m-coo-map {
     width: 1200px;
-    margin: 0 auto;
+    margin: 30px auto;
     .u-coo-map {
       width: 600px;
       height: 400px;
@@ -129,15 +131,15 @@
     }
     .m-coo-right {
       width: 440px;
-      height: 300px;
-      margin: 50px 0;
+      height: 330px;
+      margin: 40px 0;
       float: right;
     }
     .u-title {
       width: 100%;
       background-color: #57687c;
       color: #fff;
-      padding: 0 20px 0 30px;
+      padding: 0 20px;
       line-height: 46px;
       height: 46px;
       .l {
@@ -150,12 +152,13 @@
       }
     }
     .u-coo-list {
-      height: 254px;
+      height: 284px;
       overflow-y: auto;
       border: 1px solid #49596b;
+      background: #334151;
       .u-item {
         border-bottom: 1px solid #49596b;
-        padding: 10px 12px;
+        padding: 10px 20px;
         background: #334151;
         .t {
           font-size: 16px;
@@ -164,15 +167,15 @@
           vertical-align: top;
         }
         .tbox {
-          height: 20px;
+          height: 30px;
         }
         .cbox {
-          height: 16px;
+          height: 20px;
         }
         .c {
           font-size: 14px;
           line-height: 1.5;
-          color: #e5e5e5;
+          color: #eaeaea;
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
@@ -231,7 +234,14 @@
         width: 388px;
         height: 286px;
       }
+      &:hover {
+        box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+      }
     }
+  }
+  .child-platform-wrap {
+    width: 100%;
+    background-color: #f5f5f5;
   }
   .child-platform-2 {
     height: auto;

@@ -24,7 +24,7 @@
           <div class="u-title">延伸阅读</div>
           <ul>
             <li class="u-m f-cb" v-for="m in more">
-              <nuxt-link class="u-btn u-btn-more" :to="{ name: 'detail-id', params: {detail: gmtype === 112 ? 'example' : 'news', id: m.id, gmtype}}">
+              <nuxt-link class="u-btn u-btn-more" :to="{ name: 'detail-id', params: {detail: gmtype === 112 ? 'example' : 'news', id: m.id}}">
                 <img :src="m.img" alt="">
                 <div class="u-m-right">
                   <p class="u-m-right-tt">{{ m.tt }}</p>
@@ -35,30 +35,97 @@
         </div>
       </div>
       <div class="m-pro-code f-cb">
-        <div class="u-left">
-          <p>原创文章，如若转载，请注明出处：国物标识</p>
-          <p>还想了解更多关于标识的价值应用？请关注右侧微信公众号</p>
+      </div>
+      <div class="prev-next" id="prev-next">
+        <nuxt-link :to="{ name: 'detail-id', params: {detail: gmtype === 112 ? 'example' : 'news', id: next.cms_id}}">
+        <div class="next item" v-if="next" :style="{backgroundImage: `url(${next.img})`}">
+          <div class="item-content">
+          <h3>{{next.title}}</h3>
+          <p>
+            <span>{{next.ctime}}</span>
+            <span>下一篇</span>
+          </p>
+          </div>
         </div>
-        <div class="u-right">
-          <ul>
-            <li class="u-item">
-              <img src="~/assets/img/gwbscode.png" alt="">
-              <span>国物标识公众号</span>
-            </li>
-            <li class="u-item">
-              <img src="~/assets/img/niotcode.png" alt="">
-              <span>NIOT 公众号</span>
-            </li>
-          </ul>
+        </nuxt-link>
+        <nuxt-link :to="{ name: 'detail-id', params: {detail: gmtype === 112 ? 'example' : 'news', id: prev.cms_id}}">
+        <div class="prev item" v-if="prev" :style="{backgroundImage: `url(${prev.img})`}">
+          <div class="item-content">
+          <h3>{{prev.title}}</h3>
+          <p>
+            <span>{{prev.ctime}}</span>
+            <span>上一篇</span>
+          </p>
+          </div>
         </div>
+        </nuxt-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import { mapState } from 'vuex'
+  import NuxtLink from '../.nuxt/components/nuxt-link'
   export default {
-    props: ['title', 'ctn', 'labels', 'more', 'gmtype']
+    components: {NuxtLink},
+    props: ['title', 'ctn', 'labels', 'more', 'gmtype'],
+    computed: {
+      ...mapState({
+        newsList: state => state.news.newsList,
+        policyList: state => state.policy.policyList,
+        examplesList: state => state.example.examples.examplesList
+      })
+    },
+    methods: {
+      showBox () {
+        let scrollHeight = document.body.scrollHeight || document.documentElement.scrollHeight
+        let scrollTop = document.documentElement.scrollTop || document.documentElement.scrollTop
+        let clientHeight = document.body.clientHeight
+        let item = document.getElementById('prev-next')
+        if (scrollTop < clientHeight / 2) {
+          item.style.position = 'fixed'
+          item.style.bottom = -240 + 'px'
+        } else if (scrollTop >= clientHeight / 2 && scrollTop + clientHeight <= scrollHeight - 242) {
+          item.style.position = 'fixed'
+          item.style.bottom = 30 + 'px'
+        } else {
+          item.style.position = 'absolute'
+          item.style.bottom = 30 + 'px'
+        }
+      }
+    },
+    data () {
+      return {
+        prev: '',
+        next: ''
+      }
+    },
+    /* eslint-disable*/
+    mounted () { // 获取上下一篇
+      let id = this.$route.params.id
+      let list = this.gmtype === 26 ? this.newsList : (this.gmtype === 113 ? this.policyList : this.examplesList)
+      let now = list.filter((item) => {
+        return item.cms_id === id
+      })
+      let {prev_id, next_id} = now[0]
+      if (prev_id) {
+        let prev = list.filter((item) => {
+          return item.cms_id === prev_id
+        })
+        this.prev = prev[0]
+      }
+      if (next_id) {
+        let next = list.filter((item) => {
+          return item.cms_id === next_id
+        })
+        this.next = next[0]
+      }
+      window.addEventListener('scroll', this.showBox, false)
+    },
+    destroyed () {
+      window.removeEventListener('scroll', this.showBox)
+    }
   }
 </script>
 <style lang="scss">
@@ -152,7 +219,7 @@
     .m-pro-code {
       width: 800px;
       background: #fff;
-      border: 1px solid #ededed;
+      //border: 1px solid #ededed;
       padding-left: 50px;
       padding-right: 50px;
       margin-top: 30px;
@@ -309,6 +376,75 @@
           border-bottom-color: transparent;
           border-right-color: rgba(255, 255, 255, 1);
         }
+      }
+    }
+  }
+  .prev-next {
+    width: 310px;
+    transition: all 1s;
+    position: absolute;
+    left: 50%;
+    margin-left: 230px;
+    bottom: -240px;
+  }
+  .item {
+    width: 100%;
+    height: 100px;
+    padding: 12px 10px;
+    margin-bottom: 10px;
+    color: #fff;
+    background-color: #fff;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    position: relative;
+    transition: background-size .2s ease;
+    cursor: pointer;
+    &:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, .5);
+    }
+    &:hover {
+      background-size: 110%;
+    }
+    .item-content {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      overflow: hidden;
+      p {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        span {
+          float: left;
+        }
+        span:last-child {
+          float: right;
+          &:after {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 10px;
+            width: 0;
+            height: 0;
+            border: 8px solid transparent;
+            border-left-color: #fff;
+          }
+        }
+      }
+    }
+    &.prev .item-content p span:last-child{
+      &:after {
+        border-left-color: transparent;
+        border-right-color: #fff;
+        margin-right: 8px;
+        margin-left: 2px;
       }
     }
   }

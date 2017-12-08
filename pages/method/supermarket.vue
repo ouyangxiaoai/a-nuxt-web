@@ -1,6 +1,7 @@
 <template>
   <div class="supermarket">
     <div class="banner"></div>
+    <div class="sm-bac-wrap">
     <div class="sm-bac">
       <h1>项目背景</h1>
       <div class="content">
@@ -15,6 +16,7 @@
         </div>
       </div>
     </div>
+    </div>
     <div class="sm-origin">
       <h1>溯源全景图</h1>
       <div v-for="item in originText">
@@ -22,12 +24,14 @@
         <p v-if="item.text">{{item.text}}</p>
       </div>
     </div>
+    <div class="sm-adv-wrap">
     <div class="sm-adv">
       <h1>项目优势</h1>
       <div v-for="item in smAdv">
         <span><i>{{item.title}}</i></span>
         <p>{{item.text}}</p>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -58,19 +62,24 @@
   .sm-bac, .sm-origin, .sm-adv {
     @extend %title;
   }
+  .sm-bac-wrap, .sm-adv-wrap {
+    width: 100%;
+    background-color: $bgf8;
+  }
   .sm-bac .content {
       @include clearfix;
-      padding: 0 30px;
+      padding: 27px 30px;
+      margin-top: 50px;
+      background-color: #fff;
     .img-left {
       float: left;
-      margin-top: 77px;
       img {
         width: 482px;
       }
     }
     .text-right {
       float: right;
-      margin-top: 124px;
+      margin-top: 47px;
       width: 588px;
       h2 {
         font-size: 16px;
@@ -80,7 +89,7 @@
       }
       p {
         word-wrap: break-word;
-        line-height: 150%;
+        line-height: 1.5;
         margin-top: 27px;
       }
     }
@@ -102,6 +111,7 @@
       }
       p {
         margin-top: 20px;
+        color: #999;
       }
     }
     div:nth-child(2), div:last-child {
@@ -130,10 +140,11 @@
       left: 25px;
       width: 102px;
       height: 102px;
-      background: url("~/assets/img/rfid-4.png") no-repeat center center;
+      background: url("~/assets/img/rfid-1.png") no-repeat center center;
     }
     div:nth-child(2) span i {
       line-height: 36px;
+      background-color: #71BEC5;
     }
     div p {
       position: absolute;
@@ -147,6 +158,7 @@
       i {
         padding: 0;
         line-height: 46px;
+        background-color: #15A7CB;
       }
     }
     div:nth-child(3) p {

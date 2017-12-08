@@ -57,31 +57,27 @@
       height: 90px;
       line-height: 16px;
       font-size: 12px;
-      color: #333;
-      background-color: #fff;
+      background-color: #646577;
       text-align: center;
       cursor: pointer;
       &:first-child {
-        background-color: #fff;
-        color: #333;
+        background-color: #6fd0ff;
+        a {
+          color: #2c2c2c;
+        }
       }
       &.list-item--weixin {
-        // border-bottom: 1px solid #4b4c63;
-        background-color: #009bee;
+        border-bottom: 1px solid #4b4c63;
         color: #fff;
-        .code {
-          display: block;
-        }
         &:hover {
           .code {
             display: block;
           }
-          background-color: #009bee;
-          color: #fff;
         }
       }
       &:last-child {
         cursor: pointer;
+        color: #fff;
       }
       .icon-earphone {
         width: 22px;

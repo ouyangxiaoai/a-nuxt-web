@@ -34,22 +34,20 @@ export const state = () => ({
 })
 export const getters = {
   exampleList (state) { // 对于获取到的案例添加一个detail描述
-    let lists = cloneDeep(state.examples.examplesList) // 进行了一次深拷贝这样state不会改变，如果要自己写方法则需要递归判断
-    lists.forEach((list) => {
-      list.forEach((item) => {
-        summary.forEach((sum) => {
-          if (item.title.indexOf(sum.number) !== -1) {
-            item.detail = sum.content
-          }
-        })
+    let list = cloneDeep(state.examples.examplesList) // 进行了一次深拷贝这样state不会改变，如果要自己写方法则需要递归判断
+    list.forEach((item) => {
+      summary.forEach((sum) => {
+        if (item.title.indexOf(sum.number) !== -1) {
+          item.detail = sum.content
+        }
       })
     })
-    return lists
+    return list
   }
 }
 export const mutations = {
   'GET_EXAMPLE_LIST' (state, data) {
-    state.examples.examplesList.push(data.list)
+    state.examples.examplesList = [...state.examples.examplesList, ...data.list]
     state.examples.examplesParams = data.params
   }
 }

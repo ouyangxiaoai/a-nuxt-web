@@ -1,4 +1,5 @@
 <template>
+  <div class="header-wrap">
 <div class="head-container">
   <div class="head-left">
   <nuxt-link to="/" class="head-left" @click="handleSelect('/')"><img src="~/assets/img/logo.png" alt="NIOT" class="img-logo"></nuxt-link>
@@ -47,6 +48,7 @@
     </a>
   </div>
 </div>
+  </div>
 </template>
 <script>
   import HeadSearch from '~/components/common/headSearch'
@@ -78,6 +80,14 @@
 </script>
 <style lang="scss" scoped>
   @import "assets/scss/mixins.scss"; // 使用‘~/assets’会报错，原因不明
+/*  .header-wrap {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: #fff;
+    z-index: 999999;
+  }*/
 .head-left {
   float: left;
 }
@@ -117,9 +127,19 @@
     .el-menu {
       border-bottom: none;
     }
-    .el-menu--horizontal .el-submenu .el-submenu__title, .el-menu-item {
-      height: 37px;
-      line-height: 37px;
+    .el-menu--horizontal .el-submenu>.el-menu {
+      padding: 0;
+    }
+    .el-menu--horizontal .el-submenu .el-submenu__title, .el-menu--horizontal .el-menu-item {
+      height: 46px;
+      line-height: 46px;
+      border-bottom: none;
+    }
+    .el-menu--horizontal .el-submenu .el-menu-item {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      min-width: 180px;
     }
     .el-menu-item.is-active,.el-submenu.is-active .el-submenu__title {
       // border-bottom: none;
@@ -129,6 +149,9 @@
         color: #009BEE;
         font-weight: bold;
       }
+    }
+    .el-submenu .el-menu-item.is-active {
+      background-color: #f5f5f5;
     }
     .el-submenu__title, .el-menu-item {
       // transition: none;

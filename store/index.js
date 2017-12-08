@@ -1,4 +1,5 @@
 import { getBanner, getBusinessChild } from '../api/index'
+import cloneDeep from 'lodash/cloneDeep'
 
 export const state = () => ({
   activeIndex: '/',
@@ -23,7 +24,8 @@ export const state = () => ({
   banners: [],
   dataSuccess: false,
   newsContent: [],
-  policyContent: []
+  policyContent: [],
+  gmtype: 26
 })
 export const getters = {
   bannersImg: state => {
@@ -31,14 +33,6 @@ export const getters = {
     state.banners.forEach((item) => {
       list.push(item.image)
     })
-    return list
-  },
-  newsRight: state => {
-    let list = state.newsContent.slice(1)
-    return list
-  },
-  policyRight: state => {
-    let list = state.policyContent.slice(1)
     return list
   }
 }
@@ -73,10 +67,13 @@ export const mutations = {
     state.dataSuccess = true
   },
   'GET_NEWS_CONTENT' (state, newsContent) { // 首页新闻详情
-    state.newsContent = newsContent
+    state.newsContent = [...state.newsContent, ...newsContent]
   },
   'GET_POLICY_CONTENT' (state, policyContent) { // 首页点击政策
-    state.policyContent = policyContent
+    state.policyContent = [...state.policyContent, ...policyContent]
+  },
+  'CHANGE_GMTYPE' (state, gmtype) { // 新闻类型
+    state.gmtype = gmtype
   }
 }
 export const actions = {
@@ -90,50 +87,47 @@ export const actions = {
       }
     }).then(res => {
       let tempArr = []
-      let list = res.data.results.filter((item) => {
-        return item.img !== ''
+      let list = res.data.results
+      list.forEach((item) => { // 如果没有图片使用默认
+        if (item.img === '') {
+          item.img = require('~/assets/img/initial-bac.jpg')
+        }
       })
       list.forEach((item, index) => {
-        let {img, title, ctime, cms_id} = item
+        let {img, title, ctime, cms_id, labels, prev_id, next_id} = item
         tempArr[index] = {
           img,
           title,
           ctime,
-          cms_id
+          cms_id,
+          labels,
+          prev_id,
+          next_id
         }
       })
       let news = {
         list: tempArr,
         params: {
-          page: 1,
-          size: 6,
+          page,
+          size,
           newsTotal: res.data.count
         }
       }
       let type = gmtype === 112 ? 'example/GET_EXAMPLE_LIST' : (gmtype === 26) ? 'GET_NEWS' : 'GET_POLICY'
       commit(type, news)
+      commit('SCROLL_DISABLE') // 在滚动加载的时候每次请求完打开可以下次请求
     }).catch(err => console.log(`获取${gmtype}发生错误：`, err))
   },
   async getNewsContent ({commit}, {list, type}) {
-    const newsContent = []
-    for (let i = 0; i < 4; i++) { // 首页的新闻详情
-      let id = list[i].cms_id
-      await this.$axios({
-        url: `/cms/message/${id}`,
-        method: 'get',
-        type: 'jsonp'
-      }).then((res) => {
-        let title = res.data.title
-        let content = res.data.content
-        let time = res.data.ctime
-        let news = {title, content, time, cms_id: id}
-        newsContent.push(news)
-      }).catch((err) => {
-        console.log('获取详情出错：', err)
-      })
+    let contents = cloneDeep(list)
+    let len = list.length
+    for (let i = 0; i < len; i++) { // 首页的新闻详情
+      let id = contents[i].cms_id
+      let {data: {subtitle}} = await this.$axios({url: `/cms/message/${id}`, method: 'get', type: 'jsonp'})
+      contents[i].content = subtitle
     }
     let types = type === 'news' ? 'GET_NEWS_CONTENT' : 'GET_POLICY_CONTENT'
-    commit(types, newsContent)
+    commit(types, contents)
   },
   async nuxtServerInit ({commit, state, dispatch}, {app}) { // 所有初始化的数据在这里请求
     let {data} = await app.$axios.get('http://v2.cniotroot.cn/api/sitemap.json') // 获取所有API
@@ -151,126 +145,8 @@ export const actions = {
     commit('business/B_INTRO_CHILD', {platform, company})
     /*  首次案例展示  */
     await dispatch('getContent', {gmtype: 112})
+    if (state.scrollDisable) { // 如果之前的请求影响了滚动的请求关闭
+      commit('SCROLL_DISABLE')
+    }
   }
 }
-/* import Vue from 'vue'
-import Vuex from 'vuex'
-import { getNewsRequest } from '../api/info'
-import { getBanner, getNewsContent } from '../api/index'
-import example from './example'
-
-Vue.use(Vuex)
-
-const store = () => new Vuex.Store({
-  modules: { example },
-  state: {
-    activeIndex: '/',
-    apiUrl: {},
-    news: {
-      newsList: [],
-      newsParams: {
-        page: 1,
-        size: 6,
-        total: 0
-      }
-    },
-    policy: {
-      policyList: [],
-      policyParams: {
-        page: 1,
-        size: 6,
-        total: 0
-      }
-    },
-    scrollDisable: false,
-    banners: [],
-    dataSuccess: false,
-    newsContent: [],
-    policyContent: []
-  },
-  getters: {
-    bannersImg: state => {
-      let list = []
-      state.banners.forEach((item) => {
-        list.push(item.image)
-      })
-      return list
-    },
-    newsRight: state => {
-      let list = state.newsContent.slice(1)
-      return list
-    },
-    policyRight: state => {
-      let list = state.policyContent.slice(1)
-      return list
-    }
-  },
-  mutations: {
-    'CHANGE_ACTIVE_INDEX' (state, index) {
-      state.activeIndex = index
-    },
-    'GET_ALL_API' (state, api) { // 获取所有api地址
-      state.apiUrl = {...state.apiUrl, ...api}
-    },
-    'GET_NEWS' (state, data) { // 获取新闻
-      state.news.newsList = [...state.news.newsList, ...data.list]
-      state.news.newsParams = data.params
-      state.scrollDisable = !state.scrollDisable // 每次请求完之后放开禁止请求
-    },
-    'SCROLL_DISABLE' (state) { // 控制每次滚动到底部的时候只发一次请求  可以删除不影响数据
-      state.scrollDisable = !state.scrollDisable
-    },
-    'GET_POLICY' (state, data) { // 国家政策
-      state.policy.policyList = [...state.policy.policyList, ...data.list]
-      state.policy.policyParams = data.params
-      state.scrollDisable = !state.scrollDisable // 每次请求完之后放开禁止请求
-    },
-    'GET_BANNERS' (state, banners) { // 首页banner
-      state.banners = banners
-    },
-    'DATA_SUCCESS' (state) { // 确定请求成功
-      state.dataSuccess = true
-    },
-    'GET_NEWS_CONTENT' (state, newsContent) { // 首页新闻详情
-      state.newsContent = newsContent
-    },
-    'GET_POLICY_CONTENT' (state, policyContent) { // 首页点击政策
-      state.policyContent = policyContent
-    }
-  },
-  actions: {
-    async getNews ({commit, state}, params) { // 每次滚到底部发送请求的方法
-      commit('SCROLL_DISABLE') // 首先在此次请求没有结束前禁止再进入此方法
-      let { gmtype, page, size } = params
-      let newsData = await getNewsRequest(state.apiUrl.iot_site.news, gmtype, page, size)
-      commit('GET_NEWS', newsData)
-    },
-    async nuxtServerInit ({commit, state}, {app}) { // 所有初始化的数据在这里请求
-      let {data} = await app.axios.get('http://ng.cniotroot.cn/api/sitemap.json') // 获取所有API
-      commit('GET_ALL_API', data)
-      let newsData = await getNewsRequest(state.apiUrl.iot_site.news, 26) // 获取请求返回的数据 新闻
-      commit('GET_NEWS', newsData)
-      /!* commit('SCROLL_DISABLE') // 由于上个commit会禁止掉滚动请求在这里重新打开 *!/
-      let policyData = await getNewsRequest(state.apiUrl.iot_site.news, 113) // 国家政策
-      commit('GET_POLICY', policyData)
-      let banners = await getBanner(state.apiUrl.iot_site.banners) // 首页banner
-      commit('GET_BANNERS', banners)
-      const url = state.apiUrl.iot_site.cms_message.replace('$id$', '')
-      const newsContent = []
-      const policyContent = []
-      for (let i = 0; i < 4; i++) { // 首页的新闻详情
-        let id = state.news.newsList[i].cms_id
-        let news = await getNewsContent(url, id)
-        newsContent.push(news)
-      }
-      commit('GET_NEWS_CONTENT', newsContent)
-      for (let i = 0; i < 4; i++) { // 首页的国家政策
-        let id = state.policy.policyList[i].cms_id
-        let policy = await getNewsContent(url, id)
-        policyContent.push(policy)
-      }
-      commit('GET_POLICY_CONTENT', policyContent)
-    }
-  }
-})
-export default store */

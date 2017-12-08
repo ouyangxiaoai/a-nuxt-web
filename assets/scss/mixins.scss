@@ -105,7 +105,7 @@
 /* 左边蓝色竖线 */
 %line-title {
   display: inline-block;
-  width: 2px;
+  width: 4px;
   height: 20px;
   background-color: #009BEE;
   vertical-align: top;
@@ -141,6 +141,7 @@
   word-wrap: break-word;
   font-style: normal;
   font-size: 12px;
+  background-color: #EDBE51;
 }
 
 /*  大标题居中带英文小标题  */
@@ -153,7 +154,7 @@
     display: block;
     text-align: center;
     margin-top: 12px;
-    color: #d0cfcf;
+    color: #bfbfbf;
     font-size: 12px;
   }
 }

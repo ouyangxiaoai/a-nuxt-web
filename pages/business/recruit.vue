@@ -13,8 +13,10 @@
         </li>
       </ul>
     </div>
+    <div class="partner-adv-wrap">
     <div class="partner-adv">
       <h1>成为国家平台合作伙伴的好处</h1>
+    </div>
     </div>
     <div class="partner-condition">
       <h1>成为国家平台合作伙伴的条件</h1>
@@ -24,6 +26,7 @@
         </p>
       </div>
     </div>
+    <div class="partner-process-wrap">
     <div class="partner-process">
       <h1>成为合作伙伴的审核流程</h1>
       <div>
@@ -35,6 +38,7 @@
           <span></span>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -78,17 +82,17 @@
   }
   .our-advantage {
     @extend %title;
-    height: 650px;
+    height: auto;
     padding: 80px 0;
     .adv-ul {
       @include clearfix;
       margin-top: 60px;
-      &:before {
+     /* &:before {
         display: block;
         width: 100%;
         height: 8px;
         background-color:#E0F2FB;
-      }
+      }*/
       &:last-child {
         margin-top: 54px;
       }
@@ -99,6 +103,8 @@
       height: 192px;
       padding: 0 42px 0 46px;
       position: relative;
+      border: 1px solid #E0F2FB;
+      border-top-width: 8px;
       img, div {
         position: absolute;
         @extend %posvm;
@@ -128,6 +134,9 @@
     height: 590px;
     padding: 80px 0;
     background: url("~/assets/img/partner-adv-bac.png") no-repeat center 160px;
+  }
+  .partner-adv-wrap, .partner-process-wrap {
+    background-color: $bgf8;
   }
   .partner-condition {
     background: url("~/assets/img/partner-condition-bac.png") no-repeat left 170px;

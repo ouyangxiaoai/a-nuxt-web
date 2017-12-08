@@ -127,6 +127,7 @@
         width: 100%;
         height: 50px;
         text-align: center;
+        transition: display 1s;
       }
       .detail {
         display: none;

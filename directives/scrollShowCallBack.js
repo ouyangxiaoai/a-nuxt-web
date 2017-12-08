@@ -12,7 +12,7 @@ let scrollCallback = function (callback) {
     )
   }
   let scrollH = document.documentElement.scrollTop || document.body.scrollTop
-  if (windowH + scrollH >= getDocumentHeight() - 152 - (this.holder || 20)) {
+  if (windowH + scrollH >= getDocumentHeight() - (this.holder || 20)) {
     callback()
   }
 }

@@ -17,7 +17,7 @@
     "axios": "^0.17.1",
     "element-ui": "^2.0.1",
     "lodash": "^4.17.4",
-    "node-sass": "^4.5.3",
+    "node-sass": "^4.7.2",
     "nuxt": "^1.0.0-rc11",
     "sass-loader": "^6.0.6",
     "vue-awesome-swiper": "^2.6.7",

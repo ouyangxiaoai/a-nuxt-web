@@ -241,6 +241,7 @@
   }
   .child-platform-wrap {
     width: 100%;
+    min-width: 1200px;
     background-color: #f5f5f5;
   }
   .child-platform-2 {

@@ -92,14 +92,15 @@
   float: left;
 }
 .head-right {
-  @include clearfix;
-  float: right;
+ @extend %posvm;
+  right: 8%;
 }
 .head-container {
   @include clearfix;
   padding: 40px 0;
-  min-width: 1300px;
-  margin: 0 3%;
+  min-width: 1200px;
+  margin: 0 0 0 8%;
+  position: relative;
 }
 .img-logo {
   width: 215px;
@@ -134,6 +135,7 @@
       height: 46px;
       line-height: 46px;
       border-bottom: none;
+      font-size: 16px;
     }
     .el-menu--horizontal .el-submenu .el-menu-item {
       margin: 0;

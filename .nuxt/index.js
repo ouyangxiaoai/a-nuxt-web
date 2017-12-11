@@ -14,6 +14,7 @@ import plugin0 from 'plugin0'
 import plugin1 from 'plugin1'
 import plugin2 from 'plugin2'
 import plugin3 from 'plugin3'
+import plugin4 from 'plugin4'
 
 
 // Component: <no-ssr>
@@ -145,6 +146,7 @@ async function createApp (ssrContext) {
   
   if (typeof plugin0 === 'function') await plugin0(ctx, inject)
   if (typeof plugin1 === 'function') await plugin1(ctx, inject)
+  if (typeof plugin4 === 'function') await plugin4(ctx, inject)
   
   if (process.browser) { 
     if (typeof plugin2 === 'function') await plugin2(ctx, inject)

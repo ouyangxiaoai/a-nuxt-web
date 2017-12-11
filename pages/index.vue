@@ -3,9 +3,11 @@
     <banner :banners="banners"></banner>
     <div class="num-wrap">
     <div class="num">
-      <div v-for="item in nums">
+      <div v-for="item in nums" class="num-item">
+        <span>
         <p v-num-scroll="item.num">0</p>
-        <span>{{item.name}}</span>
+        <div>{{item.name}}</div>
+        </span>
       </div>
     </div>
     </div>
@@ -230,17 +232,29 @@ export default {
   .num { // 中间数字部分
     width: $width;
     margin: 0 auto;
-    height: 130px;
-    padding: 30px 0;
-    div {
-      width: 33.3%;
+    height: 150px;
+    padding: 40px 0 20px 0;
+  }
+  .num-item {
+    width: 33.3%;
+    display: inline-block;
+    position: relative;
+    height: 90px;
+    span {
+      float: left;
       text-align: center;
-      display: inline-block;
-      p{
+      p {
         @extend %title-zh;
         font-size: 32px;
-        margin-bottom: 12px;
       }
+    }
+    &:nth-child(2)>span{
+      @include poshc;
+    }
+    &:nth-child(3)>span {
+     position: absolute;
+      top: 0;
+      right: 0;
     }
   }
   .product-advantage, .product-feature, .product-advantage-2 { // 产品优势一整块
@@ -248,7 +262,7 @@ export default {
     height: 776px;
     margin: 70px auto;
     text-align: center;
-    overflow: hidden;
+    //overflow: hidden;
     position: relative;
     @include clearfix;
     .title {
@@ -380,6 +394,7 @@ export default {
 /*  产品功能  */
   .product-feature {
     width: 100%;
+    min-width: 1200px;
     padding: 70px 0;
     margin-top: 0;
     margin-bottom: 0;
@@ -394,6 +409,7 @@ export default {
   }
   .fea-content {
     width: 100%;
+    min-width: 1200px;
     height: 579px;
     background: url("~/assets/img/fea-bac.png") no-repeat center center;
     background-size: cover;
@@ -486,6 +502,7 @@ export default {
   /*  产品优势2  */
   .product-advantage-2 {
     width: 100%;
+    min-width: 1200px;
     margin-top: 0;
     margin-bottom: 0;
     height: 770px;
@@ -614,6 +631,7 @@ export default {
   /*  合作伙伴 */
   .partner {
     width: 100%;
+    min-width: 1200px;
     text-align: center;
     background-color: $bgf8;
     .par-content {

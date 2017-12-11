@@ -51,7 +51,7 @@
       text-align: center;
       span {
         display: block;
-        font-size: 24px;
+        font-size: 22px;
       }
       span:last-child {
         font-size: 16px;

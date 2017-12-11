@@ -118,6 +118,7 @@
   }
   .rfid-content {
     width: 100%;
+    min-width: 1200px;
     background-color: $bgf8;
   }
     .img-left {
@@ -149,6 +150,7 @@
     }
   .rfid-zican {
     width: 100%;
+    min-width: 1200px;
     height: 570px;
     position: relative;
     h1 {
@@ -308,7 +310,7 @@
       @extend %posvm;
       left: 145px;
       h2 {
-        font-size: 16px;
+        font-size: 18px;
       }
       p {
         margin-top: 30px;

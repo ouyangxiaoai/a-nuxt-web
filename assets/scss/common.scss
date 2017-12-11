@@ -10,6 +10,7 @@ $bgf8: #f8f8f8;
 
 .banner { // 静态的banner并且没有文字
   width: 100%;
+  min-width: 1200px;
   height: 290px;
   background: url("~/assets/img/rfid-banner.png") no-repeat center center;
   background-size: cover;

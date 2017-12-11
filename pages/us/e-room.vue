@@ -28,6 +28,8 @@
   @import "assets/scss/mixins.scss";
   .exhabition {
     background-color: #f5f5f5;
+    width: 100%;
+    min-width: 1200px;
   }
   .room-exhabition {
     width: 1200px;

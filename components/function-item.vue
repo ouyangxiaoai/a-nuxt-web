@@ -28,6 +28,7 @@
 <style lang="scss" scoped>
   .function-title {
     width: 100%;
+    min-width: 1200px;
     background: url("~/assets/img/manage-title.png") no-repeat top center;
     height: 290px;
     .title-content {
@@ -47,6 +48,7 @@
   .function-detail {
     margin: 70px auto;
     text-align: center;
+    min-width: 1200px;
     h2 {
       font-size: 20px;
       color: #333;

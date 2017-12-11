@@ -106,6 +106,8 @@
         bottom: 0;
         width: 380px;
         border: none;
+        left: -1px;
+        background-color: #fff;
         transition: height 1s;
       }
       h2 {
@@ -140,7 +142,7 @@
         // overflow: hidden;
         .text {
           height: 120px;
-          background-color: #fff;
+
           left: -1px;
         }
         div>p:nth-child(2) {

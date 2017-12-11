@@ -127,6 +127,7 @@
   .map-wrap {
     width: 100%;
     background-color: #f5f5f5;
+    min-width: 1200px;
   }
   .m-box-map{
     position: relative;

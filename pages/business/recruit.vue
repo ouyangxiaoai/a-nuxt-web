@@ -137,6 +137,7 @@
   }
   .partner-adv-wrap, .partner-process-wrap {
     background-color: $bgf8;
+    min-width: 1200px;
   }
   .partner-condition {
     background: url("~/assets/img/partner-condition-bac.png") no-repeat left 170px;
@@ -168,6 +169,7 @@
     background: none;
     height: 612px;
     .step{
+      float: left;
       display: inline-block;
       margin-top: 80px;
       text-align: center;

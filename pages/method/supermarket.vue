@@ -64,6 +64,7 @@
   }
   .sm-bac-wrap, .sm-adv-wrap {
     width: 100%;
+    min-width: 1200px;
     background-color: $bgf8;
   }
   .sm-bac .content {

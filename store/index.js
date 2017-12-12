@@ -130,11 +130,7 @@ export const actions = {
     let len = list.length
     for (let i = 0; i < len; i++) { // 首页的新闻详情
       let id = contents[i].cms_id
-<<<<<<< HEAD
       let cmsUrl = getUrl(`/message/${id}`, 'CMS')
-=======
-      let cmsUrl = getUrl(`/CMS/message/${id}`, 'CMS')
->>>>>>> 添加proxy根据环境存在不同url
       let {data: {subtitle}} = await this.$axios({url: cmsUrl, method: 'get', type: 'jsonp'})
       contents[i].content = subtitle
     }

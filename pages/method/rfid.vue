@@ -104,7 +104,11 @@
             y = 0
             img = require('~/assets/img/zican-position.png')
         }
-        activeLine.style.transform = `translateY(${y}px)`
+        if (window.Modernizr && window.Modernizr.csstransitions) {
+          activeLine.style.transform = `translateY(${y}px)`
+        } else {
+          activeLine.style.top = `${y + 20}px`
+        }
         content.style.backgroundImage = `url(${img})`
       }
     }

@@ -88,7 +88,8 @@
         width:100%;
         height: 100%;
         text-align: center;
-        border: 1px solid #eee;
+        border: 1px solid transparent;
+        border-bottom: none;
         position: relative;
         @include clearfix;
         // overflow: hidden;
@@ -105,7 +106,7 @@
         position: absolute;
         bottom: 0;
         width: 380px;
-        border: none;
+        border: 1px solid #eee;
         left: -1px;
         background-color: #fff;
         transition: height 1s;
@@ -142,8 +143,9 @@
         // overflow: hidden;
         .text {
           height: 120px;
-
+          width: 380px;
           left: -1px;
+          border: none;
         }
         div>p:nth-child(2) {
           display: none;

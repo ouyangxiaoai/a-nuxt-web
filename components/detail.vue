@@ -132,8 +132,8 @@
   .u-ctn {
     width: 700px;
     margin: 48px auto 0;
-    font-size: 18px;
-    p {
+    font-size: 16px;
+    p{
       margin-top: 24px;
     }
     strong {

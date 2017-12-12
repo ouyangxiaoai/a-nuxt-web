@@ -1,4 +1,4 @@
-import { getBanner, getBusinessChild } from '../api/index'
+import { getBanner, getBusinessChild, getUserAgent } from '../api/index'
 import cloneDeep from 'lodash/cloneDeep'
 
 export const state = () => ({
@@ -25,7 +25,8 @@ export const state = () => ({
   dataSuccess: false,
   newsContent: [],
   policyContent: [],
-  gmtype: 26
+  gmtype: 26,
+  ieLow: false
 })
 export const getters = {
   bannersImg: state => {
@@ -74,6 +75,9 @@ export const mutations = {
   },
   'CHANGE_GMTYPE' (state, gmtype) { // 新闻类型
     state.gmtype = gmtype
+  },
+  'GET_IE' (state, bool) { // 检测到IE9以及以下
+    state.ieLow = bool
   }
 }
 export const actions = {
@@ -129,7 +133,11 @@ export const actions = {
     let types = type === 'news' ? 'GET_NEWS_CONTENT' : 'GET_POLICY_CONTENT'
     commit(types, contents)
   },
-  async nuxtServerInit ({commit, state, dispatch}, {app}) { // 所有初始化的数据在这里请求
+  async nuxtServerInit ({commit, state, dispatch}, {app, req, isServer}) { // 所有初始化的数据在这里请求
+    /*  浏览器判断 */
+    let userAgent = isServer ? req.headers['user-agent'] : navigator.userAgent
+    let bool = getUserAgent(userAgent)
+    await commit('GET_IE', bool)
     let {data} = await app.$axios.get('http://v2.cniotroot.cn/api/sitemap.json') // 获取所有API
     commit('GET_ALL_API', data)
     await dispatch('getContent', {gmtype: 26})

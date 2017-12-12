@@ -227,6 +227,7 @@ export default {
   @import "assets/scss/mixins.scss";
   @import "assets/scss/common.scss";
   .num-wrap {
+    min-width: 1200px;
     background-color: $bgf8;
   }
   .num { // 中间数字部分
@@ -350,7 +351,7 @@ export default {
           }
           div img {
             position: absolute;
-            top: 5px;
+            @extend %posvm;
             left: 0;
           }
           div h2 {
@@ -378,8 +379,7 @@ export default {
         left: 995px;
       }
       .show2 .content-list div:first-child img {
-        left: 3px;
-        top: 1.5px;
+        left: 5px;
       }
       &.isActive {
         box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);

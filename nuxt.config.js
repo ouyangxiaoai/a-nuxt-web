@@ -35,8 +35,8 @@ module.exports = {
   plugins: ['~/plugins/elementUI', {src: '~/plugins/baiduMap', ssr: false}, {src: '~/plugins/vue-awesome-swiper', ssr: false}],
   build: {
     plugins: [new webpack.DefinePlugin({
-        'process.env.URL_MODE': JSON.stringify(process.env.URL_MODE)
-      })],
+      'process.env.URL_MODE': JSON.stringify(process.env.URL_MODE)
+    })],
     // 第三方模块或者自己编写的模块统一打包
     vendor: ['element-ui', 'axios', 'vue-baidu-map', 'babel-polyfill', 'eventsource-polyfill'],
     /*

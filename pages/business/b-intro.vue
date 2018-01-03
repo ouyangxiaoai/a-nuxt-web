@@ -64,6 +64,7 @@
   import 'echarts/lib/component/tooltip'
   import chinaMap from '~/api/china.json'
   import { mapState } from 'vuex'
+  import getUrl from '~/config/url'
 
   ECharts.registerMap('china', chinaMap)
 
@@ -86,7 +87,8 @@
       }
     },
     async asyncData ({store, app}) {
-      let { data } = await app.$axios.get('/v1/company/', {params: {province: 44, status: 2}})
+      let url = getUrl('/api/v1/company/')
+      let { data } = await app.$axios.get(url, {params: {province: 44, status: 2}})
       return {list: data.results, isEmpty: data.results.length === 0, companyList: {44: data.results}}
     },
     methods: {
@@ -94,7 +96,8 @@
         let id = event.data.id
         this.province = event.data.name
         if (!this.companyList[id]) { // 判断是否存在这个省
-          let { data } = await this.$axios.get('/v1/company/', {params: {province: id, status: 2}})
+          let url = getUrl('/api/v1/company/')
+          let { data } = await this.$axios.get(url, {params: {province: id, status: 2}})
           this.companyList[id] = data.results
         }
         this.list = this.companyList[id]

@@ -3,10 +3,12 @@
 </template>
 <script>
   import detail from '~/components/detail'
+  import getUrl from '~/config/url'
   export default {
     components: {detail},
     async asyncData ({app, params}) {
-      let {data} = await app.$axios({method: 'get', type: 'jsonp', url: `/cms/message/${params.id}`})
+      let cmsUrl = getUrl(`/CMS/message/${params.id}`, 'CMS')
+      let {data} = await app.$axios({method: 'get', type: 'jsonp', url: cmsUrl})
       let {title, ctime, subtitle, content, labels, gmtype} = data
       let arr = labels.split(' ')
       for (let i = 0; i < arr.length; i++) {
@@ -15,7 +17,8 @@
           i = i - 1
         }
       }
-      let {data: {results}} = await app.$axios({method: 'get', type: 'json', url: '/v1/iot-site/refs/', params: { page: 1, size: 4, gmtype }})
+      let url = getUrl('/api/v1/iot-site/refs/')
+      let {data: {results}} = await app.$axios({method: 'get', type: 'json', url, params: { page: 1, size: 4, gmtype }})
       let arrMore = []
       for (let i = 0; i < results.length; i++) {
         let obj = {}

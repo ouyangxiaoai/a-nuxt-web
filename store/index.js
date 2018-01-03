@@ -1,5 +1,6 @@
 import { getBanner, getBusinessChild, getUserAgent } from '../api/index'
 import cloneDeep from 'lodash/cloneDeep'
+import getUrl from '~/config/url'
 
 export const state = () => ({
   activeIndex: '/',
@@ -80,10 +81,12 @@ export const mutations = {
     state.ieLow = bool
   }
 }
+/* eslint-disable */
 export const actions = {
   /*   一个统一的action方法：url是iost-site/refs/ */
   async getContent ({commit}, {gmtype = '', page = 1, size = 6}) {
-    await this.$axios.get('/v1/iot-site/refs/', {
+    let url = getUrl('/api/v1/iot-site/refs/')
+    await this.$axios.get(url, {
       params: {
         gmtype,
         page,
@@ -127,7 +130,8 @@ export const actions = {
     let len = list.length
     for (let i = 0; i < len; i++) { // 首页的新闻详情
       let id = contents[i].cms_id
-      let {data: {subtitle}} = await this.$axios({url: `/cms/message/${id}`, method: 'get', type: 'jsonp'})
+      let cmsUrl = getUrl(`/CMS/message/${id}`, 'CMS')
+      let {data: {subtitle}} = await this.$axios({url: cmsUrl, method: 'get', type: 'jsonp'})
       contents[i].content = subtitle
     }
     let types = type === 'news' ? 'GET_NEWS_CONTENT' : 'GET_POLICY_CONTENT'
@@ -138,7 +142,8 @@ export const actions = {
     let userAgent = isServer ? req.headers['user-agent'] : navigator.userAgent
     let bool = getUserAgent(userAgent)
     await commit('GET_IE', bool)
-    let {data} = await app.$axios.get('http://v2.cniotroot.cn/api/sitemap.json') // 获取所有API
+    // let url = getUrl('/api/sitemap.json')
+    let {data} = await app.$axios.get('/api/sitemap.json') // 获取所有API
     commit('GET_ALL_API', data)
     await dispatch('getContent', {gmtype: 26})
     await dispatch('getContent', {gmtype: 113})

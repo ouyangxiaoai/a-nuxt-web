@@ -51,6 +51,8 @@
   import pagenation from '~/components/common/pagenation'
   import ScrollShowCallBack from '~/directives/scrollShowCallBack'
   import { mapState } from 'vuex'
+  import getUrl from '~/config/url'
+  /* eslint-disable */
   export default {
     components: {'news-item': newsItem, pagenation},
     directives: {'scroll-show-callback': ScrollShowCallBack},
@@ -89,7 +91,8 @@
         } */
       },
       async getContent (gmtype, page = 1) {
-        let { data: { results, count } } = await this.$axios.get('/v1/iot-site/refs/', {params: {gmtype, page, size: 6}})
+        let url = getUrl('/api/v1/iot-site/refs/')
+        let { data: { results, count } } = await this.$axios.get(url, {params: {gmtype, page, size: 6}})
         let tempArr = []
         /* let list = results.filter((item) => { // 过滤掉没有图片的新闻
           return item.img !== ''
@@ -102,7 +105,8 @@
         for (let i = 0; i < results.length; i++) {
           let {img, title, ctime, cms_id, labels, prev_id, next_id} = results[i]
           /* eslint-disable */
-          let { data: {content}} = await this.$axios({url: `/cms/message/${cms_id}`, type: 'jsonp', method: 'get'})
+          let cmsUrl = getUrl(`/CMS/message/${cms_id}`, 'CMS')
+          let { data: {content}} = await this.$axios({url: cmsUrl, type: 'jsonp', method: 'get'})
           tempArr.push({
             img,
             title,

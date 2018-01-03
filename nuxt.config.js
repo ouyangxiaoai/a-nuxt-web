@@ -1,6 +1,7 @@
+const host = require('./config')
 const path = require('path')
-const config = require('./proxy')
 const isDev = Object.is(process.env.NODE_ENV, 'development')
+const domain = isDev ? host.dev : host.prod
 module.exports = {
   /*
   ** Headers of the page
@@ -57,6 +58,19 @@ module.exports = {
     middleware: 'auth',
     fallback: true
   },
-  modules: isDev ? config.modulesDev : config.modulesPro,
-  proxy: isDev ? config.proxy : ''
+  modules: ['@nuxtjs/axios', '@nuxtjs/proxy'],
+  axios: {
+    baseURL: ''
+  },
+  proxy: {
+    '/api':
+      {
+        target: domain['default']
+      },
+    '/CMS':
+      {
+        target: domain['CMS'],
+        pathRewrite: {'^/CMS': ''}
+      }
+  }
 }

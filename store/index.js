@@ -130,7 +130,7 @@ export const actions = {
     let len = list.length
     for (let i = 0; i < len; i++) { // 首页的新闻详情
       let id = contents[i].cms_id
-      let cmsUrl = getUrl(`/CMS/message/${id}`, 'CMS')
+      let cmsUrl = getUrl(`/message/${id}`, 'CMS')
       let {data: {subtitle}} = await this.$axios({url: cmsUrl, method: 'get', type: 'jsonp'})
       contents[i].content = subtitle
     }

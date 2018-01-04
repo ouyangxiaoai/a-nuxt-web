@@ -10,10 +10,16 @@ const getUrlByAlias = (url, platform = 'default') => {
    * 为了简化生产环境的配置，默认使用 host 模式，开发模式下手动设置 URL_MODE 为 "dev"。
    **/
   const targetHost = require('~/config')
-  if (process.env.NODE_ENV === 'development') {
-    return `${url}`
+  platform || (platform = 'default')
+  let ret
+  if (process.env.URL_MODE === 'dev') {
+    ret = platform === 'default'
+      ? `${url}`
+      : `/${platform}${url}`
   } else {
-    return `${targetHost[platform]}${url}`
+    ret = `${targetHost[platform]}${url}`
   }
+  process.env.URL_MODE === 'dev' && console.log(ret)
+  return ret
 }
 export default getUrlByAlias

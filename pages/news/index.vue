@@ -105,7 +105,7 @@
         for (let i = 0; i < results.length; i++) {
           let {img, title, ctime, cms_id, labels, prev_id, next_id} = results[i]
           /* eslint-disable */
-          let cmsUrl = getUrl(`/CMS/message/${cms_id}`, 'CMS')
+          let cmsUrl = getUrl(`/message/${cms_id}`, 'CMS')
           let { data: {content}} = await this.$axios({url: cmsUrl, type: 'jsonp', method: 'get'})
           tempArr.push({
             img,

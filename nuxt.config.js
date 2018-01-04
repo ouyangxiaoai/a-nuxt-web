@@ -1,7 +1,6 @@
 const host = require('./config')
+const webpack = require('webpack')
 const path = require('path')
-const isDev = Object.is(process.env.NODE_ENV, 'development')
-const domain = isDev ? host.dev : host.prod
 module.exports = {
   /*
   ** Headers of the page
@@ -35,6 +34,9 @@ module.exports = {
   */
   plugins: ['~/plugins/elementUI', {src: '~/plugins/baiduMap', ssr: false}, {src: '~/plugins/vue-awesome-swiper', ssr: false}],
   build: {
+    plugins: [new webpack.DefinePlugin({
+        'process.env.URL_MODE': JSON.stringify(process.env.URL_MODE)
+      })],
     // 第三方模块或者自己编写的模块统一打包
     vendor: ['element-ui', 'axios', 'vue-baidu-map', 'babel-polyfill', 'eventsource-polyfill'],
     /*
@@ -65,11 +67,11 @@ module.exports = {
   proxy: {
     '/api':
       {
-        target: domain['default']
+        target: host.default
       },
     '/CMS':
       {
-        target: domain['CMS'],
+        target: host.CMS,
         pathRewrite: {'^/CMS': ''}
       }
   }

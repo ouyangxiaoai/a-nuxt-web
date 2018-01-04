@@ -7,7 +7,7 @@
   export default {
     components: {detail},
     async asyncData ({app, params}) {
-      let cmsUrl = getUrl(`/CMS/message/${params.id}`, 'CMS')
+      let cmsUrl = getUrl(`/message/${params.id}`, 'CMS')
       let {data} = await app.$axios({method: 'get', type: 'jsonp', url: cmsUrl})
       let {title, ctime, subtitle, content, labels, gmtype} = data
       let arr = labels.split(' ')

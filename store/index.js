@@ -1,6 +1,7 @@
 import { getBanner, getBusinessChild, getUserAgent } from '../api/index'
 import cloneDeep from 'lodash/cloneDeep'
 import getUrl from '~/config/url'
+import {agent} from '../api/util'
 
 export const state = () => ({
   activeIndex: '/',
@@ -27,7 +28,8 @@ export const state = () => ({
   newsContent: [],
   policyContent: [],
   gmtype: 26,
-  ieLow: false
+  ieLow: false,
+  isMobile: false // 是否移动端
 })
 export const getters = {
   bannersImg: state => {
@@ -79,6 +81,9 @@ export const mutations = {
   },
   'GET_IE' (state, bool) { // 检测到IE9以及以下
     state.ieLow = bool
+  },
+  'IS_MOBILE' (state, isMobile) { // 是否移动端
+    state.isMobile = isMobile
   }
 }
 /* eslint-disable */
@@ -140,8 +145,11 @@ export const actions = {
   async nuxtServerInit ({commit, state, dispatch}, {app, req, isServer}) { // 所有初始化的数据在这里请求
     /*  浏览器判断 */
     let userAgent = isServer ? req.headers['user-agent'] : navigator.userAgent
-    let bool = getUserAgent(userAgent)
+    let bool = getUserAgent(userAgent) // 判断IE9及以下
     await commit('GET_IE', bool)
+    /* 移动端判断  */
+    const {isMobile} = agent(userAgent)
+    commit('IS_MOBILE', isMobile)
     // let url = getUrl('/api/sitemap.json')
     let {data} = await app.$axios.get('/api/sitemap.json') // 获取所有API
     commit('GET_ALL_API', data)

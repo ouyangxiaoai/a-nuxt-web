@@ -1,10 +1,6 @@
 <template>
 <div v-bind="item">
   <div class="function-title">
-<!--    <div class="title-content">
-    <h1>{{item.title}}</h1>
-    <p>{{item.titleText}}</p>
-    </div>-->
   </div>
   <div class="function-detail" v-for="detail in item.detail">
     <h2>{{detail.title}}</h2>

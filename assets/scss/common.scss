@@ -8,6 +8,11 @@ $c3: #333;
 $cbf: #bfbfbf;
 $bgf8: #f8f8f8;
 
+.mobile-fix {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
 .banner { // 静态的banner并且没有文字
   width: 100%;
   min-width: 1200px;
@@ -42,4 +47,12 @@ $bgf8: #f8f8f8;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* 浮动 */
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
 }

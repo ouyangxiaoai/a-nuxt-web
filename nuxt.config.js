@@ -1,6 +1,7 @@
 const host = require('./config')
 const webpack = require('webpack')
 const path = require('path')
+
 module.exports = {
   /*
   ** Headers of the page
@@ -10,7 +11,6 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       {'http-equiv': 'X-UA-Compatible', content: 'IE=edge'},
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '国家物联网标识管理公共服务平台，是由中国科学院计算机网络信息中心牵头，联合工业和信息化部电子科学技术情报研究所、工业和信息化部电信研究院、中国物品编码中心三家参与单位建立的物联网标识统一管理和公共服务平台。' },
       {hid: 'keywords', name: 'keywords', content: '国物标识 国家平台  国物防伪  溯源中国 溯源  防伪 一物一码'}
     ],
@@ -18,6 +18,7 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
     script: [
+      {src: 'http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js'},
       { src: '/modernizr.custom.js' }
     ]
   },
@@ -34,6 +35,17 @@ module.exports = {
   */
   plugins: ['~/plugins/elementUI', {src: '~/plugins/baiduMap', ssr: false}, {src: '~/plugins/vue-awesome-swiper', ssr: false}],
   build: {
+    postcss: {
+      plugins: {
+        'postcss-cssnext': {
+          'browsers': [
+            '> 1%',
+            'last 2 versions',
+            'not ie <= 10' // to disable rem unit (px fallback) feature in postcss-cssnext
+          ]
+        }
+      }
+    },
     plugins: [new webpack.DefinePlugin({
       'process.env.URL_MODE': JSON.stringify(process.env.URL_MODE)
     })],

@@ -158,3 +158,55 @@
     font-size: 12px;
   }
 }
+$default-font-size: 124.2px;
+/*  px2rem */
+@mixin px2rem($property, $values...) {
+  $max: length($values); //返回$values列表的长度值
+  $remValues: '';
+
+  @for $i from 1 through $max {
+    $value: nth($values, $i);
+    $remValues: #{$remValues}($value / $default-font-size) * 1rem;
+
+    @if $i < $max {
+      $remValues: #{$remValues + " "};
+    }
+  }
+  #{$property}: $remValues;
+}
+@function pxTorem ($value) {
+  @return $value / $default-font-size * 1rem
+}
+/*  flex上下居中、左右between布局 */
+%flex-box{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+/*  手机端的单张banner */
+.mobile-banner {
+  width: 100%;
+  height: pxTorem(480px);
+  background: url("~/assets/img/example-banner.png") no-repeat center center;
+  background-size: cover;
+}
+/* 手机端蓝色竖线标题 */
+%mobile-line {
+  h1 {
+    font-size: pxTorem(50px);
+    color: #000;
+    margin-bottom: pxTorem(80px);
+    position: relative;
+    height: pxTorem(66px);
+    line-height: pxTorem(66px);
+    padding-left: pxTorem(50px);
+    &:before {
+      @extend %posvm;
+      left: 0;
+      height: pxTorem(50px);
+      width: pxTorem(10px);
+      background-color: #009BEE;
+    }
+  }
+}

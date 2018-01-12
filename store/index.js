@@ -127,7 +127,9 @@ export const actions = {
       }
       let type = gmtype === 112 ? 'example/GET_EXAMPLE_LIST' : (gmtype === 26) ? 'GET_NEWS' : 'GET_POLICY'
       commit(type, news)
-      commit('SCROLL_DISABLE') // 在滚动加载的时候每次请求完打开可以下次请求
+      if (gmtype === 112) {
+        commit('SCROLL_DISABLE') // 在滚动加载的时候每次请求完打开可以下次请求
+      }
     }).catch(err => console.log(`获取${gmtype}发生错误：`, err))
   },
   async getNewsContent ({commit}, {list, type}) {
@@ -141,6 +143,7 @@ export const actions = {
     }
     let types = type === 'news' ? 'GET_NEWS_CONTENT' : 'GET_POLICY_CONTENT'
     commit(types, contents)
+    commit('SCROLL_DISABLE') // 在滚动加载的时候每次请求完打开可以下次请求
   },
   async nuxtServerInit ({commit, state, dispatch}, {app, req, isServer}) { // 所有初始化的数据在这里请求
     /*  浏览器判断 */
@@ -150,11 +153,12 @@ export const actions = {
     /* 移动端判断  */
     const {isMobile} = agent(userAgent)
     commit('IS_MOBILE', isMobile)
+
     // let url = getUrl('/api/sitemap.json')
     let {data} = await app.$axios.get('/api/sitemap.json') // 获取所有API
     commit('GET_ALL_API', data)
-    await dispatch('getContent', {gmtype: 26})
-    await dispatch('getContent', {gmtype: 113})
+    await dispatch('getContent', {gmtype: 26, size: state.isMobile ? 2 : 6})
+    await dispatch('getContent', {gmtype: 113, size: state.isMobile ? 2 : 6})
     let banners = await getBanner(state.apiUrl.iot_site.banners) // 首页banner
     commit('GET_BANNERS', banners)
     /* 首页新闻详情 */
@@ -165,7 +169,7 @@ export const actions = {
     let company = await getBusinessChild(state.apiUrl.cms.businesses)
     commit('business/B_INTRO_CHILD', {platform, company})
     /*  首次案例展示  */
-    await dispatch('getContent', {gmtype: 112})
+    await dispatch('getContent', {gmtype: 112, size: state.isMobile ? 2 : 6})
     if (state.scrollDisable) { // 如果之前的请求影响了滚动的请求关闭
       commit('SCROLL_DISABLE')
     }

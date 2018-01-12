@@ -1,13 +1,13 @@
 <template>
   <div class="news-page">
-    <div class="banner">
+    <div :class="isMobile ? 'mobile-banner' : 'banner'">
       <!--<div class="text">
         <h1>科技·创造美好生活</h1>
         <p>物联网国家政策、物联网标识应用新动向</p>
         <p>以及国家物联网标识平台发展资讯、行业新闻</p>
       </div>-->
     </div>
-    <div class="content" v-scroll-show-callback="handleTrendScroll" scroll-placeholder="30">
+    <div class="content" v-scroll-show-callback="handleTrendScroll" scroll-placeholder="30" v-if="!isMobile">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <!--<el-tab-pane label="全部" name="all">
           <div class="item-content" v-for="item in list">
@@ -43,6 +43,22 @@
         </el-tab-pane>
       </el-tabs>
     </div>
+    <div  v-else>
+    <div class="mobile-content-new">
+      <h1>平台动向</h1>
+      <nuxt-link :to="{name: 'news-name', params: {name: 'platform'}}"><h2>查看更多</h2></nuxt-link>
+      <mobile-new-item :list="newsContent.slice(0, 2)">
+        <div slot="time"></div>
+      </mobile-new-item>
+    </div>
+      <div class="mobile-content-policy">
+        <h1>国家政策</h1>
+        <nuxt-link :to="{name: 'news-name', params: {name: 'policy'}}"><h2>查看更多</h2></nuxt-link>
+        <mobile-new-item :list="policyContent.slice(0, 1)">
+
+        </mobile-new-item>
+      </div>
+    </div>
     <!--<pagenation @handleCurrentChange="handleCurrentChange" :current-page="currentPage" :page-size="size" :total="count" v-if="count > 3"></pagenation>-->
   </div>
 </template>
@@ -52,12 +68,13 @@
   import ScrollShowCallBack from '~/directives/scrollShowCallBack'
   import { mapState } from 'vuex'
   import getUrl from '~/config/url'
+  import MobileNewItem from '~/components/mobile-new-item'
   /* eslint-disable */
   export default {
-    components: {'news-item': newsItem, pagenation},
+    components: {'news-item': newsItem, pagenation, 'mobile-new-item': MobileNewItem},
     directives: {'scroll-show-callback': ScrollShowCallBack},
     computed: {
-      ...mapState(['newsContent', 'policyContent', 'scrollDisable', 'news', 'policy'])
+      ...mapState(['newsContent', 'policyContent', 'scrollDisable', 'news', 'policy', 'isMobile'])
     },
     data () {
       return {
@@ -92,7 +109,7 @@
       },
       async getContent (gmtype, page = 1) {
         let url = getUrl('/api/v1/iot-site/refs/')
-        let { data: { results, count } } = await this.$axios.get(url, {params: {gmtype, page, size: 6}})
+        let { data: { results, count } } = await this.$axios.get(url, {params: {gmtype, page, size: this.isMobile ? 2 : 6}})
         let tempArr = []
         /* let list = results.filter((item) => { // 过滤掉没有图片的新闻
           return item.img !== ''
@@ -136,7 +153,7 @@
           gmtype = 26
           params = this.news.newsParams
         } else {
-         gmtype = 112
+         gmtype = 113
          params = this.policy.policyParams
         }
           let {page, newsTotal, size } = params
@@ -150,8 +167,9 @@
             return false // 上次请求是否完成
           }
           this.$store.commit('SCROLL_DISABLE') // 上个请求未完成禁止进入
-          await this.$store.dispatch('getContent', {gmtype, page: nowPage})
-          await this.$store.dispatch('getNewsContent', {list: this.news.newsList.slice(6 * (nowPage-1)), type: this.activeName})
+          await this.$store.dispatch('getContent', {gmtype, page: nowPage, size})
+          let list = gmtype === 26 ? this.news.newsList : this.policy.policyList
+          await this.$store.dispatch('getNewsContent', {list: list.slice(size * (nowPage-1)), type: this.activeName})
         }
       }
   }
@@ -161,6 +179,10 @@
   @import "assets/scss/mixins";
   .banner {
     background-image: url('~/assets/img/news-bac.png');
+  }
+  .mobile-banner {
+    background-image: url('~/assets/img/mobile/news-bac-mobile.png');
+    height: pxTorem(720px);
   }
   .content {
     width: 1200px;
@@ -213,6 +235,25 @@
       }
     }
   }
+  .mobile-content-new, .mobile-content-policy {
+      @include px2rem(padding, 0px, 51px);
+      position: relative;
+      h1 {
+        font-size: pxTorem(50px);
+        @include px2rem(padding, 100px, 0px, 80px);
+      }
+      h2 {
+        position: absolute;
+        top: pxTorem(107px);
+        right: pxTorem(51px);
+        font-size: pxTorem(42px);
+        color: #009BEE;
+        cursor: pointer;
+      }
+  }
+  .mobile-content-policy {
+    background-color: #f5f5f5;
+  }
 </style>
 <style lang="scss">
   @import "assets/scss/mixins.scss";
@@ -255,6 +296,20 @@
     }
     .el-tabs__active-bar {
       transition: none;
+      display: none;
+    }
+  }
+  .news-page .mobile-content {
+    .el-tabs__item {
+      font-size: pxTorem(50px);
+
+    }
+    .el-tabs__header {
+      background-color: #f5f5f5;
+      @include px2rem(padding, 100px, 40px, 80px);
+      margin-bottom: 0;
+    }
+    .el-tabs__active-bar, .el-tabs__nav-wrap:after {
       display: none;
     }
   }

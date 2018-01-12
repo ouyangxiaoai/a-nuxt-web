@@ -1,11 +1,11 @@
 <template>
   <div>
     <fix-header />
-    <div class="page-content">
+    <div :class="[isMobile ? 'mobile-content' : 'page-content']">
     <nuxt/>
     </div>
     <side-bar></side-bar>
-    <fix-foot />
+    <fix-foot></fix-foot>
     <browser v-if="showBox"></browser>
   </div>
 </template>
@@ -25,6 +25,11 @@
       return {
         showBox: this.$store.state.ieLow
       }
+    },
+    computed: {
+      isMobile () {
+        return this.$store.state.isMobile
+      }
     }
     /* ,
     mounted () {
@@ -35,7 +40,11 @@
   }
 </script>
 <style lang="scss" scoped>
-  /*.page-content {
+  @import "~assets/scss/mixins.scss";
+  .page-content {
     margin-top: 126px;
-  }*/
+  }
+  .mobile-content {
+    padding-top: pxTorem(146px);
+  }
 </style>

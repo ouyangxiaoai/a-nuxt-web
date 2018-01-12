@@ -31,6 +31,7 @@ a{
   text-decoration: none;
   &:link, &:visited, &:hover, &:active {
     color: #666;
+    text-decoration: none;
   }
 }
 img {
@@ -50,7 +51,9 @@ h1, h2, h3, h4, h5, h6 {
 *:before, *:after {
   content: ''
 }
-
+.f-box:before, .f-box:after { // 影响flex布局
+    content: initial;
+  }
 input, textarea, select {
   font-family: inherit;
   font-size: inherit;

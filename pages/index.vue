@@ -1,16 +1,18 @@
 <template>
   <div>
-    <banner :banners="banners"></banner>
-    <div class="num-wrap">
+    <banner :banners="banners" :isMobile="isMobile"></banner>
+    <div :class="['num-wrap', isMobile ? 'num-mobile' : '']">
     <div class="num">
       <div v-for="item in nums" class="num-item">
         <span>
-        <p v-num-scroll="item.num">0</p>
+        <p v-num-scroll="item.num" v-if="!isMobile">0</p>
+         <p v-else>{{item.num}}</p>
         <div>{{item.name}}</div>
         </span>
       </div>
     </div>
     </div>
+    <div v-if="!isMobile">
     <!--  产品优势  -->
     <div class="product-advantage">
       <div class="title">
@@ -106,6 +108,55 @@
       </ul>
       </div>
     </div>
+    </div>
+    <div class="mobile" v-else>
+      <div class="mobile-function">
+        <h1>产品功能</h1>
+        <h2>物联网技术 + 大数据分析 + GIS技术</h2>
+        <div class="function-content">
+          <div class="function-header">
+            <div  v-for="item in functionHeader" :class="item.index === activeHeader ? 'isActive' : ''" @click="activeFunction(item.index)">
+              <span><img :src="activeHeader === item.index ? item.imgActive : item.img" alt=""></span>
+              <p>{{item.title}}</p>
+            </div>
+          </div>
+          <div class="function-text">
+            <div>
+              <p>{{functionText[activeHeader - 1].text}}</p>
+              <img :src="functionText[activeHeader - 1].img" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mobile-news">
+        <h1>平台动向</h1>
+        <h2>表示应用新方向，掌握最前沿的行业新闻</h2>
+        <div class="new-content">
+          <img :src="contentLeft[0].img" alt="">
+          <h3>{{contentLeft[0].title}}</h3>
+          <p>{{contentLeft[0].ctime}}</p>
+        </div>
+      </div>
+      <div class="mobile-policy">
+        <h1>国家政策</h1>
+        <h2>物联网国家政策，了解最新动向</h2>
+        <div class="new-content">
+          <img :src="policyContent[0].img" alt="">
+          <h3>{{policyContent[0].title}}</h3>
+          <p>{{policyContent[0].ctime}}</p>
+        </div>
+      </div>
+      <div class="mobile-partner">
+        <div class="mobile-par-content">
+          <h1>携手共赢，与全球合作伙伴共建标识生态</h1>
+          <ul v-for="list in mobilePartner">
+            <li v-for="item in list">
+              <img :src="item.img" alt="国物标识合作伙伴">
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -126,7 +177,8 @@ export default {
     }),
     ...mapState({
       newsContent: state => state.newsContent,
-      policyContent: state => state.policyContent
+      policyContent: state => state.policyContent,
+      isMobile: 'isMobile'
     })
   },
   data () {
@@ -134,10 +186,16 @@ export default {
       activeAdv: '0',
       activeNews: 'first',
       contentLeft: this.$store.state.newsContent,
-      nums: [
+      nums: this.numsPC,
+      numsPC: [
         {name: '已注册企业数', num: '23612'},
         {name: '标识注册总量', num: '35987483'},
         {name: '累计查询次数', num: '10879385'}
+      ],
+      mobileNums: [
+        {name: '已注册企业数', num: '2.3万'},
+        {name: '标识注册总量', num: '3.6亿'},
+        {name: '累计查询次数', num: '1.1亿'}
       ],
       advContent: [
         {
@@ -200,8 +258,41 @@ export default {
         {img: require('~/assets/img/partner-5.png')},
         {img: require('~/assets/img/partner-6.png')},
         {img: require('~/assets/img/partner-7.png')}
+      ],
+      mobilePartner: [
+        [
+          {img: require('~/assets/img/partner-1.png')},
+          {img: require('~/assets/img/partner-2.png')},
+          {img: require('~/assets/img/partner-4.png')}
+        ],
+        [
+          {img: require('~/assets/img/partner-5.png')},
+          {img: require('~/assets/img/partner-3.png')},
+          {img: require('~/assets/img/partner-6.png')},
+          {img: require('~/assets/img/partner-7.png')}
+        ]
+      ],
+      functionHeader: [
+        {img: require('~/assets/img/mobile/1.png'), title: '大数据应用', index: 1, imgActive: require('~/assets/img/mobile/a.png')},
+        {img: require('~/assets/img/mobile/2.png'), title: '精准营销', index: 2, imgActive: require('~/assets/img/mobile/b.png')},
+        {img: require('~/assets/img/mobile/3.png'), title: '渠道优化', index: 3, imgActive: require('~/assets/img/mobile/c.png')},
+        {img: require('~/assets/img/mobile/4.png'), title: '窜货管理', index: 4, imgActive: require('~/assets/img/mobile/d.png')},
+        {img: require('~/assets/img/mobile/5.png'), title: '售后服务', index: 5, imgActive: require('~/assets/img/mobile/e.png')},
+        {img: require('~/assets/img/mobile/6.png'), title: '防伪溯源', index: 6, imgActive: require('~/assets/img/mobile/f.png')}
+      ],
+      activeHeader: 1,
+      functionText: [
+        {img: require('~/assets/img/mobile/big-data.png'), text: '汇集海量市场数据，整合、挖掘、实时分析数据，构建系统化数据体系，帮助企业进行智能化决策'},
+        {img: require('~/assets/img/mobile/market.png'), text: '洞察消费者需求，勾勒用户画像，实时调整营销策略，将最符合消费者心理的营销活动，展现在消费者面前'},
+        {img: require('~/assets/img/mobile/channel.png'), text: '基于标识大数据分析，通过后台数据可视化展示，企业可直观查询销售区域市场特点、消费偏好、竞争关系等信息进一步优化渠道投放，促进销售转化'},
+        {img: require('~/assets/img/mobile/manage.png'), text: '以"一物一码"的独特产品标识，结合消费者扫码信息数据反馈，比对系统产品销售区域设置的对应关系，7*24小时全天候监控渠道窜货行为，并提供实时预警'},
+        {img: require('~/assets/img/mobile/service.png'), text: '每个标识码都是一个服务员，一键售后服务，搭建消费者与用户沟通的桥梁，及时高效，打造极致用户体验'},
+        {img: require('~/assets/img/mobile/security.png'), text: '结合GIS获取消费者扫码时间、地点等数据维度，系统大数据实时对比，实现产品数据化防伪，降低企业防伪成本'}
       ]
     }
+  },
+  mounted () {
+    this.nums = this.isMobile ? this.mobileNums : this.numsPC
   },
   methods: {
     advActive (index) { // 点击激活某一个产品优势模块
@@ -218,6 +309,9 @@ export default {
         name: 'detail-id',
         params: {detail: 'news', id}
       })
+    },
+    activeFunction (index) { // 手机端点击功能切换
+      this.activeHeader = index
     }
   }
 }
@@ -229,6 +323,59 @@ export default {
   .num-wrap {
     min-width: 1200px;
     background-color: $bgf8;
+  }
+  .num-mobile { // 移动端中间数字部分
+    min-width: 100%;
+    background-color: #fff;
+    .num {
+      width: 100%;
+      height: auto;
+      @include px2rem(padding, 67px, 0px, 70px, 0px);
+    }
+    .num-item {
+      width: 33.3%;
+      height: pxTorem(148px);
+      p {
+        font-size: pxTorem(52px);
+        font-weight: bold;
+        position: relative;
+        &:after {
+          content: '+';
+          position: absolute;
+          top: 0;
+          right: 0;
+          font-size: pxTorem(24px);
+        }
+      }
+      span {
+        @include poshc;
+        div {
+          white-space: nowrap;
+          color: #999;
+          margin-top: pxTorem(32px);
+        }
+      }
+      &:nth-child(3)>span {
+        position: relative;
+        top: 0;
+        right: 0;
+      }
+      &:nth-child(3) p:after {
+        content: '次';
+      }
+      &:after {
+        display: inline-block;
+        width: pxTorem(1px);
+        height: pxTorem(40px);
+        background-color: #aaa;
+        position: absolute;
+        right: 0;
+        top: pxTorem(40px);
+      }
+      &:nth-child(3):after {
+        width: 0;
+      }
+    }
   }
   .num { // 中间数字部分
     width: $width;
@@ -661,6 +808,194 @@ export default {
       &:nth-child(3) {
         padding-top: 10px;
       }
+    }
+  }
+  .mobile { // 手机端样式
+    background-color: #f5f5f5;
+    .mobile-function {
+      background-color: #f5f5f5;
+      @include px2rem(padding, 118px, 0px, 120px, 0px);
+      text-align: center;
+      h1 {
+        font-size: pxTorem(60px);
+        color: #000;
+      }
+      h2 {
+        font-size: pxTorem(42px);
+        color: #999;
+        @include px2rem(padding, 60px, 0px, 100px, 0px);
+      }
+    }
+    .function-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      div.isActive {
+        position: relative;
+        &:before, &:after {
+          z-index: 2;
+          position: absolute;
+          bottom: pxTorem(-91px);
+          @include poshc;
+          @include upTriangle(pxTorem(30px), #999)
+        }
+        &:after {
+          z-index: 3;
+          border-bottom-color: #ffffff;
+        }
+      }
+     div>span {
+       display: block;
+       height: pxTorem(70px);
+       position: relative;
+       img {
+         @extend %posc;
+       }
+     }
+      p {
+        font-size: pxTorem(34px);
+        margin-top: pxTorem(40px);
+        color: #666;
+      }
+      .isActive>p {
+        color: #44A5EF;
+      }
+      div:nth-child(1) {
+        img {
+          width: pxTorem(75px);
+          height: pxTorem(65px);
+        }
+      }
+      div:nth-child(2) {
+        img {
+          width: pxTorem(78px);
+          height: pxTorem(70px);
+        }
+      }
+      div:nth-child(3) {
+        img {
+          width: pxTorem(62px);
+          height: pxTorem(61px);
+        }
+      }
+      div:nth-child(4) {
+        img {
+          width: pxTorem(57px);
+          height: pxTorem(60px);
+        }
+      },
+      div:nth-child(5) {
+        img {
+        width: pxTorem(67px);
+        height: pxTorem(67px);
+        }
+      }
+      div:nth-child(6) {
+        img {
+          width: pxTorem(62px);
+          height: pxTorem(57px);
+        }
+      }
+    }
+    .function-text {
+      @include px2rem(margin, 90px, 80px, 0px);
+      @include px2rem(padding, 120px, 50px, 118px);
+      border: 1px solid #cccccc;
+      background-color: #ffffff;
+      p {
+        font-size: pxTorem(46px);
+        color: #666;
+        line-height:1.8;
+        text-align: left;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        margin-top: pxTorem(100px);
+      }
+    }
+    .mobile-news, .mobile-policy {
+      @include px2rem(padding, 120px, 0px, 100px);
+      background-color: #fff;
+      text-align: center;
+      h1 {
+        font-size: pxTorem(60px);
+        color: #000;
+        vertical-align: middle;
+        position: relative;
+        &:after {
+          @extend %posvm;
+          margin-left: pxTorem(30px);
+          width: pxTorem(64px);
+          height: pxTorem(64px);
+          background: url("~/assets/img/mobile/arrow-right-circle.png") no-repeat;
+          background-size: cover;
+        }
+      }
+      h2 {
+        font-size: pxTorem(42px);
+        color: #999;
+        @include px2rem(padding, 60px, 0px, 100px);
+      }
+      .new-content {
+        text-align: left;
+        img {
+          width: 100%;
+        }
+        h3 {
+          font-size: pxTorem(48px);
+          color: #000;
+          @include px2rem(padding, 77px, 50px, 50px);
+        }
+        p {
+          color: #999;
+          font-size: pxTorem(40px);
+          padding-left: pxTorem(50px);
+        }
+      }
+    }
+    .mobile-policy {
+      margin-top: pxTorem(30px);
+    }
+    .mobile-partner {
+      @include px2rem(padding, 160px, 0px, 122px);
+      text-align: center;
+      @include clearfix;
+      h1 {
+        font-size: pxTorem(46px);
+        color: #000;
+        margin-bottom: pxTorem(100px);
+      }
+      ul li {
+        float: left;
+        width: 33.3%;
+        text-align: center;
+        height: pxTorem(130px);
+        &:nth-child(1) img{
+          width: pxTorem(271px);
+        }
+        &:nth-child(2) img{
+          width: pxTorem(296px);
+        }
+        &:nth-child(3) img{
+          width: pxTorem(357px);
+        }
+      }
+     ul:last-child li {
+       width: 25%;
+       &:nth-child(4) img {
+          width: 171px;
+       }
+       &:nth-child(1) img {
+         width: pxTorem(172px);
+       }
+       &:nth-child(2) img {
+         width: pxTorem(252px);
+       }
+       &:nth-child(3) img {
+         width: pxTorem(238px);
+       }
+     }
     }
   }
 </style>

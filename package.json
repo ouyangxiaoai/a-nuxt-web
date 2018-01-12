@@ -4,6 +4,12 @@
   "description": "ssr of iot website",
   "author": "yangxiu <yangxiu@cnicg.cn>",
   "private": true,
+  "config": {
+    "nuxt": {
+      "host": "0.0.0.0",
+      "port": "3000"
+    }
+  },
   "scripts": {
     "dev": "cross-env URL_MODE=dev nuxt",
     "build": "nuxt build",
@@ -23,6 +29,7 @@
     "nuxt": "^1.0.0-rc11",
     "sass-loader": "^6.0.6",
     "swiper": "^2.7.6",
+    "vconsole": "^3.1.0",
     "vue-baidu-map": "^0.18.9",
     "vue-echarts": "^2.5.1"
   },

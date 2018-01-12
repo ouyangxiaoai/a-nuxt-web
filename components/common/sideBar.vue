@@ -1,5 +1,6 @@
 <template>
-  <div class="sideBar">
+  <div>
+  <div class="sideBar" v-if="!isMobile">
     <ul class="sideBar-list">
       <li class="list-item">
         <a href="http://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzgwMDE4NjAyMl80NzI0NDhfODAwMTg2MDIyXzJf" target="_blank" rel="noreferrer" class="item-link">
@@ -20,6 +21,10 @@
       </li>
     </ul>
   </div>
+  <div class="mobile mobile-side" @click="goToTop" v-else>
+
+  </div>
+  </div>
 </template>
 
 <script>
@@ -27,6 +32,11 @@
 
   export default {
     name: 'sideBar',
+    computed: {
+      isMobile () {
+        return this.$store.state.isMobile
+      }
+    },
     methods: {
       goToTop () {
         animate(document.body, {scrollTop: '0'}, 400, 'ease-out')
@@ -114,5 +124,15 @@
         }
       }
     }
+  }
+  .mobile-side {
+    position: fixed;
+    right: 5%;
+    bottom: 10%;
+    z-index: 10000;
+    width: pxTorem(118px);
+    height: pxTorem(118px);
+    background: url("~/assets/img/mobile/go-top.png") no-repeat;
+    background-size: cover;
   }
 </style>

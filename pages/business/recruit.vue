@@ -1,11 +1,11 @@
 <template>
   <div class="recruit">
-    <div class="banner"></div>
-    <div class="our-advantage">
+    <div :class="isMobile ? 'mobile-banner' : 'banner'"></div>
+    <div :class="isMobile ? 'our-advantage-mobile' : 'our-advantage'">
       <h1>国家平台的优势</h1>
       <ul v-for="list in advantage" class="adv-ul">
         <li v-for="item in list" class="adv-item">
-          <img :src="item.icon" alt="CNICG">
+          <img :src="isMobile ? item.iconMobile : item.icon" alt="CNICG">
           <div>
             <h2>{{item.title}}</h2>
             <p>{{item.detail}}</p>
@@ -13,6 +13,15 @@
         </li>
       </ul>
     </div>
+    <div class="service-system" v-if="isMobile">
+      <h1>推广服务机构</h1>
+      <ul>
+        <li v-for="url in companyList">
+          <img :src="url" alt="">
+        </li>
+      </ul>
+    </div>
+    <div v-else>
     <div class="partner-adv-wrap">
     <div class="partner-adv">
       <h1>成为国家平台合作伙伴的好处</h1>
@@ -40,20 +49,39 @@
       </div>
     </div>
     </div>
+    </div>
   </div>
 </template>
 <script>
   export default {
+    computed: {
+      isMobile () {
+        return this.$store.state.isMobile
+      },
+      company () {
+        return this.$store.state.business.childCompany
+      }
+    },
+    methods: {
+      companyMore () {
+        let more = [require('~/assets/img/mobile/company-more.png')]
+        this.companyList = [...this.company, ...more]
+      }
+    },
+    mounted () {
+      this.companyMore()
+    },
     data () {
       return {
+        companyList: [],
         advantage: [
-          [ {icon: require('~/assets/img/recruit-adv-1.png'), title: '政策重点支持', detail: '由国家发改委批复的国家级战略项目'},
-            {icon: require('~/assets/img/recruit-adv-2.png'), title: '品牌权威', detail: '国家平台由中科院牵头品牌公信力强，业务扩展相比其他企业产品更加迅速'},
-            {icon: require('~/assets/img/recruit-adv-3.png'), title: '"高精尖"研发团队', detail: '研发团队由中科院高级研发人员共同研发建设研发技术国内领先'}
+          [ {icon: require('~/assets/img/recruit-adv-1.png'), iconMobile: require('~/assets/img/mobile/recruit-adv-1.png'), title: '政策重点支持', detail: '由国家发改委批复的国家级战略项目'},
+            {icon: require('~/assets/img/recruit-adv-2.png'), iconMobile: require('~/assets/img/mobile/recruit-adv-2.png'), title: '品牌权威', detail: '国家平台由中科院牵头品牌公信力强，业务扩展相比其他企业产品更加迅速'},
+            {icon: require('~/assets/img/recruit-adv-3.png'), iconMobile: require('~/assets/img/mobile/recruit-adv-3.png'), title: '"高精尖"研发团队', detail: '研发团队由中科院高级研发人员共同研发建设研发技术国内领先'}
           ],
-          [ {icon: require('~/assets/img/recruit-adv-4.png'), title: '小投入大收益', detail: '相比其他企业，国家平台推广机构几乎零成本投入'},
-            {icon: require('~/assets/img/recruit-adv-5.png'), title: '产品应用广阔', detail: '基于平台强大的研发技术，提供高度匹配的个性化技术解决方案'},
-            {icon: require('~/assets/img/recruit-adv-6.png'), title: '合作资源丰富', detail: '联合工信部、中国物品编码中心中国检验认证集团等合作机构，市场资源更具竞争力'}
+          [ {icon: require('~/assets/img/recruit-adv-4.png'), iconMobile: require('~/assets/img/mobile/recruit-adv-4.png'), title: '小投入大收益', detail: '相比其他企业，国家平台推广机构几乎零成本投入'},
+            {icon: require('~/assets/img/recruit-adv-5.png'), iconMobile: require('~/assets/img/mobile/recruit-adv-5.png'), title: '产品应用广阔', detail: '基于平台强大的研发技术，提供高度匹配的个性化技术解决方案'},
+            {icon: require('~/assets/img/recruit-adv-6.png'), iconMobile: require('~/assets/img/mobile/recruit-adv-6.png'), title: '合作资源丰富', detail: '联合工信部、中国物品编码中心中国检验认证集团等合作机构，市场资源更具竞争力'}
           ]
         ],
         partnerCondition: [
@@ -79,6 +107,9 @@
   @import "assets/scss/mixins";
   .banner {
     background-image: url("~/assets/img/recruit-banner.png");
+  }
+  .mobile-banner {
+    background-image: url('~/assets/img/mobile/recruit-banner-mobile.png');
   }
   .our-advantage {
     @extend %title;
@@ -127,6 +158,57 @@
       &:nth-child(2) {
         margin: 0 30px;
       }
+    }
+  }
+  .our-advantage-mobile { // 手机端优势样式
+    @include px2rem(padding, 100px, 46px, 120px);
+    @extend %mobile-line;
+      .adv-item {
+        width: 100%;
+        height: pxTorem(300px);
+        @include px2rem(padding, 70px, 0px, 0px);
+        position: relative;
+        border: pxTorem(2px) solid #E0F2FB;
+        border-top-width: pxTorem(14px);
+        margin-bottom: pxTorem(40px);
+        img, div {
+          position: absolute;
+          @extend %posvm;
+          left: pxTorem(66px);
+        }
+        div {
+          left: auto;
+          right: pxTorem(42px);
+          width: pxTorem(800px);
+        }
+        div h2 {
+          font-size: pxTorem(48px);
+          color: #0299ed;
+          padding-bottom: pxTorem(30px);
+        }
+        div p {
+          line-height: 150%;
+          font-size: pxTorem(40px);
+          color: #666;
+        }
+      }
+      .adv-ul:last-child .adv-item:last-child {
+        margin-bottom: 0;
+      }
+    }
+  .service-system {
+    @include px2rem(padding, 100px, 46px, 81px);
+    @extend %mobile-line;
+    background-color: #f5f5f5;
+    li {
+      display: inline-block;
+      @include px2rem(margin, 0px, 44px, 42px, 0px);
+    }
+    li:nth-child(2n) {
+      margin-right: 0;
+    }
+    img {
+      width: pxTorem(553px);
     }
   }
   .partner-adv, .partner-condition, .partner-process {

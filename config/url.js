@@ -19,7 +19,7 @@ const getUrlByAlias = (url, platform = 'default') => {
   } else {
     ret = `${targetHost[platform]}${url}`
   }
-  process.env.URL_MODE === 'dev' && console.log(ret)
+  /* process.env.URL_MODE === 'dev' && console.log(ret) */
   return ret
 }
 export default getUrlByAlias

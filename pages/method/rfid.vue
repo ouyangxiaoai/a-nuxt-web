@@ -1,5 +1,6 @@
 <template>
   <div class="rfid">
+    <div v-if="!isMobile">
     <div class="banner"></div>
     <div class="rfid-content">
     <div class="rfid-bac">
@@ -47,22 +48,55 @@
       <h1>系统设计</h1>
       <img src="~/assets/img/rfid-system.png" alt="系统设计">
     </div>
+    </div>
+    <div class="mobile" v-else>
+      <div class="mobile-banner"></div>
+      <div class="rfid-bac-mobile">
+        <h1>项目背景</h1>
+        <i></i>
+        <div v-for="item in rfidBac" class="rfid-bac-item">
+          <h2>{{item.title}}</h2>
+          <p>{{item.detail}}{{item.detail2}}</p>
+        </div>
+      </div>
+      <div class="zican-manage">
+        <h1>固定资产管理系统</h1>
+        <div class="manage-list">
+        <el-collapse accordion v-model="activeIndex">
+          <el-collapse-item v-for="(item, index) in tabContent" :key="index" :name="index + ''">
+            <template slot="title">
+              <i :class="['header-icon',`icon-${index}`]"></i>
+              <span>{{item.title}}</span>
+              <i :class="(index + '') === activeIndex ? 'el-icon-arrow-up' : 'el-icon-arrow-down'"></i>
+            </template>
+            <p>{{item.detail1}}{{item.detail2 || '' }}</p>
+          </el-collapse-item>
+        </el-collapse>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
   export default {
+    computed: {
+      isMobile () {
+        return this.$store.state.isMobile
+      }
+    },
     data () {
       return {
+        activeIndex: '-1',
         rfidBac: [
           {title: '背景介绍', detail: 'RFID是一种无线射频识别技术，由读写器、天线和标签组成。当标签靠近到读写器和天线组成的感应范围时，标签会将存储在芯片里的数据发送给读写器，读写器会将数据上传至信息系统'},
           {title: '技术应用', detail: '目前RFID技术，正被广泛应用于农业、工业、物流、公共交通和各种服务领域'}
         ],
         tabContent: [
-          {title: '资产定位', detail1: '资产定位即记录资产的位置信息。为实现资产定位功能，需要对所有需要实现定位的资产加装电子标签，从而将电子便签与资产进行绑定', detail2: '在有安装RFID的读卡器办公区域或空间内，对资产进行监控管理'},
-          {title: '资产追踪', detail1: '资产追踪是记录资产位置及位置变化情况。通过在写字楼、办公室、会议室等地方部署相应的RFID读写设备，读取电子标签，实现位置信息的动态记录', detail2: '同时，为了更好管理资产的位置状态，一旦资产产生位置变化，将生成通知消息，提供给资产管理员进行监控和管理参考'},
-          {title: '远程管理', detail1: '实现资产自动管理，利用RFID技术和无线远程传输功能，实现对资产全生命周期（新增、调拨、闲置、报废、维修等）过程的智能化动态', detail2: '实时跟踪，集中监控管理，为资产合理调配提供准确的参考数据'},
-          {title: '资产盘点', detail1: '资产盘点即定期或不定期地对公司的资产、存货进行全部或部分的清点，以确实掌握企业存货数量、价值，并加以改善，加强管理', detail2: '资产盘点是资产管理中最耗时耗力的应用环节，固定资产管理系统目的之一就是为了实现高效的资产盘点'},
-          {title: '设备防盗', detail1: '当资产从安装到RFID读写器的大门经过时，如果资产未经授权，或标签遭到暴力拆除时，现场将触发警报，同时后台将报警的时间、地点、固定资产信息送到相关人员', detail2: '所有报警事件会自动记录到系统数据库中，并形成报警日志以供查询'}
+          {title: '资产定位', icon: require('~/assets/img/mobile/manage-1.png'), detail1: '资产定位即记录资产的位置信息。为实现资产定位功能，需要对所有需要实现定位的资产加装电子标签，从而将电子便签与资产进行绑定', detail2: '在有安装RFID的读卡器办公区域或空间内，对资产进行监控管理'},
+          {title: '资产追踪', icon: require('~/assets/img/mobile/manage-2.png'), detail1: '资产追踪是记录资产位置及位置变化情况。通过在写字楼、办公室、会议室等地方部署相应的RFID读写设备，读取电子标签，实现位置信息的动态记录', detail2: '同时，为了更好管理资产的位置状态，一旦资产产生位置变化，将生成通知消息，提供给资产管理员进行监控和管理参考'},
+          {title: '远程管理', icon: require('~/assets/img/mobile/manage-3.png'), detail1: '实现资产自动管理，利用RFID技术和无线远程传输功能，实现对资产全生命周期（新增、调拨、闲置、报废、维修等）过程的智能化动态', detail2: '实时跟踪，集中监控管理，为资产合理调配提供准确的参考数据'},
+          {title: '资产盘点', icon: require('~/assets/img/mobile/manage-4.png'), detail1: '资产盘点即定期或不定期地对公司的资产、存货进行全部或部分的清点，以确实掌握企业存货数量、价值，并加以改善，加强管理', detail2: '资产盘点是资产管理中最耗时耗力的应用环节，固定资产管理系统目的之一就是为了实现高效的资产盘点'},
+          {title: '设备防盗', icon: require('~/assets/img/mobile/manage-5.png'), detail1: '当资产从安装到RFID读写器的大门经过时，如果资产未经授权，或标签遭到暴力拆除时，现场将触发警报，同时后台将报警的时间、地点、固定资产信息送到相关人员', detail2: '所有报警事件会自动记录到系统数据库中，并形成报警日志以供查询'}
         ],
         rfidAdv: [
           {title: '方便快捷', text: '快速识别，高可靠性，易操作'},
@@ -258,6 +292,39 @@
       margin: 50px auto 0;
     }
   }
+  .mobile-banner {
+    background-image: url('~/assets/img/mobile/rfid-banner-mobile.png');
+  }
+  .rfid-bac-mobile {
+    @include px2rem(padding, 115px, 50px, 0px);
+    @extend %mobile-line;
+    i {
+      display: block;
+      width: 100%;
+      height: pxTorem(600px);
+      background: url('~/assets/img/mobile/rfid-bac-mobile.png') no-repeat center center;
+      background-size: cover;
+      margin-bottom: pxTorem(80px);
+    }
+    .rfid-bac-item {
+      margin-bottom: pxTorem(100px);
+      h2 {
+        font-size: pxTorem(48px);
+        color: #000;
+      }
+      p {
+        font-size: pxTorem(40px);
+        color: #999;
+        margin-top: pxTorem(50px);
+        line-height: 1.5;
+      }
+    }
+  }
+  .zican-manage {
+    @include px2rem(padding, 100px, 50px, 50px);
+    @extend %mobile-line;
+    background-color: #f5f5f5;
+  }
 </style>
 <style lang="scss">
   @import "assets/scss/common.scss";
@@ -320,6 +387,69 @@
         margin-top: 30px;
         line-height: 150%;
       }
+    }
+  }
+  .manage-list {
+    .el-collapse-item__header {
+      height: pxTorem(140px);
+      line-height: pxTorem(120px);
+      font-size: pxTorem(48px);
+      color: #333;
+      position: relative;
+    }
+    .el-collapse-item {
+      margin-bottom: pxTorem(50px);
+    }
+    .el-collapse {
+      border: none;
+    }
+    .el-collapse-item__arrow {
+      display: none;
+    }
+    .el-icon-arrow-down, .el-icon-arrow-up {
+      @extend %posvm;
+      right: pxTorem(20px);
+    }
+    .header-icon {
+      @extend %posvm;
+      left: pxTorem(40px);
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    .icon-0 {
+      background-image: url('~/assets/img/mobile/manage-1.png');
+      width: pxTorem(47px);
+      height: pxTorem(54px);
+    }
+    .icon-1 {
+      width: pxTorem(64px);
+      height: pxTorem(64px);
+      background-image: url('~/assets/img/mobile/manage-2.png');
+    }
+    .icon-2 {
+      width: pxTorem(58px);
+      height: pxTorem(48px);
+      background-image: url('~/assets/img/mobile/manage-3.png');
+    }
+    .icon-3 {
+      width: pxTorem(47px);
+      height: pxTorem(52px);
+      background-image: url('~/assets/img/mobile/manage-4.png');
+    }
+    .icon-4 {
+      width: pxTorem(64px);
+      height: pxTorem(48px);
+      background-image: url('~/assets/img/mobile/manage-5.png');
+    }
+    span {
+      @extend %posvm;
+      left: pxTorem(160px);
+    }
+    .el-collapse-item__content {
+      font-size: pxTorem(46px);
+      color: #999;
+      line-height: 1.5;
+      @include px2rem(padding, 50px, 40px, 100px);
     }
   }
 </style>

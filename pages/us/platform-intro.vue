@@ -1,5 +1,6 @@
 <template>
-  <div class="platform">
+  <div>
+  <div class="platform" v-if="!isMobile">
     <div class="banner"></div>
     <div class="pla-intro">
       <h1>平台简介</h1>
@@ -44,9 +45,37 @@
       </div>
     </div>
   </div>
+    <div class="mobile-platform" v-else>
+      <div class="mobile-banner"></div>
+      <div class="pla-intro-mobile">
+        <h1>平台简介</h1>
+        <div class="intro-content-mobile">
+          <img src="~/assets/img/pla-intro-bac.png" alt="">
+          <p>广州中国科学院计算机网络信息中心（Computer Network Information Center Chinese Academy of Sciences, Guangzhou，简称CNICG）是由中国科学院计算机网络信息中心、广州市政府以及南沙区政府三方合资共建的新型研发机构，承担物联网标识管理公共服务平台建设、运营、管理与服务的国家任务，开展物联网标识服务应用示范，建设物联网信息服务、技术研发和人才培养基地</p>
+          <p>国家物联网标识管理公共服务平台是由国家发改委正式批复的物联网技术研发及产业化专项项目【发改办高技[2013]2664号】，由中国科学院计算机网络信息中心牵头，联合多家单位共同建立的全国唯一的物联网标识统一管理和公共服务平台</p>
+          <p>国家物联网标识管理公共服务平台于2014年正式落地广州南沙新区，致力打造物联网标识标准化、规范化管理体系，为物联网规模化发展提供有效的产业支撑，着力解决我国物联网应用的互联互通问题。现已成为广东省物联网发展重点项目、中国（广东）自由贸易试验区广州南沙片区第九大创新业务体系</p>
+        </div>
+      </div>
+      <div class="hopeful-mobile">
+        <h1>项目愿景</h1>
+        <p>致力于万亿级物联网标识的价值创新，为物联网应用、大数据、云计算和人工智能等企业（单位）提供物联网标识的注册、查询、存储服务</p>
+      </div>
+      <div class="policy-mobile">
+        <h1>项目支持</h1>
+        <p>结合国民经济和社会发展的重大需求，以重点领域的物联网应用示范为依托，着力突破制约我国物联网发展的关键核心技术，为物联网规模化发展提供有效的产业支撑；制定基础共性技术标准，完善物联网标准体系，着力解决我国物联网应用的互联互通问题；依托已有基础，建设公共服务平台，着力解决检测认证和标识管理问题；加强产业自主创新能力建设，着力培育发展一批物联网技术研发和产品设备制造优势企业</p>
+        <img src="~/assets/img/pla-policy-1.png" alt="项目支持">
+        <img src="~/assets/img/pla-policy-2.png" alt="项目支持">
+      </div>
+    </div>
+  </div>
 </template>
 <script>
   export default {
+    computed: {
+      isMobile () {
+        return this.$store.state.isMobile
+      }
+    },
     data () {
       return {
         mem: [
@@ -64,6 +93,9 @@
   @import "assets/scss/common.scss";
   .banner {
     background-image: url("~/assets/img/platform.png");
+  }
+  .mobile-banner {
+    background-image: url('~/assets/img/mobile/platform-mobile.png');
   }
   .pla-intro, .hopeful, .pla-product, .pla-mem, .pla-policy {
     width: $width;
@@ -208,6 +240,28 @@
       img:last-child {
         float: right;
       }
+    }
+  }
+  .pla-intro-mobile, .hopeful-mobile, .policy-mobile {
+    @include px2rem(padding, 100px, 50px, 20px);
+    @extend %mobile-line;
+      img, p {
+        width: 100%;
+        margin-bottom: pxTorem(80px);
+      }
+      p {
+        font-size: pxTorem(40px);
+        color: #666;
+        line-height: 150%;
+      }
+  }
+  .hopeful-mobile {
+    background-color: #f5f5f5;
+  }
+  .policy-mobile {
+    padding-bottom: pxTorem(50px);
+    img {
+      margin-bottom: pxTorem(50px);
     }
   }
 </style>

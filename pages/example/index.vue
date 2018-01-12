@@ -1,11 +1,7 @@
 <template>
-  <div class="examples">
+  <div>
+  <div class="examples" v-if="!isMobile">
     <div class="banner">
-      <!--<div class="text">
-        <h1>应用案例</h1>
-        <p>国家物联网标识的实际应用案例，基于标识的扩展功能，解决行业的需求痛点</p>
-        <p>目前国家平台应用领域包括跨境电商、母婴、生鲜、食品、医疗等行业</p>
-      </div>-->
     </div>
     <div class="content">
       <h1>案例展示<span>/</span><span>Case Display</span></h1>
@@ -25,18 +21,31 @@
       </ul>
     </div>
   </div>
+  <div class="mobile-examples" v-else>
+    <div class="mobile-banner"></div>
+    <div class="mobile-content">
+      <h1>案例展示</h1>
+      <div v-scroll-show-callback="handleTrendScroll">
+        <mobile-new-item :list="exampleList"></mobile-new-item>
+      </div>
+    </div>
+  </div>
+  </div>
 </template>
 <script>
   import { mapGetters, mapState } from 'vuex'
   import ScrollShowCallBack from '~/directives/scrollShowCallBack'
+  import MobileNewItem from '~/components/mobile-new-item'
   export default {
+    components: {'mobile-new-item': MobileNewItem},
     computed: {
       ...mapGetters({
         'exampleList': 'example/exampleList'
       }),
       ...mapState({
         examplesParams: (state) => state.example.examples.examplesParams,
-        scrollDisable: state => state.scrollDisable
+        scrollDisable: state => state.scrollDisable,
+        isMobile: 'isMobile'
       })
     },
     directives: {'scroll-show-callback': ScrollShowCallBack},
@@ -50,7 +59,7 @@
           return false
         }
         this.$store.commit('SCROLL_DISABLE') // 上个请求未完成禁止进入
-        this.$store.dispatch('getContent', {gmtype: 112, page: ++page})
+        this.$store.dispatch('getContent', {gmtype: 112, page: ++page, size})
       }
     }
   }
@@ -60,6 +69,10 @@
   @import "assets/scss/common.scss";
   .banner {
     background-image: url("~/assets/img/example-banner.png");
+  }
+  .mobile-banner {
+    background-image: url('~/assets/img/mobile/example-banner-mobile.png');
+    height: pxTorem(720px);
   }
   .content {
     width: 1200px;
@@ -160,6 +173,13 @@
     }
     .example:nth-child(3n - 1) {
       margin: 0 30px;
+    }
+  }
+  .mobile-content {
+    @include px2rem(padding, 0px, 51px);
+    h1 {
+      font-size: pxTorem(50px);
+      @include px2rem(padding, 100px, 0px, 80px);
     }
   }
 </style>

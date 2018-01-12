@@ -1,6 +1,6 @@
 <template>
-  <div class="header-wrap">
-<div class="head-container">
+<div class="header-wrap">
+<div class="head-container" v-if="!isMobile">
   <div class="head-left">
   <nuxt-link to="/" class="head-left" @click="handleSelect('/')"><img src="~/assets/img/logo.png" alt="NIOT" class="img-logo"></nuxt-link>
   <el-menu
@@ -48,6 +48,26 @@
     </a>
   </div>
 </div>
+    <div class="mobile" v-else>
+      <div class="f-box mobile-head">
+        <nuxt-link to="/" class="logo"><img src="~/assets/img/logo.png" alt="NIOT"></nuxt-link>
+        <img src="~/assets/img/mobile/list.svg" alt="" @click="collapse">
+      </div>
+      <div class="menu" :style="{width: isCollapse ? '100%' : '0'}">
+        <el-menu ref="headMenu-mobile" :router="router" :default-active="activeIndex" mode="vertical" active-text-color="#000" text-color="#999" @select="collapse">
+          <el-menu-item index="/">首页</el-menu-item>
+          <el-submenu index="method">
+            <template slot="title">解决方案</template>
+            <el-menu-item index="/method/rfid">RFID解决方案</el-menu-item>
+            <el-menu-item index="/method/supermarket">超市解决方案</el-menu-item>
+          </el-submenu>
+          <el-menu-item index="/example">应用案例</el-menu-item>
+          <el-menu-item index="/business/recruit">业务合作</el-menu-item>
+          <el-menu-item index="/news">新闻中心</el-menu-item>
+          <el-menu-item index="/us/platform-intro">关于我们</el-menu-item>
+        </el-menu>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -56,38 +76,44 @@
   export default {
     computed: {
       ...mapState([
-        'activeIndex'
+        'activeIndex',
+        'isMobile'
       ])
     },
     data () {
       return {
-        router: true
+        router: true,
+        isCollapse: false
       }
     },
     components: {'head-search': HeadSearch},
     methods: {
       handleSelect (index) {
         // this.$store.commit('CHANGE_ACTIVE_INDEX', index)
+      },
+      collapse () {
+        if (this.isCollapse) {
+          document.getElementsByTagName('body')[0].className = ''
+        } else {
+          document.getElementsByTagName('body')[0].className = 'mobile-fix'
+        }
+        this.isCollapse = !this.isCollapse
       }
-    },
-    mounted () {
-      /* let localData = window.sessionStorage.getItem('activeIndex')
-      if (this.$store.state.activeIndex === '/' && localData && localData !== '/') {
-        this.$store.commit('CHANGE_ACTIVE_INDEX', localData)
-      } */
     }
   }
 </script>
 <style lang="scss" scoped>
   @import "assets/scss/mixins.scss"; // 使用‘~/assets’会报错，原因不明
-/*  .header-wrap {
+  @import "assets/scss/common.scss";
+  .header-wrap {
     position: fixed;
     left: 0;
     top: 0;
-    width: 100%;
+    right: 0;
     background-color: #fff;
     z-index: 999999;
-  }*/
+    box-shadow: 0 0 1px rgba(0, 0, 0, .2);
+  }
 .head-left {
   float: left;
 }
@@ -104,7 +130,6 @@
 }
 .img-logo {
   width: 215px;
-  height: 37px;
   object-fit: cover;
   margin-right: 40px;
 }
@@ -121,9 +146,37 @@
       background: #38a8e1;
     }
   }
+  .mobile {
+    .mobile-head {
+      @include px2rem(height, 146px);
+      @include px2rem(padding, 0px, 50px);
+      @extend %flex-box;
+      img {
+        @include px2rem(width, 48px);
+      }
+      .logo>img {
+        @include px2rem(width, 265px);
+      }
+    }
+    .menu {
+      position: fixed;
+      overflow: hidden;
+      @include px2rem(top, 146px);
+      right: 0;
+      width: 0;
+      height: 100%;
+      background-color: #f8f8f8;
+      z-index: 1000;
+      transition: all .5s;
+    }
+  }
 </style>
 <style lang="scss">
+  .mobile {
+    overflow: hidden;
+  }
   // 改写element的样式
+  @import "assets/scss/mixins.scss";
   .head-container {
     .el-menu {
       border-bottom: none;
@@ -159,6 +212,42 @@
       // transition: none;
       padding: 0;
       margin: 0 20px;
+    }
+  }
+  .mobile {
+    .el-menu {
+      border: none;
+      background-color: #f8f8f8;
+    }
+    .el-menu-item, .el-submenu__title {
+      padding-left: pxTorem(60px)!important;
+        @include px2rem(height, 138px);
+        @include px2rem(line-height, 138px);
+        @include px2rem(font-size, 48px);
+        border-top-color: #ccc;
+        border-top-style: solid;
+        @include px2rem(border-top-width, 1px);
+        &:last-child {
+          border-bottom-color: #ccc;
+          border-bottom-style: solid;
+          @include px2rem(border-bottom-width, 1px);
+        }
+    }
+    .el-menu-item.is-active {
+      background-color: #fff;
+    }
+    .el-submenu__title {
+      @include px2rem(font-size, 48px);
+      @include px2rem(height, 138px);
+      @include px2rem(line-height, 138px);
+    }
+    .el-submenu__icon-arrow {
+      font-size: pxTorem(50px);
+      margin-top: pxTorem(-25px);
+    }
+    .el-submenu .el-menu-item {
+      padding-left: pxTorem(80px)!important;
+      font-size: pxTorem(40px);
     }
   }
 </style>

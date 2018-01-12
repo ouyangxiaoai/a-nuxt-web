@@ -1,10 +1,11 @@
 <template>
-  <footer class="foot">
+  <div>
+  <footer class="foot" v-if="!isMobile">
     <div>
       <div class="address">
         <p class="dib">
           <span>地址：广东省广州市南沙区南沙资讯科技园香港科技大学霍英东研究院科技楼三楼</span>
-          <span>电话：400-806-0373 </span>
+          <a href="javascript:void(0)" class="tel">电话：400-806-0373</a>
           <span>邮箱：support@cnicg.cn</span>
         </p>
       </div>
@@ -23,11 +24,21 @@
       </div>
     </div>
   </footer>
+  <div class="mobile mobile-foot" v-else>
+    <p>国家物联网标识管理公共服务平台   粤ICP备16031487号-2</p>
+    <p>版权所有：广州中国科学院计算机网络信息中心</p>
+  </div>
+  </div>
 </template>
 
 <script>
   export default {
     name: 'foot',
+    computed: {
+      isMobile () {
+        return this.$store.state.isMobile
+      }
+    },
     data () {
       return {
         friends: [
@@ -92,11 +103,16 @@
     }
     .address {
       color: #e9e8e8;
-      span {
+      span, .tel {
+        color: #e9e8e8;
         margin-left: 28px;
         &:first-child {
           margin-left: 0;
         }
+      }
+      .tel:hover {
+        text-decoration: none;
+        cursor: text;
       }
     }
     .friends {
@@ -150,5 +166,12 @@
     .last:after{
       border:0;
     }
+  }
+  .mobile-foot {
+    @include px2rem(padding, 50px, 0px);
+    text-align: center;
+    color: #e9e8e8;
+    background-color: #353B48;
+    @include px2rem(font-size, 34px);
   }
 </style>

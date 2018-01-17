@@ -1,7 +1,7 @@
 <template>
   <div>
   <div v-for="item in list" class="mobile-example">
-    <nuxt-link :to="{name: 'detail-id', params: {detail: 'example', id: item.cms_id}}">
+    <nuxt-link :to="{name: 'detail-id', params: {detail: activeIndex === '/example' ? 'example' : 'news', id: item.cms_id}}">
       <i :style="{backgroundImage: `url(${item.img})`}"></i>
       <div v-if="activeIndex !== '/example'">{{item.ctime.split(' ')[0]}}</div>
       <h2>{{item.title}}</h2>

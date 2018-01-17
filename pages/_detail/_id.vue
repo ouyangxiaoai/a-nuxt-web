@@ -28,7 +28,7 @@
         obj.time = results[i].ctime
         arrMore.push(obj)
       }
-      return {title, ctn: {tt: ['国物标识', ctime, subtitle], cc: content}, labels: arr, more: arrMore, gmtype}
+      return {title, ctn: {tt: ['国家物联网标识平台', ctime, subtitle], cc: content}, labels: arr, more: arrMore, gmtype}
     }
   }
 </script>

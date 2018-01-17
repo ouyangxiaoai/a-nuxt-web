@@ -179,7 +179,7 @@
         div {
           left: auto;
           right: pxTorem(42px);
-          width: pxTorem(800px);
+          width: pxTorem(860px);
         }
         div h2 {
           font-size: pxTorem(48px);

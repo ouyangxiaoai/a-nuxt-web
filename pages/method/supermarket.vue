@@ -1,5 +1,6 @@
 <template>
-  <div class="supermarket">
+  <div>
+  <div class="supermarket" v-if="!isMobile">
     <div class="banner"></div>
     <div class="sm-bac-wrap">
     <div class="sm-bac">
@@ -34,9 +35,34 @@
     </div>
     </div>
   </div>
+  <div class="supermarket-mobile" v-else>
+    <div class="mobile-banner"></div>
+    <div class="sm-bac-mobile">
+      <h1>项目背景</h1>
+      <i></i>
+      <div class="sm-bac-wrap-mobile">
+        <h2>湖南高桥大市场简介</h2>
+        <p>湖南高桥大市场作为中南地区最大的国家级综合批发市场和全国第三大综合性市场，立足于长沙，服务范围辐射江西、湖北、广东等周边十余个省市，年交易额1000多亿元，经营户6000多户，经营从业人员15万余人</p>
+      </div>
+    </div>
+    <div class="sm-origin-mobile">
+      <h1>溯源全景图</h1>
+      <div class="sm-origin-item">
+        <img src="~/assets/img/mobile/sm-origin-mobile.png" alt="">
+        <h2>商品周期追溯</h2>
+        <p>通过防伪溯源系统，打造商品全生命周期追溯</p>
+      </div>
+    </div>
+  </div>
+  </div>
 </template>
 <script>
   export default {
+    computed: {
+      isMobile () {
+        return this.$store.state.isMobile
+      }
+    },
     data () {
       return {
         originText: [
@@ -58,6 +84,9 @@
   @import "assets/scss/common.scss";
   .banner {
     background-image: url("~/assets/img/supermarket-banner.png");
+  }
+  .mobile-banner {
+    background-image: url("~/assets/img/mobile/supermarket-banner-mobile.png");
   }
   .sm-bac, .sm-origin, .sm-adv {
     @extend %title;
@@ -179,6 +208,53 @@
     }
     i {
       @extend %circle-title;
+    }
+  }
+  .sm-bac-mobile, .sm-origin-mobile {
+    @include px2rem(padding, 115px, 50px, 0px);
+    @extend %mobile-line;
+  }
+  .sm-bac-mobile {
+    i {
+      display: block;
+      width: 100%;
+      height: pxTorem(600px);
+      background: url('~/assets/img/mobile/sm-bac-mobile.png') no-repeat center center;
+      background-size: cover;
+      margin-bottom: pxTorem(80px);
+    }
+    .sm-bac-wrap-mobile {
+      margin-bottom: pxTorem(100px);
+      h2 {
+        font-size: pxTorem(48px);
+        color: #000;
+      }
+      p {
+        font-size: pxTorem(40px);
+        color: #999;
+        margin-top: pxTorem(50px);
+        line-height: 1.5;
+      }
+    }
+  }
+  .sm-origin-mobile {
+    @include px2rem(padding, 100px, 50px);
+    background-color: #f5f5f5;
+  }
+  .sm-origin-item {
+    text-align: center;
+    img {
+      width: pxTorem(895px);
+      margin: 0 auto;
+    }
+    h2 {
+      font-size: pxTorem(48px);
+      color: #009BEE;
+      @include px2rem(padding, 79px, 0px, 50px);
+    }
+    p {
+      font-size: pxTorem(40px);
+      color: #999;
     }
   }
 </style>

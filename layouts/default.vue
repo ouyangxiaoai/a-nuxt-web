@@ -1,6 +1,6 @@
 <template>
   <div>
-    <fix-header />
+    <fix-header></fix-header>
     <div :class="[isMobile ? 'mobile-content' : 'page-content']">
     <nuxt/>
     </div>
@@ -45,6 +45,6 @@
     margin-top: 126px;
   }
   .mobile-content {
-    padding-top: pxTorem(146px);
+    padding-top: pxTorem(170px);
   }
 </style>

@@ -1,5 +1,6 @@
 <template>
-  <div class="m-pro-bg">
+  <div>
+  <div class="m-pro-bg" v-if="!isMobile">
     <div class="m-pro-detail">
       <div class="m-pro f-cb">
         <div class="m-pro-left">
@@ -61,20 +62,63 @@
         </nuxt-link>
       </div>
     </div>
+  </div v-if>
+  <div class="mobile-detail" v-else>
+    <div class="detail-content">
+      <h1>{{title}}</h1>
+      <div class="title-1">
+        <div>
+          <span>来源：</span>
+          <span>{{ctn.tt[0]}}</span>
+        </div>
+        <div>
+          <span>发布时间：</span>
+          <span>{{ctn.tt[1]}}</span>
+        </div>
+      </div>
+      <div class="m-label">
+        <span class="label" v-for="label in labels">{{label}}</span>
+      </div>
+      <div class="article-content" v-html="ctn.cc"></div>
+    </div>
+    <div class="detail-more">
+      <h1>相关推荐</h1>
+      <ul>
+        <li class="more-item" v-if="prev">
+          <nuxt-link :to="{ name: 'detail-id', params: {detail: gmtype === 112 ? 'example' : 'news', id: prev.cms_id}}">
+          <i class="img" :style="{backgroundImage: `url(${prev.img})`}"></i>
+          <div>
+            <h2>{{prev.title}}</h2>
+            <p><span>发布时间：</span><span>{{prev.ctime}}</span></p>
+          </div>
+          </nuxt-link>
+        </li>
+        <li class="more-item" v-if="next">
+          <nuxt-link :to="{ name: 'detail-id', params: {detail: gmtype === 112 ? 'example' : 'news', id: next.cms_id}}">
+        <i class="img" :style="{backgroundImage: `url(${next.img})`}"></i>
+        <div>
+          <h2>{{next.title}}</h2>
+          <p><span>发布时间：</span><span>{{next.ctime}}</span></p>
+        </div>
+          </nuxt-link>
+      </li>
+      </ul>
+    </div>
+  </div>
   </div>
 </template>
 
 <script>
   import { mapState } from 'vuex'
-  import NuxtLink from '../.nuxt/components/nuxt-link'
+  // import getUrl from '~/config/url'
   export default {
-    components: {NuxtLink},
     props: ['title', 'ctn', 'labels', 'more', 'gmtype'],
     computed: {
       ...mapState({
         newsList: state => state.news.newsList,
         policyList: state => state.policy.policyList,
-        examplesList: state => state.example.examples.examplesList
+        examplesList: state => state.example.examples.examplesList,
+        isMobile: 'isMobile'
       })
     },
     methods: {
@@ -102,33 +146,57 @@
       }
     },
     /* eslint-disable*/
-    mounted () { // 获取上下一篇
-      let id = this.$route.params.id
-      let list = this.gmtype === 26 ? this.newsList : (this.gmtype === 113 ? this.policyList : this.examplesList)
-      let now = list.filter((item) => {
-        return item.cms_id === id
-      })
-      let {prev_id, next_id} = now[0]
-      if (prev_id) {
-        let prev = list.filter((item) => {
-          return item.cms_id === prev_id
+    async mounted () { // 获取上下一篇
+        let id = this.$route.params.id
+        let list = this.gmtype === 26 ? this.newsList : (this.gmtype === 113 ? this.policyList : this.examplesList)
+        let now = list.filter((item) => {
+          return item.cms_id === id
         })
-        this.prev = prev[0]
-      }
-      if (next_id) {
-        let next = list.filter((item) => {
-          return item.cms_id === next_id
-        })
-        this.next = next[0]
-      }
-      window.addEventListener('scroll', this.showBox, false)
+        let prev_id, next_id
+         if (!now) {
+          // 由于后台不支持这个需求连同后面的空判断暂时都不做
+         }
+        if (now) { // 由于上个判断没有，这里需要判断now是否存在以免prev_id报错
+          prev_id = now[0].prev_id
+          next_id = now[0].next_id
+        }
+        if (prev_id) {
+          let prev = list.filter((item) => {
+            return item.cms_id === prev_id
+          })
+          this.prev = prev[0]
+          /*if (!this.prev) {
+            let cmsUrl = getUrl(`/message/${prev_id}`, 'CMS')
+            let {data} = await this.$axios({method: 'get', type: 'jsonp', url: cmsUrl})
+            data.cms_id = data.id
+            data.img = data.image
+            this.prev = data
+          }*/
+        }
+        if (next_id) {
+          let next = list.filter((item) => {
+            return item.cms_id === next_id
+          })
+          this.next = next[0]
+          /*if (!this.next) {
+            let cmsUrl = getUrl(`/message/${next_id}`, 'CMS')
+            let {data} = await this.$axios({method: 'get', type: 'jsonp', url: cmsUrl})
+            data.cms_id = data.id
+            data.img = data.image
+            this.next = data
+          }*/
+        }
+      if (!this.isMobile) { window.addEventListener('scroll', this.showBox, false)}
     },
     destroyed () {
-      window.removeEventListener('scroll', this.showBox)
+      if (!this.isMobile) {
+        window.removeEventListener('scroll', this.showBox)
+      }
     }
   }
 </script>
 <style lang="scss">
+  @import "assets/scss/mixins";
   .u-ctn {
     width: 700px;
     margin: 48px auto 0;
@@ -143,6 +211,30 @@
       max-width: 65%;
       margin-top: 25px;
       margin-bottom: 25px;
+    }
+    a {
+      color: rgb(0, 0, 204);
+      font-weight: 600;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  .mobile-detail .article-content {
+    p, span, strong {
+      font-size: pxTorem(44px)!important;
+      color: #666;
+      line-height: 1.5!important;
+    }
+    p {
+      margin-top: pxTorem(60px);
+    }
+    strong {
+      font-weight: bold;
+    }
+    img {
+      max-width: 100%;
+      @include px2rem(margin, 100px, 0px);
     }
     a {
       color: rgb(0, 0, 204);
@@ -445,6 +537,91 @@
         border-right-color: #fff;
         margin-right: 8px;
         margin-left: 2px;
+      }
+    }
+  }
+  .mobile-detail {
+    background-color: #f5f5f5;
+  }
+  .detail-content {
+    @include px2rem(padding, 100px, 60px);
+    background-color: #fff;
+    h1 {
+      font-size: pxTorem(60px);
+      margin-bottom: pxTorem(60px);
+      color: #000;
+    }
+    .title-1 {
+      font-size: pxTorem(40px);
+      color: #999;
+      div {
+        display: inline-block;
+        margin-right: pxTorem(40px);
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+    .m-label {
+      margin-top: pxTorem(40px);
+      font-size: pxTorem(40px);
+    }
+    .label {
+      background-color: #f0f0f0;
+      @include px2rem(padding, 10px, 18px);
+      margin-right: pxTorem(16px);
+      color: #999;
+      border-radius: 4px;
+    }
+    .article-content {
+      margin-top: pxTorem(70px);
+      font-size: 44px;
+      color: #666;
+    }
+  }
+  .detail-more {
+    margin-top: pxTorem(20px);
+    background-color: #fff;
+    @include px2rem(padding, 60px, 60px, 100px);
+    h1 {
+      font-size: pxTorem(48px);
+      color: #333;
+      padding-bottom: pxTorem(10px);
+    }
+    .more-item {
+      @include px2rem(padding, 50px, 0px);
+      border-bottom: pxTorem(1px) solid #ccc;
+      @include clearfix;
+      height: pxTorem(300px);
+      position: relative;
+      &:last-child {
+        border: 0;
+      }
+      .img {
+        float: left;
+        width: pxTorem(300px);
+        height: pxTorem(200px);
+        background-size: cover;
+        background-position: center center;
+        margin-right: pxTorem(60px);
+      }
+      div {
+        float: left;
+        width: pxTorem(760px);
+      }
+      h2 {
+        font-size: pxTorem(44px);
+        color: #666;
+        max-height: pxTorem(118px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      p {
+        font-size: pxTorem(40px);
+        color: #999;
+        position: absolute;
+        bottom: pxTorem(50px);
+        left: pxTorem(360px);
       }
     }
   }

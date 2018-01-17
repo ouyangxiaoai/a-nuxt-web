@@ -1,8 +1,9 @@
 <template>
-  <div :class="['container', isMobile ? 'mobile-banner' : '']">
+  <div :class="['container', isMobile ? 'mobile-banners' : '']">
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" v-for="banner in banners" :style="{backgroundImage: `url(${banner})`}">
+      <div class="swiper-slide" v-for="banner in banners">
+        <img :src="banner" alt="">
       </div>
     </div>
     <div class="swiper-button-prev" @click="prevSlide"></div>
@@ -44,9 +45,12 @@
       height: 740px;
       overflow: hidden;
       .swiper-slide {
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
+        text-align: center;
+        background-color: #eee;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
       }
     }
     .swiper-button-next,.swiper-button-prev {
@@ -66,7 +70,7 @@
       transform: rotate(180deg)
     }
   }
-  .mobile-banner {
+  .mobile-banners {
     .swiper-container {
       min-width: 100%!important;
       height: pxTorem(720px);
@@ -75,12 +79,15 @@
       }
       .swiper-slide {
         height: pxTorem(720px)!important;
+        img {
+          object-fit: cover;
+        }
       }
     }
     .swiper-button-next,.swiper-button-prev {
       position: absolute;
       top: 50%;
-      margin-top: pxTorem(30px);
+      margin-top: pxTorem(-30px);
       left: 0;
       background-image: url("~/assets/img/banner-arrow.png");
       width: pxTorem(44px);

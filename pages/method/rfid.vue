@@ -398,7 +398,7 @@
       position: relative;
     }
     .el-collapse-item {
-      margin-bottom: pxTorem(50px);
+      margin-bottom: pxTorem(30px);
     }
     .el-collapse {
       border: none;

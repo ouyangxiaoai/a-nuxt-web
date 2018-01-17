@@ -46,17 +46,13 @@
     <div  v-else>
     <div class="mobile-content-new">
       <h1>平台动向</h1>
-      <nuxt-link :to="{name: 'news-name', params: {name: 'platform'}}"><h2>查看更多</h2></nuxt-link>
-      <mobile-new-item :list="newsContent.slice(0, 2)">
-        <div slot="time"></div>
-      </mobile-new-item>
+      <nuxt-link :to="{name: 'list-name', params: {name: 'platform'}}"><h2>查看更多</h2></nuxt-link>
+      <mobile-new-item :list="newsContent.slice(0, 2)"></mobile-new-item>
     </div>
       <div class="mobile-content-policy">
         <h1>国家政策</h1>
-        <nuxt-link :to="{name: 'news-name', params: {name: 'policy'}}"><h2>查看更多</h2></nuxt-link>
-        <mobile-new-item :list="policyContent.slice(0, 1)">
-
-        </mobile-new-item>
+        <nuxt-link :to="{name: 'list-name', params: {name: 'policy'}}"><h2>查看更多</h2></nuxt-link>
+        <mobile-new-item :list="policyContent.slice(0, 1)"></mobile-new-item>
       </div>
     </div>
     <!--<pagenation @handleCurrentChange="handleCurrentChange" :current-page="currentPage" :page-size="size" :total="count" v-if="count > 3"></pagenation>-->

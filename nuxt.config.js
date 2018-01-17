@@ -70,7 +70,7 @@ module.exports = {
   },
   router: {
     middleware: 'auth',
-    fallback: true
+    fallback: false
   },
   modules: ['@nuxtjs/axios', '@nuxtjs/proxy'],
   axios: {

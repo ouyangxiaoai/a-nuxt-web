@@ -115,7 +115,7 @@
         <h2>物联网技术 + 大数据分析 + GIS技术</h2>
         <div class="function-content">
           <div class="function-header">
-            <div  v-for="item in functionHeader" :class="item.index === activeHeader ? 'isActive' : ''" @click="activeFunction(item.index)">
+            <div  v-for="item in functionHeader" :class="item.index === activeHeader ? 'isActive' : ''" @click.stop="activeFunction(item.index)">
               <span><img :src="activeHeader === item.index ? item.imgActive : item.img" alt=""></span>
               <p>{{item.title}}</p>
             </div>
@@ -132,18 +132,22 @@
         <h1>平台动向</h1>
         <h2>表示应用新方向，掌握最前沿的行业新闻</h2>
         <div class="new-content">
+          <nuxt-link :to="{ name: 'detail-id', params: {detail: 'news', id: contentLeft[0].cms_id}}">
           <img :src="contentLeft[0].img" alt="">
           <h3>{{contentLeft[0].title}}</h3>
           <p>{{contentLeft[0].ctime}}</p>
+          </nuxt-link>
         </div>
       </div>
       <div class="mobile-policy">
         <h1>国家政策</h1>
         <h2>物联网国家政策，了解最新动向</h2>
         <div class="new-content">
+          <nuxt-link :to="{ name: 'detail-id', params: {detail: 'policy', id: policyContent[0].cms_id}}">
           <img :src="policyContent[0].img" alt="">
           <h3>{{policyContent[0].title}}</h3>
           <p>{{policyContent[0].ctime}}</p>
+          </nuxt-link>
         </div>
       </div>
       <div class="mobile-partner">
@@ -261,15 +265,15 @@ export default {
       ],
       mobilePartner: [
         [
-          {img: require('~/assets/img/partner-1.png')},
-          {img: require('~/assets/img/partner-2.png')},
-          {img: require('~/assets/img/partner-4.png')}
+          {img: require('~/assets/img/mobile/partner-1.png')},
+          {img: require('~/assets/img/mobile/partner-2.png')},
+          {img: require('~/assets/img/mobile/partner-3.png')}
         ],
         [
-          {img: require('~/assets/img/partner-5.png')},
-          {img: require('~/assets/img/partner-3.png')},
-          {img: require('~/assets/img/partner-6.png')},
-          {img: require('~/assets/img/partner-7.png')}
+          {img: require('~/assets/img/mobile/partner-4.png')},
+          {img: require('~/assets/img/mobile/partner-5.png')},
+          {img: require('~/assets/img/mobile/partner-6.png')},
+          {img: require('~/assets/img/mobile/partner-7.png')}
         ]
       ],
       functionHeader: [
@@ -327,6 +331,9 @@ export default {
   .num-mobile { // 移动端中间数字部分
     min-width: 100%;
     background-color: #fff;
+    .mobile-banner {
+      height: pxTorem(720px);
+    }
     .num {
       width: 100%;
       height: auto;
@@ -339,6 +346,7 @@ export default {
         font-size: pxTorem(52px);
         font-weight: bold;
         position: relative;
+        font-family: '思源黑体', 'CN Regular';
         &:after {
           content: '+';
           position: absolute;
@@ -835,12 +843,15 @@ export default {
         &:before, &:after {
           z-index: 2;
           position: absolute;
-          bottom: pxTorem(-91px);
+          left: 0;
+          bottom: pxTorem(-90px);
           @include poshc;
-          @include upTriangle(pxTorem(30px), #999)
+          border: pxTorem(30px) solid transparent;
+          border-bottom-color: #aaa;
         }
         &:after {
           z-index: 3;
+          bottom: pxTorem(-91px);
           border-bottom-color: #ffffff;
         }
       }
@@ -898,9 +909,10 @@ export default {
       }
     }
     .function-text {
+      position: relative;
       @include px2rem(margin, 90px, 80px, 0px);
       @include px2rem(padding, 120px, 50px, 118px);
-      border: 1px solid #cccccc;
+      border: pxTorem(1px) solid #cccccc;
       background-color: #ffffff;
       p {
         font-size: pxTorem(46px);
@@ -975,25 +987,25 @@ export default {
           width: pxTorem(271px);
         }
         &:nth-child(2) img{
-          width: pxTorem(296px);
+          width: pxTorem(294px);
         }
         &:nth-child(3) img{
-          width: pxTorem(357px);
+          width: pxTorem(356px);
         }
       }
      ul:last-child li {
        width: 25%;
        &:nth-child(4) img {
-          width: 171px;
+          width: pxTorem(171px);
        }
        &:nth-child(1) img {
-         width: pxTorem(172px);
+         width: pxTorem(171px);
        }
        &:nth-child(2) img {
          width: pxTorem(252px);
        }
        &:nth-child(3) img {
-         width: pxTorem(238px);
+         width: pxTorem(237px);
        }
      }
     }

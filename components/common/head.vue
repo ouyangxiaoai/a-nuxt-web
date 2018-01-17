@@ -1,84 +1,84 @@
 <template>
 <div class="header-wrap">
-<div class="head-container" v-if="!isMobile">
-  <div class="head-left">
-  <nuxt-link to="/" class="head-left" @click="handleSelect('/')"><img src="~/assets/img/logo.png" alt="NIOT" class="img-logo"></nuxt-link>
-  <el-menu
-    ref="headMenu"
-    :router="router"
-    :default-active="activeIndex"
-    class="head-left"
-    mode="horizontal"
-    active-text-color="#409eff"
-    @select="handleSelect">
-    <el-menu-item index="/">首页</el-menu-item>
-    <el-submenu index="function">
-      <template slot="title">功能介绍</template>
-      <el-menu-item index="/function/c-manage">窜货管理</el-menu-item>
-      <el-menu-item index="/function/big-data">大数据</el-menu-item>
-      <el-menu-item index="/function/security">防伪溯源</el-menu-item>
-      <el-menu-item index="/function/market">精准营销</el-menu-item>
-      <el-menu-item index="/function/channel">渠道优化</el-menu-item>
-      <el-menu-item index="/function/service">售后服务</el-menu-item>
-    </el-submenu>
-    <el-submenu index="method">
-      <template slot="title">解决方案</template>
-      <el-menu-item index="/method/rfid">RFID解决方案</el-menu-item>
-      <el-menu-item index="/method/supermarket">超市解决方案</el-menu-item>
-    </el-submenu>
-    <el-menu-item index="/example">应用案例</el-menu-item>
-    <el-submenu index="business">
-      <template slot="title">业务合作</template>
-      <el-menu-item index="/business/b-intro">业务介绍</el-menu-item>
-      <el-menu-item index="/business/recruit">招募专题</el-menu-item>
-    </el-submenu>
-    <el-menu-item index="/news">新闻中心</el-menu-item>
-    <el-submenu index="us">
-      <template slot="title">关于我们</template>
-      <el-menu-item index="/us/platform-intro">平台简介</el-menu-item>
-      <el-menu-item index="/us/e-room">展厅掠影</el-menu-item>
-      <el-menu-item index="/us/link-us">联系我们</el-menu-item>
-    </el-submenu>
-  </el-menu>
-  </div>
-  <div class="head-right">
-    <head-search class="search head-left"></head-search>
-    <a href="http://v2.cniotroot.cn/#/index/login" target="_blank" rel="noreferrer" class="login head-left">
-      登录
-    </a>
-  </div>
-</div>
-    <div class="mobile" v-else>
-      <div class="f-box mobile-head">
-        <nuxt-link to="/" class="logo"><img src="~/assets/img/logo.png" alt="NIOT"></nuxt-link>
-        <img src="~/assets/img/mobile/list.svg" alt="" @click="collapse">
-      </div>
-      <div class="menu" :style="{width: isCollapse ? '100%' : '0'}">
-        <el-menu ref="headMenu-mobile" :router="router" :default-active="activeIndex" mode="vertical" active-text-color="#000" text-color="#999" @select="collapse">
-          <el-menu-item index="/">首页</el-menu-item>
-          <el-submenu index="method">
-            <template slot="title">解决方案</template>
-            <el-menu-item index="/method/rfid">RFID解决方案</el-menu-item>
-            <el-menu-item index="/method/supermarket">超市解决方案</el-menu-item>
-          </el-submenu>
-          <el-menu-item index="/example">应用案例</el-menu-item>
-          <el-menu-item index="/business/recruit">业务合作</el-menu-item>
-          <el-menu-item index="/news">新闻中心</el-menu-item>
-          <el-menu-item index="/us/platform-intro">关于我们</el-menu-item>
-        </el-menu>
-      </div>
+  <div class="head-container" v-if="!isMobile">
+    <div class="head-left">
+      <nuxt-link to="/" class="head-left" @click="handleSelect('/')"><img src="~/assets/img/logo.png" alt="NIOT" class="img-logo"></nuxt-link>
+      <el-menu
+        ref="headMenu"
+        :router="router"
+        :default-active="activeIndex"
+        class="head-left"
+        mode="horizontal"
+        active-text-color="#409eff"
+        @select="handleSelect">
+        <el-menu-item index="/">首页</el-menu-item>
+        <el-submenu index="function">
+          <template slot="title">功能介绍</template>
+          <el-menu-item index="/function/c-manage">窜货管理</el-menu-item>
+          <el-menu-item index="/function/big-data">大数据</el-menu-item>
+          <el-menu-item index="/function/security">防伪溯源</el-menu-item>
+          <el-menu-item index="/function/market">精准营销</el-menu-item>
+          <el-menu-item index="/function/channel">渠道优化</el-menu-item>
+          <el-menu-item index="/function/service">售后服务</el-menu-item>
+        </el-submenu>
+        <el-submenu index="method">
+          <template slot="title">解决方案</template>
+          <el-menu-item index="/method/rfid">RFID解决方案</el-menu-item>
+          <el-menu-item index="/method/supermarket">超市解决方案</el-menu-item>
+        </el-submenu>
+        <el-menu-item index="/example">应用案例</el-menu-item>
+        <el-submenu index="business">
+          <template slot="title">业务合作</template>
+          <el-menu-item index="/business/b-intro">业务介绍</el-menu-item>
+          <el-menu-item index="/business/recruit">招募专题</el-menu-item>
+        </el-submenu>
+        <el-menu-item index="/news">新闻中心</el-menu-item>
+        <el-submenu index="us">
+          <template slot="title">关于我们</template>
+          <el-menu-item index="/us/platform-intro">平台简介</el-menu-item>
+          <el-menu-item index="/us/e-room">展厅掠影</el-menu-item>
+          <el-menu-item index="/us/link-us">联系我们</el-menu-item>
+        </el-submenu>
+      </el-menu>
+    </div>
+    <div class="head-right">
+      <head-search class="search head-left"></head-search>
+      <a href="http://v2.cniotroot.cn/#/index/login" target="_blank" rel="noreferrer" class="login head-left">
+        登录
+      </a>
     </div>
   </div>
+  <div class="mobile" v-else>
+    <div class="f-box mobile-head">
+      <nuxt-link to="/" class="logo"><img src="~/assets/img/logo.png" alt="NIOT"></nuxt-link>
+      <img src="~/assets/img/mobile/list.svg" alt="" @click="collapse" />
+    </div>
+    <div class="menu" :style="{width: isCollapse ? '100%' : '0'}">
+      <el-menu ref="headMenu-mobile" :router="router" :default-active="activeIndex" mode="vertical" active-text-color="#000" text-color="#999" @select="collapse">
+        <el-menu-item index="/">首页</el-menu-item>
+        <el-submenu index="method">
+          <template slot="title">解决方案</template>
+          <el-menu-item index="/method/rfid">RFID解决方案</el-menu-item>
+          <el-menu-item index="/method/supermarket">超市解决方案</el-menu-item>
+        </el-submenu>
+        <el-menu-item index="/example">应用案例</el-menu-item>
+        <el-menu-item index="/business/recruit">业务合作</el-menu-item>
+        <el-menu-item index="/news">新闻中心</el-menu-item>
+        <el-menu-item index="/us/platform-intro">关于我们</el-menu-item>
+      </el-menu>
+    </div>
+  </div>
+</div>
 </template>
 <script>
   import HeadSearch from '~/components/common/headSearch'
   import { mapState } from 'vuex'
   export default {
     computed: {
-      ...mapState([
-        'activeIndex',
-        'isMobile'
-      ])
+      ...mapState({
+        activeIndex: 'activeIndex',
+        isMobile: 'isMobile'
+      })
     },
     data () {
       return {
@@ -112,7 +112,7 @@
     right: 0;
     background-color: #fff;
     z-index: 999999;
-    box-shadow: 0 0 1px rgba(0, 0, 0, .2);
+    border-bottom: pxTorem(1px) solid #aaa;
   }
 .head-left {
   float: left;
@@ -148,7 +148,7 @@
   }
   .mobile {
     .mobile-head {
-      @include px2rem(height, 146px);
+      @include px2rem(height, 170px);
       @include px2rem(padding, 0px, 50px);
       @extend %flex-box;
       img {
@@ -161,7 +161,7 @@
     .menu {
       position: fixed;
       overflow: hidden;
-      @include px2rem(top, 146px);
+      @include px2rem(top, 170px);
       right: 0;
       width: 0;
       height: 100%;

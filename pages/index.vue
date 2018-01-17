@@ -847,7 +847,7 @@ export default {
           bottom: pxTorem(-90px);
           @include poshc;
           border: pxTorem(30px) solid transparent;
-          border-bottom-color: #aaa;
+          border-bottom-color: #ccc;
         }
         &:after {
           z-index: 3;

@@ -112,7 +112,7 @@
     right: 0;
     background-color: #fff;
     z-index: 999999;
-    border-bottom: pxTorem(1px) solid #aaa;
+    border-bottom: pxTorem(1px) solid #dedfe0;
   }
 .head-left {
   float: left;

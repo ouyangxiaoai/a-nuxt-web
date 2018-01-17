@@ -37,7 +37,7 @@
   }
 </script>
 <style lang="scss" scoped>
-  @import "/idangerous.swiper.css";
+  @import "assets/scss/idangerous.swiper.scss";
   @import "assets/scss/mixins.scss";
   .container {
     .swiper-container {

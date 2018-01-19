@@ -7,18 +7,18 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    'title': '国家物联网标识管理公共服务平台',
+    'title': '物联网云平台_标识基点 万物互联',
     meta: [
       { charset: 'utf-8' },
       {'http-equiv': 'X-UA-Compatible', content: 'IE=edge'},
-      { hid: 'description', name: 'description', content: '国家物联网标识管理公共服务平台，是由中国科学院计算机网络信息中心牵头，联合工业和信息化部电子科学技术情报研究所、工业和信息化部电信研究院、中国物品编码中心三家参与单位建立的物联网标识统一管理和公共服务平台。' },
-      {hid: 'keywords', name: 'keywords', content: '国物标识 国家平台  国物防伪  溯源中国 溯源  防伪 一物一码'}
+      { hid: 'description', name: 'description', content: '物联网云平台，以标识为基，构建万物互联体系；以标识为炉，熔炼数据商业价值；以标识为器，锻造惠民物联生态！' },
+      {hid: 'keywords', name: 'keywords', content: 'IoT,NIOT,RFID,LoRa,物联网,标识,标识追溯,标识营销,标识监管,物联网络,物联网云平台'}
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
     script: [
-      {src: 'http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js'},
+      {src: '/flexble.js'},
       { src: '/modernizr.custom.js' }
     ]
   },

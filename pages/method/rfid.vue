@@ -394,8 +394,12 @@
       height: pxTorem(140px);
       line-height: pxTorem(120px);
       font-size: pxTorem(48px);
-      color: #333;
+      color: #666;
       position: relative;
+      font-weight: normal;
+    }
+    .el-collapse-item.is-active .el-collapse-item__header {
+      border-bottom-color: #cccccc;
     }
     .el-collapse-item {
       margin-bottom: pxTorem(30px);

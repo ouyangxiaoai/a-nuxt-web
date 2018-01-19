@@ -51,7 +51,7 @@
   <div class="mobile" v-else>
     <div class="f-box mobile-head">
       <nuxt-link to="/" class="logo"><img src="~/assets/img/logo.png" alt="NIOT"></nuxt-link>
-      <img src="~/assets/img/mobile/list.svg" alt="" @click="collapse" />
+      <img src="~/assets/img/mobile/list.png" alt="" @click="collapse" />
     </div>
     <div class="menu" :style="{width: isCollapse ? '100%' : '0'}">
       <el-menu ref="headMenu-mobile" :router="router" :default-active="activeIndex" mode="vertical" active-text-color="#000" text-color="#999" @select="collapse">
@@ -151,11 +151,14 @@
       @include px2rem(height, 170px);
       @include px2rem(padding, 0px, 50px);
       @extend %flex-box;
+      align-items: flex-start;
       img {
-        @include px2rem(width, 48px);
+        @include px2rem(height, 45px);
+        margin-top: pxTorem(61px);
       }
       .logo>img {
-        @include px2rem(width, 265px);
+        @include px2rem(height, 70px);
+        margin-top: pxTorem(50px);
       }
     }
     .menu {

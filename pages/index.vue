@@ -129,7 +129,7 @@
         </div>
       </div>
       <div class="mobile-news">
-        <h1>平台动向</h1>
+        <nuxt-link :to="{name: 'list-name', params: {name: 'news'}}"><h1><span>平台动向</span><img src="~/assets/img/mobile/arrow-right-circle.png" alt=""></h1></nuxt-link>
         <h2>表示应用新方向，掌握最前沿的行业新闻</h2>
         <div class="new-content">
           <nuxt-link :to="{ name: 'detail-id', params: {detail: 'news', id: contentLeft[0].cms_id}}">
@@ -140,7 +140,7 @@
         </div>
       </div>
       <div class="mobile-policy">
-        <h1>国家政策</h1>
+        <nuxt-link :to="{name: 'list-name', params: {name: 'policy'}}"><h1><span>国家政策</span><img src="~/assets/img/mobile/arrow-right-circle.png" alt=""></h1></nuxt-link>
         <h2>物联网国家政策，了解最新动向</h2>
         <div class="new-content">
           <nuxt-link :to="{ name: 'detail-id', params: {detail: 'policy', id: policyContent[0].cms_id}}">
@@ -344,15 +344,14 @@ export default {
       height: pxTorem(148px);
       p {
         font-size: pxTorem(52px);
-        font-weight: bold;
+        font-weight: 400;
         position: relative;
-        font-family: '思源黑体', 'CN Regular';
         &:after {
           content: '+';
           position: absolute;
-          top: 0;
+          top: pxTorem(-10px);
           right: 0;
-          font-size: pxTorem(24px);
+          font-size: pxTorem(34px);
         }
       }
       span {
@@ -370,6 +369,8 @@ export default {
       }
       &:nth-child(3) p:after {
         content: '次';
+        top: 0;
+        font-size: pxTorem(28px);
       }
       &:after {
         display: inline-block;
@@ -851,7 +852,7 @@ export default {
         }
         &:after {
           z-index: 3;
-          bottom: pxTorem(-91px);
+          bottom: pxTorem(-95px);
           border-bottom-color: #ffffff;
         }
       }
@@ -931,17 +932,18 @@ export default {
       background-color: #fff;
       text-align: center;
       h1 {
-        font-size: pxTorem(60px);
-        color: #000;
-        vertical-align: middle;
-        position: relative;
-        &:after {
-          @extend %posvm;
+        span {
+          display: inline-block;
+          font-size: pxTorem(60px);
+          color: #000;
+          vertical-align: middle;
+          position: relative;
+        }
+        img {
+          vertical-align: middle;
+          display: inline-block;
           margin-left: pxTorem(30px);
-          width: pxTorem(64px);
-          height: pxTorem(64px);
-          background: url("~/assets/img/mobile/arrow-right-circle.png") no-repeat;
-          background-size: cover;
+          width: pxTorem(45px);
         }
       }
       h2 {
@@ -970,7 +972,7 @@ export default {
       margin-top: pxTorem(30px);
     }
     .mobile-partner {
-      @include px2rem(padding, 160px, 0px, 122px);
+      @include px2rem(padding, 120px, 0px, 60px);
       text-align: center;
       @include clearfix;
       h1 {

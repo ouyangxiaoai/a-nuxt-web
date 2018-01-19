@@ -54,6 +54,6 @@
 <style lang="scss" scoped>
   @import "assets/scss/mixins.scss";
   .new-list {
-    @include px2rem(padding, 100px, 51px, 0px);
+    background-color: #f5f5f5;
   }
 </style>

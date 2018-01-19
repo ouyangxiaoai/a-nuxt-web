@@ -6,8 +6,8 @@
         <img :src="banner" alt="">
       </div>
     </div>
-    <div class="swiper-button-prev" @click="prevSlide"></div>
-    <div class="swiper-button-next" @click="nextSlide"></div>
+    <div class="swiper-button-prev" @click="prevSlide" v-if="!isMobile"></div>
+    <div class="swiper-button-next" @click="nextSlide" v-if="!isMobile"></div>
   </div>
   </div>
 </template>
@@ -80,6 +80,7 @@
       .swiper-slide {
         height: pxTorem(720px)!important;
         img {
+          height: pxTorem(720px);
           object-fit: cover;
         }
       }

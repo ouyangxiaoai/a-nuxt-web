@@ -176,10 +176,9 @@
     }
   }
   .mobile-content {
-    @include px2rem(padding, 0px, 51px);
     h1 {
       font-size: pxTorem(50px);
-      @include px2rem(padding, 100px, 0px, 80px);
+      @include px2rem(padding, 100px, 51px, 80px);
     }
   }
 </style>

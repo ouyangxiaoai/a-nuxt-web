@@ -32,7 +32,15 @@
 <style lang="scss" scoped>
   @import "assets/scss/mixins.scss";
   .mobile-example {
-    padding-bottom: pxTorem(100px);
+    @include px2rem(padding, 100px, 51px, 90px);
+    background-color: #ffffff;
+    margin-bottom: pxTorem(30px);
+    &:first-child {
+      padding-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
     i {
       display: block;
       width: 100%;
@@ -52,5 +60,14 @@
       font-size: pxTorem(40px);
       color: #999;
     }
+  }
+</style>
+<style lang="scss">
+  @import "assets/scss/mixins.scss";
+  .mobile-content-policy .mobile-example {
+    background-color: #f5f5f5;
+  }
+  .new-list .mobile-example:first-child {
+    padding-top: pxTorem(100px);
   }
 </style>

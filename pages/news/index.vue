@@ -232,11 +232,12 @@
     }
   }
   .mobile-content-new, .mobile-content-policy {
-      @include px2rem(padding, 0px, 51px);
       position: relative;
+      background-color: #f5f5f5;
       h1 {
         font-size: pxTorem(50px);
-        @include px2rem(padding, 100px, 0px, 80px);
+        @include px2rem(padding, 100px, 51px, 80px);
+        background-color: #fff;
       }
       h2 {
         position: absolute;
@@ -248,7 +249,10 @@
       }
   }
   .mobile-content-policy {
-    background-color: #f5f5f5;
+    h1 {
+      background-color: #f5f5f5;
+      padding-top: pxTorem(90px);
+    }
   }
 </style>
 <style lang="scss">

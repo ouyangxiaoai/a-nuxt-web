@@ -89,6 +89,7 @@
     width: 600px;
     height: 122px;
     background-color: #f8f8f8;
+    cursor: pointer;
     &:hover {
       box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     }

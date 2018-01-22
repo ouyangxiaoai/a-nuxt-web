@@ -480,6 +480,7 @@ export default {
         padding: 62px 0 62px 50px;
         border: 1px solid #e9e9e9;
         background-color: $bgf8;
+        cursor: default;
         .content-title {
           text-align: left;
           font-size: 20px;

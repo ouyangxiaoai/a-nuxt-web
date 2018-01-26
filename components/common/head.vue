@@ -123,18 +123,22 @@
 }
 .head-container {
   @include clearfix;
-  padding: 40px 0;
+  padding: 30px 0;
   min-width: 1200px;
   margin: 0 0 0 8%;
   position: relative;
 }
+a {
+  display: inline-block;
+  height: 50px;
+}
 .img-logo {
-  width: 215px;
+  height: 50px;
   object-fit: cover;
   margin-right: 40px;
 }
   .login {
-    background: #42b8f1;
+    background: #009BEE;
     border-radius: 3px;
     line-height: 38px;
     color: #fff;

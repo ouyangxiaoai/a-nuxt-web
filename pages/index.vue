@@ -389,8 +389,8 @@ export default {
   .num { // 中间数字部分
     width: $width;
     margin: 0 auto;
-    height: 150px;
-    padding: 40px 0 20px 0;
+    height: 140px;
+    padding: 35px 0 20px 0;
   }
   .num-item {
     width: 33.3%;
@@ -403,6 +403,7 @@ export default {
       p {
         @extend %title-zh;
         font-size: 32px;
+        margin-bottom: 10px;
       }
     }
     &:nth-child(2)>span{

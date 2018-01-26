@@ -42,7 +42,7 @@
   .container {
     .swiper-container {
       min-width: 1200px!important;
-      height: 740px;
+      height: 520px;
       overflow: hidden;
       .swiper-slide {
         text-align: center;
@@ -51,6 +51,11 @@
         justify-content: center;
         align-items: center;
         overflow: hidden;
+        img {
+          /*height: 520px;
+          width: 100%;*/
+          object-fit: cover;
+        }
       }
     }
     .swiper-button-next,.swiper-button-prev {

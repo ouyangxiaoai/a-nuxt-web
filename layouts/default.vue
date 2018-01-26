@@ -42,7 +42,7 @@
 <style lang="scss" scoped>
   @import "~assets/scss/mixins.scss";
   .page-content {
-    margin-top: 126px;
+    margin-top: 110px;
   }
   .mobile-content {
     padding-top: pxTorem(170px);

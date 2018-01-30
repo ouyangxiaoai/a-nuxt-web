@@ -101,9 +101,9 @@
         rfidAdv: [
           {title: '方便快捷', text: '快速识别，高可靠性，易操作'},
           {title: '降低成本', text: '节约人力，提高企业管理效益'},
-          {title: '智能管理', text: '合理调配资源，减少资源浪费'},
+          {title: '减少浪费', text: '合理调配资源，减少资源浪费'},
           {title: '资产防盗', text: '自动识别，防止财产丢失'},
-          {title: '减少浪费', text: '有序管理，可实时监控喝记录'}
+          {title: '智能管理', text: '有序管理，可实时监控记录'}
         ]
       }
     },
@@ -184,6 +184,7 @@
         width: 594px;
         margin-top: 10px;
         line-height: 150%;
+        font-size: 14px;
       }
     }
   .rfid-zican {
@@ -233,6 +234,7 @@
         position: absolute;
         top: 90px;
         left: 180px;
+        font-size: 14px;
       }
       div:nth-child(2)>span {
         top: 13px;
@@ -386,6 +388,7 @@
       p {
         margin-top: 30px;
         line-height: 150%;
+        font-size: 14px;
       }
     }
   }

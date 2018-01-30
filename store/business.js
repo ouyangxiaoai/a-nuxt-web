@@ -5,7 +5,7 @@ export const state = () => ({
 
 export const mutations = {
   'B_INTRO_CHILD' (state, payload) {
-    state.childPlatform = payload.platform
-    state.childCompany = payload.company
+    state.childPlatform = payload[0]
+    state.childCompany = payload[1]
   }
 }

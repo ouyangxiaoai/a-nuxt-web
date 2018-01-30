@@ -52,6 +52,7 @@
     }
     p {
       line-height: 150%;
+      font-size: 14px;
     }
     img {
       margin-top: 50px;

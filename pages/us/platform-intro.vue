@@ -134,6 +134,7 @@
       right: 0;
       p {
         line-height: 150%;
+        font-size: 14px;
       }
       p:last-child{
         margin-top: 38px;
@@ -142,6 +143,7 @@
     h3 {
       margin-top: 50px;
       line-height: 150%;
+      font-size: 14px;
     }
   }
   .hopeful, .pla-product, .pla-policy .content {
@@ -162,6 +164,9 @@
       }
     }
   }
+  .hopeful p {
+    font-size: 14px;
+  }
   .pla-product {
     height: 382px;
     padding-top: 62px;
@@ -170,6 +175,7 @@
       width: 738px;
       p {
         line-height: 150%;
+        font-size: 14px;
       }
       p:last-child {
         margin-top: 40px;

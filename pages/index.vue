@@ -1,7 +1,7 @@
 <template>
   <div>
     <banner :banners="banners" :isMobile="isMobile"></banner>
-    <div :class="['num-wrap', isMobile ? 'num-mobile' : '']">
+    <div :class="['num-wrap', isMobile ? 'num-mobile' : 'num-pc']">
     <div class="num">
       <div v-for="item in nums" class="num-item">
         <span>
@@ -22,7 +22,7 @@
       </div>
       <div @click="advActive(content.index)" class="adv-content" v-for="content in advContent" :class="content.index === activeAdv ? 'isActive' : ''">
         <div class="content-header">
-          <img :src="content.img" alt="国物标识">
+          <img :src="content.img" alt="标识平台">
           <div>
           <h6>{{content.title}}</h6>
           <span>{{content.titleEn}}</span>
@@ -99,11 +99,11 @@
     <!--  合作伙伴  -->
     <div class="partner">
       <div class="par-content">
-      <h1>携手共赢，与全球合作伙伴共建标识生态</h1>
-      <h2>加入国物标识合作伙伴计划，开创新业务，获取技术、资源、实现更快速成长</h2>
+      <h1>携手共赢，与全球合作伙伴共建标识生态圈</h1>
+      <h2>加入物联网标识服务合作伙伴计划，开创新业务，获取技术、资源、实现更快速成长</h2>
       <ul>
         <li v-for="item in partner">
-          <img :src="item.img" alt="国物标识合作伙伴">
+          <img :src="item.img" alt="标识合作伙伴">
         </li>
       </ul>
       </div>
@@ -130,7 +130,7 @@
       </div>
       <div class="mobile-news">
         <nuxt-link :to="{name: 'list-name', params: {name: 'news'}}"><h1><span>平台动向</span><img src="~/assets/img/mobile/arrow-right-circle.png" alt=""></h1></nuxt-link>
-        <h2>表示应用新方向，掌握最前沿的行业新闻</h2>
+        <h2>标识应用新方向，掌握最前沿的行业新闻</h2>
         <div class="new-content">
           <nuxt-link :to="{ name: 'detail-id', params: {detail: 'news', id: contentLeft[0].cms_id}}">
           <img :src="contentLeft[0].img" alt="">
@@ -152,10 +152,10 @@
       </div>
       <div class="mobile-partner">
         <div class="mobile-par-content">
-          <h1>携手共赢，与全球合作伙伴共建标识生态</h1>
+          <h1>携手共赢，与全球合作伙伴共建标识生态圈</h1>
           <ul v-for="list in mobilePartner">
             <li v-for="item in list">
-              <img :src="item.img" alt="国物标识合作伙伴">
+              <img :src="item.img" alt="标识合作伙伴">
             </li>
           </ul>
         </div>
@@ -167,12 +167,20 @@
 <script>
 import banner from '~/components/common/banner'
 import { mapGetters, mapState } from 'vuex'
-/* import chunk from 'lodash/chunk' */
 import numScroll from '~/directives/numScroll'
 import newsItem from '~/components/new-item'
+import getUrl from '~/config/url'
+
 export default {
   components: {
     banner, 'news-item': newsItem
+  },
+  async fetch ({store, app}) {
+    if (store.state.banners.length === 0) {
+      let url = getUrl('/api/v1/iot-site/banners/')
+      let {data: {results}} = await app.$axios.get(url)
+      store.commit('GET_BANNERS', results)
+    }
   },
   directives: {'num-scroll': numScroll},
   computed: {
@@ -240,19 +248,19 @@ export default {
         }
       ],
       feaList: [
-        {icon: require('~/assets/img/1.png'), name: '大数据应用', path: '/function/big-data'},
+        {icon: require('~/assets/img/6.png'), name: '防伪溯源', path: '/function/security'},
         {icon: require('~/assets/img/2.png'), name: '精准营销', path: '/function/market'},
-        {icon: require('~/assets/img/3.png'), name: '渠道优化', path: '/function/channel'},
+        {icon: require('~/assets/img/1.png'), name: '大数据应用', path: '/function/big-data'},
         {icon: require('~/assets/img/4.png'), name: '窜货管理', path: '/function/c-manage'},
-        {icon: require('~/assets/img/5.png'), name: '售后服务', path: '/function/service'},
-        {icon: require('~/assets/img/6.png'), name: '防伪溯源', path: '/function/security'}
+        {icon: require('~/assets/img/3.png'), name: '渠道优化', path: '/function/channel'},
+        {icon: require('~/assets/img/5.png'), name: '售后服务', path: '/function/service'}
       ],
       advList: [
         {index: '01', name: '品牌权威', detail1: '国家级物联网标识基建平台', detail2: '公信力强'},
-        {index: '02', name: '兼容性强', detail1: '作为国家产品基础数据库，独有异构', detail2: '解析技术，兼容所以标识码'},
+        {index: '02', name: '兼容性强', detail1: '作为国家产品基础数据库，独有异构', detail2: '解析技术，兼容所有标识码'},
         {index: '05', name: '政策扶持', detail1: '国家发改委批复的国家级战略', detail2: '项目由政府出资重点建设'},
-        {index: '03', name: '安全稳定', detail1: '表示信息存储运营，数据信息安全稳定', detail2: ''},
-        {index: '04', name: '技术保障', detail1: '有中科院高级研发人员共同研发建设', detail2: '技术国内领先'}
+        {index: '03', name: '安全稳定', detail1: '标识信息存储运营，数据信息安全稳定', detail2: ''},
+        {index: '04', name: '技术保障', detail1: '由中科院高级研发人员共同研发建设', detail2: '技术国内领先'}
       ],
       partner: [
         {img: require('~/assets/img/partner-1.png')},
@@ -392,6 +400,9 @@ export default {
     height: 140px;
     padding: 35px 0 20px 0;
   }
+  .num-pc .num-item span div {
+    font-size: 14px;
+  }
   .num-item {
     width: 33.3%;
     display: inline-block;
@@ -505,6 +516,9 @@ export default {
             }
             i, h2, span {
               display: inline-block;
+            }
+            span {
+              font-size: 14px;
             }
           }
           div img {

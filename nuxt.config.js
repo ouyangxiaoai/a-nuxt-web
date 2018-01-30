@@ -33,8 +33,16 @@ module.exports = {
   /*
   ** Build configuration
   */
-  plugins: ['~/plugins/elementUI', {src: '~/plugins/baiduMap', ssr: false}, {src: '~/plugins/vue-awesome-swiper', ssr: false}],
+  plugins: ['~/plugins/elementUI', {src: '~/plugins/baiduMap', ssr: false}],
   build: {
+    babel: {
+      'plugins': [['component', [
+        {
+          'libraryName': 'element-ui',
+          'styleLibraryName': 'theme-chalk'
+        }
+      ]]]
+    },
     postcss: {
       plugins: {
         'postcss-cssnext': {

@@ -14,10 +14,10 @@
         <el-menu-item index="/">首页</el-menu-item>
         <el-submenu index="function">
           <template slot="title">功能介绍</template>
-          <el-menu-item index="/function/c-manage">窜货管理</el-menu-item>
-          <el-menu-item index="/function/big-data">大数据</el-menu-item>
           <el-menu-item index="/function/security">防伪溯源</el-menu-item>
           <el-menu-item index="/function/market">精准营销</el-menu-item>
+          <el-menu-item index="/function/big-data">大数据应用</el-menu-item>
+          <el-menu-item index="/function/c-manage">窜货管理</el-menu-item>
           <el-menu-item index="/function/channel">渠道优化</el-menu-item>
           <el-menu-item index="/function/service">售后服务</el-menu-item>
         </el-submenu>
@@ -42,7 +42,7 @@
       </el-menu>
     </div>
     <div class="head-right">
-      <head-search class="search head-left"></head-search>
+      <!--<head-search class="search head-left"></head-search>-->
       <a href="http://v2.cniotroot.cn/#/index/login" target="_blank" rel="noreferrer" class="login head-left">
         登录
       </a>
@@ -119,13 +119,13 @@
 }
 .head-right {
  @extend %posvm;
-  right: 8%;
+  right: 0;
 }
 .head-container {
   @include clearfix;
   padding: 30px 0;
-  min-width: 1200px;
-  margin: 0 0 0 8%;
+  width: 1200px;
+  margin: 0 auto;
   position: relative;
 }
 a {

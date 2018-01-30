@@ -78,14 +78,14 @@
   .mobile-banners {
     .swiper-container {
       min-width: 100%!important;
-      height: pxTorem(720px);
+      height: pxTorem(520px);
       .swiper-wrapper {
-        height: pxTorem(720px);
+        height: pxTorem(520px);
       }
       .swiper-slide {
-        height: pxTorem(720px)!important;
+        height: pxTorem(520px)!important;
         img {
-          height: pxTorem(720px);
+          height: pxTorem(520px);
           object-fit: cover;
         }
       }

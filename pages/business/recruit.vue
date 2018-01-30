@@ -16,8 +16,8 @@
     <div class="service-system" v-if="isMobile">
       <h1>推广服务机构</h1>
       <ul>
-        <li v-for="url in companyList">
-          <img :src="url" alt="">
+        <li v-for="item in companyList">
+          <img :src="item.image" alt="">
         </li>
       </ul>
     </div>
@@ -37,7 +37,7 @@
     </div>
     <div class="partner-process-wrap">
     <div class="partner-process">
-      <h1>成为合作伙伴的审核流程</h1>
+      <h1>成为国家平台合作伙伴的审核流程</h1>
       <div>
         <div v-for="item in step" class="step">
           <div>
@@ -53,6 +53,7 @@
   </div>
 </template>
 <script>
+  import getUrl from '~/config/url'
   export default {
     computed: {
       isMobile () {
@@ -62,9 +63,21 @@
         return this.$store.state.business.childCompany
       }
     },
+    fetch ({store, app}) {
+      let mobile = store.state.isMobile
+      if (mobile) {
+        let list = store.state.business.childCompany
+        if (list.length === 0) {
+          let url1 = getUrl('/api/v1/cooperation/businesses')
+          return app.$axios.get(url1).then(res => {
+            return store.commit('business/B_INTRO_CHILD', [[], res.data.results])
+          })
+        }
+      }
+    },
     methods: {
       companyMore () {
-        let more = [require('~/assets/img/mobile/company-more.png')]
+        let more = [{image: require('~/assets/img/mobile/company-more.png')}]
         this.companyList = [...this.company, ...more]
       }
     },
@@ -76,7 +89,7 @@
         companyList: [],
         advantage: [
           [ {icon: require('~/assets/img/recruit-adv-1.png'), iconMobile: require('~/assets/img/mobile/recruit-adv-1.png'), title: '政策重点支持', detail: '由国家发改委批复的国家级战略项目'},
-            {icon: require('~/assets/img/recruit-adv-2.png'), iconMobile: require('~/assets/img/mobile/recruit-adv-2.png'), title: '品牌权威', detail: '国家平台由中科院牵头品牌公信力强，业务扩展相比其他企业产品更加迅速'},
+            {icon: require('~/assets/img/recruit-adv-2.png'), iconMobile: require('~/assets/img/mobile/recruit-adv-2.png'), title: '品牌权威', detail: '平台由中科院牵头品牌公信力强，业务扩展相比其他企业产品更加迅速'},
             {icon: require('~/assets/img/recruit-adv-3.png'), iconMobile: require('~/assets/img/mobile/recruit-adv-3.png'), title: '"高精尖"研发团队', detail: '研发团队由中科院高级研发人员共同研发建设研发技术国内领先'}
           ],
           [ {icon: require('~/assets/img/recruit-adv-4.png'), iconMobile: require('~/assets/img/mobile/recruit-adv-4.png'), title: '小投入大收益', detail: '相比其他企业，国家平台推广机构几乎零成本投入'},
@@ -278,6 +291,7 @@
       p {
         white-space: nowrap;
         margin-top: 30px;
+        font-size: 14px;
       }
     }
   }

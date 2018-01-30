@@ -7,7 +7,7 @@ export const getBanner = (url) => {
     console.log('获取banner发生错误：', err)
   })
 }
-export const getBusinessChild = (url) => {
+/* export const getBusinessChild = (url) => {
   return axios.get(url).then(res => {
     let data = res.data.results
     let results = []
@@ -20,7 +20,7 @@ export const getBusinessChild = (url) => {
   }).catch(err => {
     console.log('获取业务子平台以及合作机构发生错误：', err)
   })
-}
+} */
 /*  浏览器版本 */
 export const getUserAgent = (ua) => {
   let rv = -1 // Return value assumes failure.

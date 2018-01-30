@@ -18,15 +18,15 @@
       return {
         market: {
           title: '精准营销',
-          titleText: '智能优化营销策略，低成本广覆盖，精准触达用户，营销效果看得见',
+          titleText: '低成本广覆盖，智能优化营销策略，精准触达用户，营销效果看得见',
           detail: [
-            {title: '技术原理：GIS+物联网标识+大数据', detail1: '洞察消费者需求，勾勒用户画像，实时调整营销策略，将最符合消费者心理的营销活动，展现在消费者面前', img: require('~/assets/img/market-detail.png')}
+            {title: '技术原理：物联网标识+大数据+GIS', detail1: '洞察消费者需求，勾勒用户画像，实时调整营销策略，将最符合消费者心理的营销活动，展现在消费者面前', img: require('~/assets/img/market-detail.png')}
           ]
         },
         text: [
           {title: '促销商品', detail1: '通过标识可将促销活动产品范围细分到单件产品上'},
           {title: '后台一键生成活动', detail1: '企业可随时自主控制营销活动范围', detail2: '活动地域，甚至单个经销商'},
-          {title: '可视化报告', detail1: '活动中，可形成可视化报告，精准勾勒用户画像', detail2: '根据活动POI, 规划资源投放，精确管理活动的每一笔支出'}
+          {title: '可视化报告', detail1: '活动中精准勾勒用户画像，精确管理活动的每一笔支出', detail2: '形成可视化报告 投资回报清晰可见'}
         ]
       }
     }
@@ -56,6 +56,7 @@
     }
     p {
       line-height: 150%;
+      font-size: 14px;
     }
   }
 </style>

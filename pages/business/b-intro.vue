@@ -37,10 +37,10 @@
     </div>
   </div>
     <div class="child-platform-1">
-      <h1>现有子平台</h1>
+      <h1>数据合作平台</h1>
       <div class="content">
-        <div v-for="url in platform">
-          <img :src="url" alt="CNICG 子平台">
+        <div v-for="item in platform">
+          <img :src="item.image" alt="CNICG 子平台">
         </div>
       </div>
     </div>
@@ -48,8 +48,8 @@
     <div class="child-platform-2">
       <h1>授权代理商</h1>
       <div class="content">
-        <div v-for="url in company">
-          <img :src="url" alt="CNICG 子平台">
+        <div v-for="item in company">
+          <img :src="item.image" alt="CNICG 子平台">
         </div>
       </div>
     </div>
@@ -90,6 +90,16 @@
       let url = getUrl('/api/v1/company/')
       let { data } = await app.$axios.get(url, {params: {province: 44, status: 2}})
       return {list: data.results, isEmpty: data.results.length === 0, companyList: {44: data.results}}
+    },
+    fetch ({store, app}) {
+      let list = store.state.business.childPlatform
+      if (list.length === 0) {
+        let url1 = getUrl('/api/v1/cooperation/platforms')
+        let url2 = getUrl('api/v1/cooperation/businesses')
+        return Promise.all([app.$axios.get(url1), app.$axios.get(url2)]).then(res => {
+          return store.commit('business/B_INTRO_CHILD', [res[0].data.results, res[1].data.results])
+        })
+      }
     },
     methods: {
       getProvince: async function (event) { // 每次点击切换省份的公司

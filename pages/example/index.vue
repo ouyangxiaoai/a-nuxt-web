@@ -48,6 +48,13 @@
         isMobile: 'isMobile'
       })
     },
+    fetch ({store}) {
+      let example = store.state.example.examples.examplesList
+      if (example.length === 0) {
+        store.commit('SCROLL_DISABLE')
+        return store.dispatch('getContent', {gmtype: 112, size: store.state.isMobile ? 2 : 6})
+      }
+    },
     directives: {'scroll-show-callback': ScrollShowCallBack},
     methods: {
       handleTrendScroll () {
@@ -144,6 +151,7 @@
         height: 50px;
         text-align: center;
         transition: display 1s;
+        font-size: 14px;
       }
       .detail {
         display: none;

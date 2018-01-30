@@ -49,8 +49,8 @@
       <h1>溯源全景图</h1>
       <div class="sm-origin-item">
         <img src="~/assets/img/mobile/sm-origin-mobile.png" alt="">
-        <h2>商品周期追溯</h2>
-        <p>通过防伪溯源系统，打造商品全生命周期追溯</p>
+        <h2>商品全过程追溯</h2>
+        <p>通过防伪溯源系统，打造商品全过程追溯</p>
       </div>
     </div>
   </div>
@@ -121,6 +121,7 @@
         word-wrap: break-word;
         line-height: 1.5;
         margin-top: 27px;
+        font-size: 14px;
       }
     }
     }
@@ -142,6 +143,7 @@
       p {
         margin-top: 20px;
         color: #999;
+        font-size: 14px;
       }
     }
     div:nth-child(2), div:last-child {
@@ -180,6 +182,7 @@
       position: absolute;
       top: 360px;
       left: 0;
+      font-size: 14px;
     }
     div:nth-child(3) span {
       top: 120px;

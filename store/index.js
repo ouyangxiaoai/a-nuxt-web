@@ -1,4 +1,4 @@
-import { getBanner, getBusinessChild, getUserAgent } from '../api/index'
+import { getUserAgent } from '../api/index'
 import cloneDeep from 'lodash/cloneDeep'
 import getUrl from '~/config/url'
 import {agent} from '../api/util'
@@ -34,8 +34,8 @@ export const state = () => ({
 export const getters = {
   bannersImg: state => {
     let list = []
-    state.banners.forEach((item) => {
-      list.push(item.image)
+    state.banners && state.banners.forEach((item) => {
+      list.push(item.image || item.img)
     })
     return list
   }
@@ -89,9 +89,9 @@ export const mutations = {
 /* eslint-disable */
 export const actions = {
   /*   一个统一的action方法：url是iost-site/refs/ */
-  async getContent ({commit}, {gmtype = '', page = 1, size = 6}) {
+getContent ({commit}, {gmtype = '', page = 1, size = 6}) {
     let url = getUrl('/api/v1/iot-site/refs/')
-    await this.$axios.get(url, {
+    return this.$axios.get(url, {
       params: {
         gmtype,
         page,
@@ -105,6 +105,7 @@ export const actions = {
           item.img = require('~/assets/img/initial-bac.jpg')
         }
       })
+      // console.log(list)
       list.forEach((item, index) => {
         let {img, title, ctime, cms_id, labels, prev_id, next_id} = item
         tempArr[index] = {
@@ -126,52 +127,50 @@ export const actions = {
         }
       }
       let type = gmtype === 112 ? 'example/GET_EXAMPLE_LIST' : (gmtype === 26) ? 'GET_NEWS' : 'GET_POLICY'
+      // console.log(news)
+      // console.log(type)
       commit(type, news)
-      if (gmtype === 112) {
+      if(gmtype === 112) {
         commit('SCROLL_DISABLE') // 在滚动加载的时候每次请求完打开可以下次请求
       }
     }).catch(err => console.log(`获取${gmtype}发生错误：`, err))
   },
-  async getNewsContent ({commit}, {list, type}) {
+  getNewsContent ({commit}, {list, type}) {
     let contents = cloneDeep(list)
-    let len = list.length
-    for (let i = 0; i < len; i++) { // 首页的新闻详情
+    // let len = list.length
+   /* for (let i = 0; i < len; i++) { // 首页的新闻详情
       let id = contents[i].cms_id
       let cmsUrl = getUrl(`/message/${id}`, 'CMS')
       let {data: {subtitle}} = await this.$axios({url: cmsUrl, method: 'get', type: 'jsonp'})
       contents[i].content = subtitle
-    }
-    let types = type === 'news' ? 'GET_NEWS_CONTENT' : 'GET_POLICY_CONTENT'
-    commit(types, contents)
-    commit('SCROLL_DISABLE') // 在滚动加载的时候每次请求完打开可以下次请求
+    }*/
+    return Promise.all([this.$axios.get(getUrl(`/message/${contents[0].cms_id}`, 'CMS')), this.$axios.get(getUrl(`/message/${contents[1].cms_id}`, 'CMS')),this.$axios.get(getUrl(`/message/${contents[2].cms_id}`, 'CMS')), this.$axios.get(getUrl(`/message/${contents[3].cms_id}`, 'CMS'))]).then(res => {
+      for(let i = 0; i < 4; i++) {
+        contents[i].content = res[i].data.subtitle
+      }
+      let types = type === 'news' ? 'GET_NEWS_CONTENT' : 'GET_POLICY_CONTENT'
+      commit(types, contents)
+      commit('SCROLL_DISABLE') // 在滚动加载的时候每次请求完打开可以下次请求
+    }).catch(err => console.log('获取详情出错：', err))
   },
-  async nuxtServerInit ({commit, state, dispatch}, {app, req, isServer}) { // 所有初始化的数据在这里请求
+  nuxtServerInit ({commit, state, dispatch}, {app, req, isServer}) { // 所有初始化的数据在这里请求
     /*  浏览器判断 */
     let userAgent = isServer ? req.headers['user-agent'] : navigator.userAgent
     let bool = getUserAgent(userAgent) // 判断IE9及以下
-    await commit('GET_IE', bool)
+    commit('GET_IE', bool)
     /* 移动端判断  */
     const {isMobile} = agent(userAgent)
     commit('IS_MOBILE', isMobile)
 
     // let url = getUrl('/api/sitemap.json')
-    let {data} = await app.$axios.get('/api/sitemap.json') // 获取所有API
-    commit('GET_ALL_API', data)
-    await dispatch('getContent', {gmtype: 26, size: state.isMobile ? 2 : 6})
-    await dispatch('getContent', {gmtype: 113, size: state.isMobile ? 2 : 6})
-    let banners = await getBanner(state.apiUrl.iot_site.banners) // 首页banner
-    commit('GET_BANNERS', banners)
-    /* 首页新闻详情 */
-    await dispatch('getNewsContent', {list: state.news.newsList, type: 'news'})
-    await dispatch('getNewsContent', {list: state.policy.policyList, type: 'policy'})
-    /* 业务介绍的子平台以及合作机构 */
-    let platform = await getBusinessChild(state.apiUrl.cms.platforms)
-    let company = await getBusinessChild(state.apiUrl.cms.businesses)
-    commit('business/B_INTRO_CHILD', {platform, company})
-    /*  首次案例展示  */
-    await dispatch('getContent', {gmtype: 112, size: state.isMobile ? 2 : 6})
-    if (state.scrollDisable) { // 如果之前的请求影响了滚动的请求关闭
-      commit('SCROLL_DISABLE')
-    }
+    // let {data} = await app.$axios.get('/api/sitemap.json') // 获取所有API
+    // commit('GET_ALL_API', data)
+    return Promise.all([dispatch('getContent', {gmtype: 26, size: state.isMobile ? 2 : 6}), dispatch('getContent', {gmtype: 113, size: state.isMobile ? 2 : 6})]).then(() => {
+     return Promise.all([dispatch('getNewsContent', {list: state.news.newsList, type: 'news'}), dispatch('getNewsContent', {list: state.policy.policyList, type: 'policy'})]).then(() => {
+       if (state.scrollDisable) { // 如果之前的请求影响了滚动的请求关闭
+         commit('SCROLL_DISABLE')
+       }
+     })
+    }).catch(err => console.log('获取新闻详情出错：', err))
   }
 }

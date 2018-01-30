@@ -185,6 +185,7 @@
         margin-top: 10px;
         line-height: 150%;
         font-size: 14px;
+        color: #999;
       }
     }
   .rfid-zican {

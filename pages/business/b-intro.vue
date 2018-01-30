@@ -95,7 +95,7 @@
       let list = store.state.business.childPlatform
       if (list.length === 0) {
         let url1 = getUrl('/api/v1/cooperation/platforms')
-        let url2 = getUrl('api/v1/cooperation/businesses')
+        let url2 = getUrl('/api/v1/cooperation/businesses')
         return Promise.all([app.$axios.get(url1), app.$axios.get(url2)]).then(res => {
           return store.commit('business/B_INTRO_CHILD', [res[0].data.results, res[1].data.results])
         })

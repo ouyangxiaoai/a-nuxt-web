@@ -84,32 +84,12 @@
     },
     methods: {
       handleClick (tab, event) {
-      /*        let name = tab.name
-        if (name === this.active) {
-          return false
-        }
-        this.active = name
-        switch (name) {
-          case 'all':
-            this.getContent(26)
-            break
-          case 'new':
-            this.getContent(26)
-            break
-          case 'policy':
-            this.getContent(113)
-            break
-          default:
-            this.getContent(26)
-        } */
+        //
       },
       async getContent (gmtype, page = 1) {
         let url = getUrl('/api/v1/iot-site/refs/')
         let { data: { results, count } } = await this.$axios.get(url, {params: {gmtype, page, size: this.isMobile ? 2 : 6}})
         let tempArr = []
-        /* let list = results.filter((item) => { // 过滤掉没有图片的新闻
-          return item.img !== ''
-        }) */
         results.forEach((item) => { // 如果没有图片使用默认
           if (item.img === '') {
             item.img = require('~/assets/img/initial-bac.jpg')

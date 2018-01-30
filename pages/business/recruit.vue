@@ -167,6 +167,7 @@
       }
       div p {
         line-height: 150%;
+        font-size: 14px;
       }
       &:nth-child(2) {
         margin: 0 30px;

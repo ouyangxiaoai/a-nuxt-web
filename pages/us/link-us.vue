@@ -40,7 +40,7 @@
           :copyright="[{id: 1, content: 'Copyright Message', bounds: {ne: {lng: 110, lat: 40}, sw:{lng: 0, lat: 0}}}, {id: 2, content: '<a>bothqia@126.com</a>'}]"/>
         <bm-city-list anchor="BMAP_ANCHOR_BOTTOM_RIGHT" />
         <bm-marker :position="{lng: 113.618, lat: 22.756}" :dragging="false">
-          <bm-label content="国家物联网标识管理公共服务平台" :labelStyle="pstyle" :offset="{width: -35, height: 30}"/>
+          <bm-label content="国科物联网云平台" :labelStyle="pstyle" :offset="{width: -35, height: 30}"/>
         </bm-marker>
         <bm-transit v-if="someWay[0].act" :panel="false" :start="adds[0].txt" :end="{lng: 113.618, lat: 22.756}" :auto-viewport="true" location="广州" ></bm-transit>
         <bm-driving v-if="someWay[1].act" :panel="false" :start="adds[0].txt" :end="{lng: 113.618, lat: 22.756}" :auto-viewport="true" location="广州" ></bm-driving>
@@ -59,9 +59,9 @@
         </div>
         <div class="c-right">
           <h2>商务合作/业务咨询</h2>
-          <p>联系人： 李小姐</p>
-          <p>联系邮箱： lipeiqi@cnicg.cn</p>
-          <p>联系电话： 020-39398179  13580372651</p>
+          <p>联系人： 翁小姐</p>
+          <p>联系邮箱： wengdanli@cnicg.cn</p>
+          <p>联系电话： 020-39393309  15902041654</p>
         </div>
       </div>
     </div>
@@ -82,7 +82,7 @@
           {
             lt: false,
             del: true,
-            txt: '国家物联网标识管理公共服务平台'
+            txt: '国科物联网云平台'
           }
         ],
         someWay: [

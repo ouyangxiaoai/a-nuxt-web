@@ -122,6 +122,7 @@
         line-height: 1.5;
         margin-top: 27px;
         font-size: 14px;
+        color: #999;
       }
     }
     }

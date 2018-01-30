@@ -37,7 +37,7 @@
     padding: 70px 0 101px 0;
     .content {
       @include clearfix;
-      margin-top: 40px;
+      margin-top: 17px;
       position: relative;
     }
     h1 {

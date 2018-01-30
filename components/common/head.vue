@@ -123,19 +123,19 @@
 }
 .head-container {
   @include clearfix;
-  padding: 30px 0;
+  padding: 35px 0;
   width: 1200px;
   margin: 0 auto;
   position: relative;
 }
 a {
   display: inline-block;
-  height: 50px;
+  height: 40px;
 }
 .img-logo {
-  height: 50px;
+  height: 40px;
   object-fit: cover;
-  margin-right: 40px;
+  margin-right: 30px;
 }
   .login {
     background: #009BEE;
@@ -146,6 +146,7 @@ a {
     width: 80px;
     text-align: center;
     display: block;
+    font-size: 14px;
     &:hover {
       background: #38a8e1;
     }

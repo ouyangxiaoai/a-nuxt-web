@@ -137,15 +137,15 @@ getContent ({commit}, {gmtype = '', page = 1, size = 6}) {
   },
   getNewsContent ({commit}, {list, type}) {
     let contents = cloneDeep(list)
-    // let len = list.length
+    let len = list.length
    /* for (let i = 0; i < len; i++) { // 首页的新闻详情
       let id = contents[i].cms_id
       let cmsUrl = getUrl(`/message/${id}`, 'CMS')
       let {data: {subtitle}} = await this.$axios({url: cmsUrl, method: 'get', type: 'jsonp'})
       contents[i].content = subtitle
     }*/
-    return Promise.all([this.$axios.get(getUrl(`/message/${contents[0].cms_id}`, 'CMS')), this.$axios.get(getUrl(`/message/${contents[1].cms_id}`, 'CMS')),this.$axios.get(getUrl(`/message/${contents[2].cms_id}`, 'CMS')), this.$axios.get(getUrl(`/message/${contents[3].cms_id}`, 'CMS'))]).then(res => {
-      for(let i = 0; i < 4; i++) {
+    return Promise.all([this.$axios.get(getUrl(`/message/${contents[0].cms_id}`, 'CMS')), len > 1 && this.$axios.get(getUrl(`/message/${contents[1].cms_id}`, 'CMS')),len > 2 && this.$axios.get(getUrl(`/message/${contents[2].cms_id}`, 'CMS')), len > 3 && this.$axios.get(getUrl(`/message/${contents[3].cms_id}`, 'CMS')), len > 4 && this.$axios.get(getUrl(`/message/${contents[4].cms_id}`, 'CMS')), len > 5 && this.$axios.get(getUrl(`/message/${contents[5].cms_id}`, 'CMS'))]).then(res => {
+      for(let i = 0; i < len; i++) {
         contents[i].content = res[i].data.subtitle
       }
       let types = type === 'news' ? 'GET_NEWS_CONTENT' : 'GET_POLICY_CONTENT'
@@ -161,10 +161,6 @@ getContent ({commit}, {gmtype = '', page = 1, size = 6}) {
     /* 移动端判断  */
     const {isMobile} = agent(userAgent)
     commit('IS_MOBILE', isMobile)
-
-    // let url = getUrl('/api/sitemap.json')
-    // let {data} = await app.$axios.get('/api/sitemap.json') // 获取所有API
-    // commit('GET_ALL_API', data)
     return Promise.all([dispatch('getContent', {gmtype: 26, size: state.isMobile ? 2 : 6}), dispatch('getContent', {gmtype: 113, size: state.isMobile ? 2 : 6})]).then(() => {
      return Promise.all([dispatch('getNewsContent', {list: state.news.newsList, type: 'news'}), dispatch('getNewsContent', {list: state.policy.policyList, type: 'policy'})]).then(() => {
        if (state.scrollDisable) { // 如果之前的请求影响了滚动的请求关闭

@@ -144,7 +144,7 @@
     .adv-item {
       float: left;
       width: 380px;
-      height: 192px;
+      height: 162px;
       padding: 0 42px 0 46px;
       position: relative;
       border: 1px solid #E0F2FB;

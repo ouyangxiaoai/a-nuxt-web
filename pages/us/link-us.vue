@@ -40,7 +40,7 @@
           :copyright="[{id: 1, content: 'Copyright Message', bounds: {ne: {lng: 110, lat: 40}, sw:{lng: 0, lat: 0}}}, {id: 2, content: '<a>bothqia@126.com</a>'}]"/>
         <bm-city-list anchor="BMAP_ANCHOR_BOTTOM_RIGHT" />
         <bm-marker :position="{lng: 113.618, lat: 22.756}" :dragging="false">
-          <bm-label content="国科物联网云平台" :labelStyle="pstyle" :offset="{width: -35, height: 30}"/>
+          <bm-label content="国科物联网云平台" :labelStyle="pstyle" :offset="{width: -125, height: 30}"/>
         </bm-marker>
         <bm-transit v-if="someWay[0].act" :panel="false" :start="adds[0].txt" :end="{lng: 113.618, lat: 22.756}" :auto-viewport="true" location="广州" ></bm-transit>
         <bm-driving v-if="someWay[1].act" :panel="false" :start="adds[0].txt" :end="{lng: 113.618, lat: 22.756}" :auto-viewport="true" location="广州" ></bm-driving>
@@ -105,7 +105,7 @@
         latitude: {},
         pstyle: {
           color: '#333',
-          fontSize: '1.2rem',
+          fontSize: '36px',
           border: 0,
           background: 'none'
         }

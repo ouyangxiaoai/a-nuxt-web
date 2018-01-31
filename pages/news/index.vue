@@ -65,9 +65,10 @@
   import { mapState } from 'vuex'
   import getUrl from '~/config/url'
   import MobileNewItem from '~/components/mobile-new-item'
+  import {Tabs, TabPane} from 'element-ui'
   /* eslint-disable */
   export default {
-    components: {'news-item': newsItem, pagenation, 'mobile-new-item': MobileNewItem},
+    components: {'news-item': newsItem, pagenation, 'mobile-new-item': MobileNewItem, 'el-tabs': Tabs, 'el-tab-pane': TabPane},
     directives: {'scroll-show-callback': ScrollShowCallBack},
     computed: {
       ...mapState(['newsContent', 'policyContent', 'scrollDisable', 'news', 'policy', 'isMobile'])

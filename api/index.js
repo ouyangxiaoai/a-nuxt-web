@@ -1,4 +1,4 @@
-import axios from 'axios'
+/* import axios from 'axios'
 
 export const getBanner = (url) => {
   return axios.get(url).then((res) => {
@@ -6,7 +6,7 @@ export const getBanner = (url) => {
   }).catch((err) => {
     console.log('获取banner发生错误：', err)
   })
-}
+} */
 /* export const getBusinessChild = (url) => {
   return axios.get(url).then(res => {
     let data = res.data.results

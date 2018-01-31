@@ -75,6 +75,9 @@
   .service .function-title {
     background-image: url("~/assets/img/service-title.png");
   }
+  .channel .function-detail, .service .function-detail {
+    margin-bottom: 0;
+  }
   .security .function-detail:last-child {
     background-color: #f5f5f5;
     padding: 70px 0;

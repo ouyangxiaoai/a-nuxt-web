@@ -170,10 +170,14 @@ import { mapGetters, mapState } from 'vuex'
 import numScroll from '~/directives/numScroll'
 import newsItem from '~/components/new-item'
 import getUrl from '~/config/url'
+import {Tabs, TabPane} from 'element-ui'
 
 export default {
   components: {
-    banner, 'news-item': newsItem
+    banner,
+    'news-item': newsItem,
+    'el-tabs': Tabs,
+    'el-tab-pane': TabPane
   },
   async fetch ({store, app}) {
     if (store.state.banners.length === 0) {

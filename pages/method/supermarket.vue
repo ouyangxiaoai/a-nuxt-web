@@ -23,6 +23,7 @@
       <div v-for="item in originText">
         <h2>{{item.title}}</h2>
         <p v-if="item.text">{{item.text}}</p>
+        <p class="pd" v-if="item.text1">{{item.text1}}</p>
       </div>
     </div>
     <div class="sm-adv-wrap">
@@ -68,7 +69,7 @@
         originText: [
           {title: '商品周期追溯', text: '通过防伪溯源系统，打造商品全生命周期追溯'},
           {title: '后台管理系统'},
-          {title: '跨境商品追溯', text: '各个进口馆的商品贴上唯一的身份标识，用户购买时，通过手机扫码，获取商品流通信息、检验信息、报关信息'}
+          {title: '跨境商品追溯', text: '各个进口馆的商品贴上唯一的身份标识，用户购买时，通', text1: '过手机扫码，获取商品流通信息、检验信息、报关信息'}
         ],
         smAdv: [
           {title: '企业', text: '帮助企业提高产品竞争力'},
@@ -135,7 +136,6 @@
       top: 383px;
       left: 0;
       width: 33.3%;
-      padding: 0 20px;
       h2 {
         text-align: center;
         color: #009BEE;
@@ -160,6 +160,12 @@
       left: 66.7%;
       h2 {
         margin-left: 130px;
+      }
+      p {
+        padding-left: 30px;
+      }
+      .pd {
+        margin-top: 0;
       }
     }
   }

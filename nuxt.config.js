@@ -35,6 +35,7 @@ module.exports = {
   */
   plugins: ['~/plugins/elementUI', {src: '~/plugins/baiduMap', ssr: false}],
   build: {
+    analyze: false,
     babel: {
       'plugins': [['component', [
         {
@@ -58,7 +59,7 @@ module.exports = {
       'process.env.URL_MODE': JSON.stringify(process.env.URL_MODE)
     })],
     // 第三方模块或者自己编写的模块统一打包
-    vendor: ['element-ui', 'axios', 'vue-baidu-map', 'babel-polyfill', 'eventsource-polyfill'],
+    vendor: ['~/plugins/elementUI', 'vue-baidu-map', 'babel-polyfill', 'eventsource-polyfill'],
     /*
     ** Run ESLint on save
     */

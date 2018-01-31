@@ -144,7 +144,11 @@ getContent ({commit}, {gmtype = '', page = 1, size = 6}) {
       let {data: {subtitle}} = await this.$axios({url: cmsUrl, method: 'get', type: 'jsonp'})
       contents[i].content = subtitle
     }*/
-    return Promise.all([this.$axios.get(getUrl(`/message/${contents[0].cms_id}`, 'CMS')), len > 1 && this.$axios.get(getUrl(`/message/${contents[1].cms_id}`, 'CMS')),len > 2 && this.$axios.get(getUrl(`/message/${contents[2].cms_id}`, 'CMS')), len > 3 && this.$axios.get(getUrl(`/message/${contents[3].cms_id}`, 'CMS')), len > 4 && this.$axios.get(getUrl(`/message/${contents[4].cms_id}`, 'CMS')), len > 5 && this.$axios.get(getUrl(`/message/${contents[5].cms_id}`, 'CMS'))]).then(res => {
+   let arr = []
+   for(let i = 0; i < len; i++) {
+     arr.push(this.$axios.get(getUrl(`/message/${contents[i].cms_id}`, 'CMS')))
+   }
+    return Promise.all(arr).then(res => {
       for(let i = 0; i < len; i++) {
         contents[i].content = res[i].data.subtitle
       }

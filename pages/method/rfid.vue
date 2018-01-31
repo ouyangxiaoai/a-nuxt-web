@@ -78,7 +78,9 @@
   </div>
 </template>
 <script>
+  import {Tabs, TabPane, CollapseItem, Collapse} from 'element-ui'
   export default {
+    components: {'el-tabs': Tabs, 'el-tab-pane': TabPane, 'el-collapse-item': CollapseItem, 'el-collapse': Collapse},
     computed: {
       isMobile () {
         return this.$store.state.isMobile

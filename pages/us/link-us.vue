@@ -18,7 +18,7 @@
         </li>
       </ul>
       <div class="u-res-list">
-        <baidu-map>
+        <baidu-map ak="0PnOGIwAUWM3MoIY2btYSd5jONOclTku" v-if="show">
           <bm-view class="bm-view">
           </bm-view>
           <bm-transit v-if="someWay[0].act" :start="adds[0].txt" :end="{lng: 113.618, lat: 22.756}" :auto-viewport="true" location="广州"></bm-transit>
@@ -28,12 +28,14 @@
     </div>
     <div class="m-map">
       <baidu-map
+        ak="0PnOGIwAUWM3MoIY2btYSd5jONOclTku"
         class="u-map"
         :center="{lng: 113.618, lat: 22.756}"
         :zoom="11"
         :scroll-wheel-zoom="true"
+        v-if="show"
       >
-        <bm-scale anchor="BMAP_ANCHOR_BOTTOM_RIGHT" />
+        <bm-scale anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-scale>
         <bm-navigation anchor="BMAP_ANCHOR_TOP_LEFT" />
         <bm-copyright
           anchor="BMAP_ANCHOR_TOP_RIGHT"
@@ -67,11 +69,23 @@
     </div>
   </div>
 </template>
-
 <script>
+  if (process.browser) {
+    var {BaiduMap, BmView, BmScale, BmTransit, BmNavigation, BmCopyright, BmCityList, BmMarker, BmDriving, BmLabel} = require('vue-baidu-map')
+  }
   export default {
+    components: {BaiduMap, BmView, BmScale, BmTransit, BmNavigation, BmCopyright, BmCityList, BmMarker, BmDriving, BmLabel},
+    asyncData ({isServer}) {
+      if (isServer) {
+        return {show: false}
+      }
+    },
+    mounted () { // 因为baidu-map不支持ssr避免报错加上这里
+      this.show = true
+    },
     data () {
       return {
+        show: true,
         title: '百度地图',
         adds: [
           {
@@ -261,6 +275,13 @@
         bottom: 10px;
         background: url("~/assets/img/link-us-code.png") no-repeat center top;
       }*/
+    }
+  }
+</style>
+<style lang="scss">
+  .map-wrap {
+    .sel_n .sel_body_name {
+      height: auto;
     }
   }
 </style>

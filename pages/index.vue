@@ -166,7 +166,7 @@
 
 <script>
 import banner from '~/components/common/banner'
-import { mapGetters, mapState } from 'vuex'
+import { mapState } from 'vuex'
 import numScroll from '~/directives/numScroll'
 import newsItem from '~/components/new-item'
 import getUrl from '~/config/url'
@@ -188,13 +188,14 @@ export default {
   },
   directives: {'num-scroll': numScroll},
   computed: {
-    ...mapGetters({
+  /*    ...mapGetters({
       banners: 'bannersImg'
-    }),
+    }), */
     ...mapState({
       newsContent: state => state.newsContent,
       policyContent: state => state.policyContent,
-      isMobile: 'isMobile'
+      isMobile: 'isMobile',
+      banners: 'banners'
     })
   },
   data () {

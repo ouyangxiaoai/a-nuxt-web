@@ -3,7 +3,7 @@
   <div class="swiper-container">
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="banner in banners">
-        <img :src="banner" alt="">
+        <a :href="banner.url ? banner.url : `javascript: void(0)`" :title="banner.title" rel="noreferrer noopener" target="_blank" v-if="!isMobile"><img :src="banner.image" alt=""></a>
       </div>
     </div>
     <div class="swiper-button-prev" @click="prevSlide" v-if="!isMobile"></div>
@@ -23,7 +23,8 @@
       // eslint-disable-next-line
       mySwiper = new Swiper('.swiper-container', {
         loop: true,
-        autoplay: 3000
+        autoplay: 3000,
+        autoplayDisableOnInteraction: false
       })
     },
     methods: {

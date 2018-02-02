@@ -1,6 +1,7 @@
-import Vue from 'vue'
-import baiduMap from 'vue-baidu-map'
-
-Vue.use(baiduMap, {
-  ak: '0PnOGIwAUWM3MoIY2btYSd5jONOclTku'
-})
+/* import Vue from 'vue'
+import BaiduMap from 'vue-baidu-map'
+if (process.browser) {
+  Vue.use(BaiduMap, {
+    ak: '0PnOGIwAUWM3MoIY2btYSd5jONOclTku'
+  })
+} */

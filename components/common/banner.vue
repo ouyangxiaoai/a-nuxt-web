@@ -4,6 +4,7 @@
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="banner in banners">
         <a :href="banner.url ? banner.url : `javascript: void(0)`" :title="banner.title" rel="noreferrer noopener" target="_blank" v-if="!isMobile"><img :src="banner.image" alt=""></a>
+        <img :src="banner.image" alt="" v-else>
       </div>
     </div>
     <div class="swiper-button-prev" @click="prevSlide" v-if="!isMobile"></div>

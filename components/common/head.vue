@@ -2,7 +2,7 @@
 <div class="header-wrap">
   <div class="head-container" v-if="!isMobile">
     <div class="head-left">
-      <nuxt-link to="/" class="head-left" @click="handleSelect('/')"><img src="~/assets/img/logo.png" alt="NIOT" class="img-logo"></nuxt-link>
+      <nuxt-link to="/" class="head-left" @click="handleSelect('/')"><img src="~/assets/img/logo-1.png" alt="NIOT" class="img-logo"></nuxt-link>
       <el-menu
         ref="headMenu"
         :router="router"
@@ -50,7 +50,7 @@
   </div>
   <div class="mobile" v-else>
     <div class="f-box mobile-head">
-      <nuxt-link to="/" class="logo"><img src="~/assets/img/logo.png" alt="NIOT"></nuxt-link>
+      <nuxt-link to="/" class="logo"><img src="~/assets/img/logo-1.png" alt="NIOT"></nuxt-link>
       <img src="~/assets/img/mobile/list.png" alt="" @click="collapse" />
     </div>
     <div class="menu" :style="{width: isCollapse ? '100%' : '0'}">

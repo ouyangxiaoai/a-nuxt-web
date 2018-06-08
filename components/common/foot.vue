@@ -1,7 +1,7 @@
 <template>
   <div>
   <footer class="foot" v-if="!isMobile">
-    <div>
+    <!--<div>
       <div class="address">
         <p class="dib">
           <span>地址：广东省广州市南沙区南沙资讯科技园香港科技大学霍英东研究院科技楼三楼</span>
@@ -22,6 +22,25 @@
           <span>版权所有：广州中国科学院计算机网络信息中心</span>
         </p>
       </div>
+    </div>-->
+    <ul class="foot-ul">
+      <li><img src="../../assets/img/footer-logo.png" alt="niot"></li>
+      <li><img src="../../assets/img/footer-code.png" alt="niot"></li>
+      <li><span class="line"></span></li>
+      <li class="friends">
+        <p>地址：广东省广州市南沙区南沙资讯科技园香港科技大学霍英东研究院科技楼三楼</p>
+        <p>电话：400-806-0373    邮箱：support@cnicg.cn</p>
+        <p class="dib">
+          <span>友情链接：</span>
+          <a :href="item.link" target="_blank" rel="noreferrer" v-for="item in friends">{{ item.name }}</a>
+        </p>
+      </li></ul>
+    <div class="copy">
+      <p class="dib">
+        <span>国家物联网标识管理公共服务平台</span>
+        <span>粤ICP备16031487号-2</span>
+        <span>版权所有：广州中国科学院计算机网络信息中心</span>
+      </p>
     </div>
   </footer>
   <div class="mobile mobile-foot" v-else>
@@ -45,14 +64,6 @@
           {
             link: 'http://iotcid.cn/',
             name: 'CID平台'
-          },
-          {
-            link: 'http://www.iotroot.com/home',
-            name: 'Ecode平台'
-          },
-          {
-            link: 'http://www.cndona.cn/',
-            name: 'Hande平台'
           },
           {
             link: 'http://www.chinasigns.cn/',
@@ -81,7 +92,6 @@
 
   .foot {
     min-width: 1200px;
-    padding-top: 30px;
     text-align: center;
     @include sc(14px, #fff);
     background-color: #444855;
@@ -139,6 +149,48 @@
         margin-left: 15px;
         &:first-child {
           margin-left: 0;
+        }
+      }
+    }
+    .foot-ul {
+      width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 50px 0;
+      li {
+        &:first-child {
+          img {
+            width: 152px;
+            height: 89px;
+          }
+        }
+        &:nth-child(2) {
+          img {
+            width: 89px;
+            height: 89px;
+          }
+        }
+        &:nth-child(3) {
+          span {
+            display: block;
+            height: 122px;
+            width: 2px;
+            background-color: rgba(255, 255, 255, .6);
+          }
+        }
+      }
+      .friends {
+        padding-top: 0;
+        margin-bottom: 0;
+        text-align: left;
+        font-size: 13px;
+        p {
+          padding: 6px 0;
+        }
+        .dib {
+          white-space: nowrap;
         }
       }
     }

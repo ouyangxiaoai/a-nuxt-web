@@ -80,9 +80,10 @@
       <div class="news-left">
         <h1>新闻中心<span>/</span><span>News Center</span></h1>
         <div class="new-content" @click="goDetail(contentLeft[0].cms_id)">
-          <!--<img :src="contentLeft[0].img" alt="">-->
-          <i class="img" :style="{backgroundImage: `url(${contentLeft[0].img})`}"></i>
-          <news-item :item="contentLeft[0]"></news-item>
+          <template v-if="contentLeft[0]">
+            <i class="img" :style="{backgroundImage: `url(${contentLeft[0].img})`}"></i>
+            <news-item :item="contentLeft[0]"></news-item>
+          </template>
         </div>
       </div>
       <div class="news-right">
@@ -131,7 +132,7 @@
       <div class="mobile-news">
         <nuxt-link :to="{name: 'list-name', params: {name: 'news'}}"><h1><span>平台动向</span><img src="~/assets/img/mobile/arrow-right-circle.png" alt=""></h1></nuxt-link>
         <h2>标识应用新方向，掌握最前沿的行业新闻</h2>
-        <div class="new-content">
+        <div class="new-content" v-if="contentLeft[0]">
           <nuxt-link :to="{ name: 'detail-id', params: {detail: 'news', id: contentLeft[0].cms_id}}">
           <img :src="contentLeft[0].img" alt="">
           <h3>{{contentLeft[0].title}}</h3>
@@ -142,7 +143,7 @@
       <div class="mobile-policy">
         <nuxt-link :to="{name: 'list-name', params: {name: 'policy'}}"><h1><span>国家政策</span><img src="~/assets/img/mobile/arrow-right-circle.png" alt=""></h1></nuxt-link>
         <h2>物联网国家政策，了解最新动向</h2>
-        <div class="new-content">
+        <div class="new-content" v-if="policyContent[0]">
           <nuxt-link :to="{ name: 'detail-id', params: {detail: 'policy', id: policyContent[0].cms_id}}">
           <img :src="policyContent[0].img" alt="">
           <h3>{{policyContent[0].title}}</h3>

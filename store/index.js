@@ -144,18 +144,24 @@ getContent ({commit}, {gmtype = '', page = 1, size = 6}) {
       let {data: {subtitle}} = await this.$axios({url: cmsUrl, method: 'get', type: 'jsonp'})
       contents[i].content = subtitle
     }*/
-   let arr = []
-   for(let i = 0; i < len; i++) {
-     arr.push(this.$axios.get(getUrl(`/message/${contents[i].cms_id}`, 'CMS')))
-   }
-    return Promise.all(arr).then(res => {
-      for(let i = 0; i < len; i++) {
-        contents[i].content = res[i].data.subtitle
+    // 这里修改成all的方式并发请求，但是也有坏处，比如说all的任一个请求出错就会直接error
+    return Promise.all([this.$axios.get(getUrl(`/message/${contents[0].cms_id}`, 'CMS')), len > 1 && this.$axios.get(getUrl(`/message/${contents[1].cms_id}`, 'CMS')), len > 2 && this.$axios.get(getUrl(`/message/${contents[2].cms_id}`, 'CMS')),len > 3 && this.$axios.get(getUrl(`/message/${contents[3].cms_id}`, 'CMS')),len > 4 && this.$axios.get(getUrl(`/message/${contents[4].cms_id}`, 'CMS')),len > 5 && this.$axios.get(getUrl(`/message/${contents[5].cms_id}`, 'CMS'))]).then(res => {
+      for(let i=0;i<len;i++) {
+        Object.assign(contents[i], {content: res[i].data ? res[i].data.subtitle : res[i].subtitle})
       }
       let types = type === 'news' ? 'GET_NEWS_CONTENT' : 'GET_POLICY_CONTENT'
+      // console.log(res)
       commit(types, contents)
       commit('SCROLL_DISABLE') // 在滚动加载的时候每次请求完打开可以下次请求
     }).catch(err => console.log('获取详情出错：', err))
+    /*for(let i = 0; i < len; i++) {
+      await this.$axios.get(getUrl(`/message/${contents[i].cms_id}`, 'CMS')).then(res => {
+        contents[i].content = res.data ? res.data.subtitle : res.subtitle
+      }).catch(err => console.log('获取详情出错：', err))
+    }
+    let types = type === 'news' ? 'GET_NEWS_CONTENT' : 'GET_POLICY_CONTENT'
+    commit(types, contents)
+    commit('SCROLL_DISABLE') // 在滚动加载的时候每次请求完打开可以下次请求*/
   },
   nuxtServerInit ({commit, state, dispatch}, {app, req, isServer}) { // 所有初始化的数据在这里请求
     /*  浏览器判断 */
